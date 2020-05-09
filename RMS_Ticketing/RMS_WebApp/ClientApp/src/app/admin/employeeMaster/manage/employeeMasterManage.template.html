@@ -1,0 +1,184 @@
+
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Employee Master'" [showRightSection]="false">
+      <form novalidate #f="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div [ngClass]="{'col-sm-3':showCompany,'col-sm-4':!showCompany}">
+            <div class="form-group row"
+                 [ngClass]="{ 'has-danger': empCode.invalid && empCode.dirty, 'has-success': empCode.valid && empCode.dirty }">
+
+              <label class="col-sm-12 col-form-label">Emp. Code*</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control withIcon" placeholder="Emp. Code"
+                       name="empCode"
+                       [(ngModel)]="model.EmpCode"
+                       required
+                       [empCodeExists]="model.CompanyID"
+                       #empCode="ngModel"
+                       [ngClass]="{ 'form-control-danger': empCode.invalid && empCode.dirty, 'form-control-success': empCode.valid && empCode.dirty }" />
+                <div *ngIf="empCode.errors?.empCodeExists" class="messages text-danger">EmployeeCode exists already</div>
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{'col-sm-3':showCompany,'col-sm-4':!showCompany}">
+            <div class="form-group row"
+                 [ngClass]="{ 'has-danger': empFullName.invalid && empFullName.dirty, 'has-success': empFullName.valid && empFullName.dirty }">
+              <label class="col-sm-12 col-form-label">Emp. Full Name*</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control withIcon" placeholder="Emp. Full Name"
+                       name="empFullName"
+                       [(ngModel)]="model.EmpFullName"
+                       required
+                       #empFullName="ngModel"
+                       [ngClass]="{ 'form-control-danger': empFullName.invalid && empFullName.dirty, 'form-control-success': empFullName.valid && empFullName.dirty }" />
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="{'col-sm-3':showCompany,'col-sm-4':!showCompany}">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Role</label>
+              <div class="col-sm-12">
+                <select class="form-control"
+                        name="tokenKey"
+                        required
+                        [(ngModel)]="model.AssignedRoleID"
+                        #role="ngModel"
+                        [ngClass]="{ 'form-control-danger': role.invalid && role.dirty, 'form-control-success': role.valid && role.dirty }">
+                  <option value="0">Select</option>
+                  <option *ngFor="let key of rolemasterData" value="{{key.RoleID}}">{{key.RoleName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3" *ngIf="showCompany">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Company</label>
+              <div class="col-sm-12">
+                <select class="form-control"
+                        [(ngModel)]="model.CompanyID"
+                        name="companyID"
+                        #companyID="ngModel">
+                  <option value="0">Select</option>
+                  <option *ngFor="let company of lCompanys" [value]="company.CompanyID">
+                    {{company.CompanyName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group row"
+                 [ngClass]="{ 'has-danger': email.invalid && email.dirty, 'has-success': email.valid && email.dirty }">
+              <label class="col-sm-12 col-form-label">Emp. Email*</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control withIcon" placeholder="Emp. Email"
+                       name="email"
+                       [(ngModel)]="model.Email"
+                       #email="ngModel"
+                       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                       [ngClass]="{ 'form-control-danger': email.invalid && email.dirty, 'form-control-success': email.valid && email.dirty }" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Emp. Mobile No.</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control withIcon" placeholder="Emp. Mobile no."
+                       name="mobileNumber"
+                       [(ngModel)]="model.MobileNumber"
+                       #mobileNumber="ngModel"
+                       myNumberOnly />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label">Active.</label>
+              <div class="col-sm-12">
+                <input type="checkbox" class="form-control withIcon"
+                       name="active"
+                       [(ngModel)]="model.Active"
+                       #active="ngModel" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <div class="col-sm-12">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <td colspan="3">
+                        <a href="javascript:void(0);" (click)="addItem();">Add</a>
+                        <a href="javascript:void(0);">Reset</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width:30%; min-width:100px;">AreaOffice</td>
+                      <td style="width:70%">Location</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let area of model.MappedRegionLocation; let i = index">
+                      <td>
+                        <select class="form-control"
+                                (change)="regionChange($event, i);"
+                                name="area{{i}}"
+                                #area{{i}}="ngModel"
+                                [(ngModel)]="model.MappedRegionLocation[i].AreaOfficeCode"
+                                [duplicateRegionValidator]="model.MappedRegionLocation">
+                          <option value="">Select</option>
+                          <option *ngFor="let area1 of dropDownRegionData"
+                                  [ngValue]="area1.AreaOfficeCode">
+                            {{area1.AreaOfficeName}}
+                          </option>
+                        </select>
+                      </td>
+                      <td>
+                        <angular2-multiselect [data]="dropDownLocationData[i].Locations"
+                                              [(ngModel)]="model.MappedRegionLocation[i].Locations"
+                                              [settings]="dropDownSettings"
+                                              (onSelect)="onItemSelect($event, i)"
+                                              name="location{{i}}" #location{{i}}="ngModel">
+                        </angular2-multiselect>
+                      </td>
+                      <td><a href="javascript:void(0);" (click)="removeItem(area, i)">Remove</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="clear" style="height:150px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+
+              <div class="col-sm-12 button-page">
+
+                <button class="btn btn-inverse float-right" (click)="resetForm()">Reset</button>
+
+                <button type="submit" class="btn btn-primary float-right"
+                        [ngClass]="{ 'disabled': !f.form.valid }"
+                        [disabled]="!f.form.valid">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+.card-header-right {
+    z-index: 999;
+}
+
+
+
+.download_hover {
+  position: relative;
+}
+
+.download_text {
+  visibility: hidden;
+  width: 105px;
+  background-color: #fff;
+  text-align: left;
+  font-size: 15px;
+  position: absolute;
+  top: 5px;
+  left: -110px;
+}
+
+.download_hover:hover .download_text {
+  visibility: visible;
+}
+
+
+.comment_hover {
+  position: relative;
+}
+
+
+.comment_text {
+  visibility: hidden;
+  width: 105px;
+  background-color: #fff;
+  text-align: left;
+  font-size: 15px;
+  position: absolute;
+  top: 5px;
+  left: -110px;
+}
+
+.comment_hover:hover .comment_text {
+  visibility: visible;
+}

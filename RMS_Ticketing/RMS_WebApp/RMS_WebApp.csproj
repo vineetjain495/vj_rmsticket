@@ -1,0 +1,708 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AE6A4662-6DBE-4347-89F0-56A67208F678}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApp</RootNamespace>
+    <AssemblyName>WebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.8</TypeScriptToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Makes the TypeScript compilation task a no-op -->
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.13.4.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.13.4\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Interop.OneNote, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Interop.Microsoft.Office.Interop.OneNote.1.1.0.0\lib\net40\Interop.Microsoft.Office.Interop.OneNote.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Interop.Publisher, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Interop.Microsoft.Office.Interop.Publisher.2.2.0.0\lib\net40\Interop.Microsoft.Office.Interop.Publisher.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.MSProject, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ns.Microsoft.Office.Interop.All.15.0.0.2\lib\Microsoft.Office.Interop.MSProject.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.PowerPoint.15.0.4420.1017\lib\net20\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Visio, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ns.Microsoft.Office.Interop.All.15.0.0.2\lib\Microsoft.Office.Interop.Visio.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="MultipartDataMediaFormatter, Version=2.0.2.0, Culture=neutral, PublicKeyToken=67148dd0761d95a0, processorArchitecture=MSIL">
+      <HintPath>..\packages\MultipartDataMediaFormatter.V2.2.0.2\lib\net45\MultipartDataMediaFormatter.dll</HintPath>
+    </Reference>
+    <Reference Include="MultipartReader, Version=1.0.4892.25057, Culture=neutral, PublicKeyToken=3f177aba73aa4f57, processorArchitecture=MSIL">
+      <HintPath>..\packages\MultipartReader.1.0.1\lib\net40\MultipartReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ns.Microsoft.Office.Interop.All.15.0.0.2\lib\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.6.9.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.6.9\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\icon\font-awesome\css\font-awesome.css" />
+    <Content Include="assets\icon\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assets\icon\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\icon\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="assets\icon\font-awesome\scss\font-awesome.css" />
+    <Content Include="assets\icon\ico-fonts\css\icofont.css" />
+    <Content Include="assets\icon\ico-fonts\fonts\icofont.svg" />
+    <Content Include="assets\icon\icofont\css\icofont.css" />
+    <Content Include="assets\icon\icofont\fonts\icofont.svg" />
+    <Content Include="assets\icon\SVG-animated\svg-weather.css" />
+    <Content Include="assets\images\CMS_RMS_backgrougd.jpg" />
+    <Content Include="assets\images\CMS_RMS_logo.jpg" />
+    <Content Include="assets\images\img1.jpg" />
+    <Content Include="assets\images\img2.jpg" />
+    <Content Include="assets\images\img3.jpg" />
+    <Content Include="assets\images\img4.jpg" />
+    <Content Include="assets\styles\animate.css" />
+    <Content Include="assets\styles\chartist.css" />
+    <Content Include="assets\styles\custom.css" />
+    <Content Include="assets\styles\styles.css" />
+    <Content Include="ClientApp\e2e\protractor.conf.js" />
+    <Content Include="ClientApp\src\app\addEmployee\addEmployee.component.css" />
+    <Content Include="ClientApp\src\app\addEmployee\addEmployee.component.html" />
+    <Content Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.component.css" />
+    <Content Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.template.html" />
+    <Content Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.component.css" />
+    <Content Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.template.html" />
+    <Content Include="ClientApp\src\app\admin\roleMaster\roleMaster.component.css" />
+    <Content Include="ClientApp\src\app\admin\roleMaster\roleMaster.template.html" />
+    <Content Include="ClientApp\src\app\app.template.html" />
+    <Content Include="ClientApp\src\app\dashboard\dashboard.template.html" />
+    <Content Include="ClientApp\src\app\editemp\editemp.component.css" />
+    <Content Include="ClientApp\src\app\editemp\editemp.component.html" />
+    <Content Include="ClientApp\src\app\externalLayout\externalLayout.component.css" />
+    <Content Include="ClientApp\src\app\forgotPassword\forgotPassword.component.css" />
+    <Content Include="ClientApp\src\app\forgotPassword\forgotPassword.template.html" />
+    <Content Include="ClientApp\src\app\login\login.component.css" />
+    <Content Include="ClientApp\src\app\login\login.template.html" />
+    <Content Include="ClientApp\src\app\mainLayout\mainLayout.component.css" />
+    <Content Include="ClientApp\src\app\mainLayout\mainLayout.template.html" />
+    <Content Include="ClientApp\src\app\picklist\picklist.component.css" />
+    <Content Include="ClientApp\src\app\picklist\picklist.template.html" />
+    <Content Include="ClientApp\src\app\resetPassword\resetPassword.template.html" />
+    <Content Include="ClientApp\src\app\shared\breadcrumbs\breadcrumbs.component.css" />
+    <Content Include="ClientApp\src\app\shared\breadcrumbs\breadcrumbs.template.html" />
+    <Content Include="ClientApp\src\app\shared\card\card.component.css" />
+    <Content Include="ClientApp\src\app\shared\card\card.template.html" />
+    <Content Include="ClientApp\src\app\shared\elements\animation.js" />
+    <Content Include="ClientApp\src\app\shared\elements\parent-remove.directive.js" />
+    <Content Include="ClientApp\src\app\showemployee\showemployee.component.css" />
+    <Content Include="ClientApp\src\app\showemployee\showemployee.component.html" />
+    <Content Include="ClientApp\src\app\showemployee\showemployee.html" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-chasing-dots.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-cube-grid.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-double-bounce.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-line-material.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-rotating-plane.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-spinner-pulse.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-three-bounce.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-wandering-cubes.css" />
+    <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-wave.css" />
+    <Content Include="ClientApp\src\app\spinner\spinner.component.css" />
+    <Content Include="ClientApp\src\app\spinner\spinner.template.html" />
+    <Content Include="ClientApp\src\app\ticketViewer\commentsComponent\commentsComponent.component.css" />
+    <Content Include="ClientApp\src\app\ticketViewer\commentsComponent\commentsComponent.component.html" />
+    <Content Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.component.css" />
+    <Content Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.template.html" />
+    <Content Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.component.css" />
+    <Content Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.component.html" />
+    <Content Include="ClientApp\src\app\ticketViewer\ticketViewer.component.css" />
+    <Content Include="ClientApp\src\app\ticketViewer\ticketViewer.template.html" />
+    <Content Include="ClientApp\src\favicon.ico" />
+    <Content Include="ClientApp\src\index.html" />
+    <Content Include="ClientApp\src\karma.conf.js" />
+    <Content Include="ClientApp\src\styles.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="dist\bar-hue.png" />
+    <Content Include="dist\bar-saturation.png" />
+    <Content Include="dist\check_black.png" />
+    <Content Include="dist\check_disabled.png" />
+    <Content Include="dist\check_indeterminate_black.png" />
+    <Content Include="dist\check_indeterminate_disabled.png" />
+    <Content Include="dist\close.png" />
+    <Content Include="dist\close_black.png" />
+    <Content Include="dist\close_white.png" />
+    <Content Include="dist\common.js" />
+    <Content Include="dist\crosshair-white.png" />
+    <Content Include="dist\crosshair.png" />
+    <Content Include="dist\default~src-app-ticketViewer-createTicket-createTicket-module~src-app-ticketViewer-crudOpsTicket-cru~e0d58778.js" />
+    <Content Include="dist\drag.png" />
+    <Content Include="dist\dragcancel.png" />
+    <Content Include="dist\error.png" />
+    <Content Include="dist\favicon.ico" />
+    <Content Include="dist\filter.png" />
+    <Content Include="dist\html_editor.png" />
+    <Content Include="dist\icomoon.svg" />
+    <Content Include="dist\icon-calendar-white.png" />
+    <Content Include="dist\icon-calendar.png" />
+    <Content Include="dist\icon-cancel.png" />
+    <Content Include="dist\icon-delete.png" />
+    <Content Include="dist\icon-down-white.png" />
+    <Content Include="dist\icon-down.png" />
+    <Content Include="dist\icon-edit.png" />
+    <Content Include="dist\icon-first.png" />
+    <Content Include="dist\icon-info-small.png" />
+    <Content Include="dist\icon-last.png" />
+    <Content Include="dist\icon-left-white.png" />
+    <Content Include="dist\icon-left.png" />
+    <Content Include="dist\icon-menu-minimized.png" />
+    <Content Include="dist\icon-menu-small.png" />
+    <Content Include="dist\icon-plus-white.png" />
+    <Content Include="dist\icon-plus.png" />
+    <Content Include="dist\icon-recurrence-exception-white.png" />
+    <Content Include="dist\icon-recurrence-exception.png" />
+    <Content Include="dist\icon-recurrence-white.png" />
+    <Content Include="dist\icon-recurrence.png" />
+    <Content Include="dist\icon-right-white.png" />
+    <Content Include="dist\icon-right.png" />
+    <Content Include="dist\icon-save.png" />
+    <Content Include="dist\icon-showpassword.png" />
+    <Content Include="dist\icon-sort-asc.png" />
+    <Content Include="dist\icon-sort-desc.png" />
+    <Content Include="dist\icon-sort-remove.png" />
+    <Content Include="dist\icon-time-white.png" />
+    <Content Include="dist\icon-time.png" />
+    <Content Include="dist\icon-up-white.png" />
+    <Content Include="dist\icon-up.png" />
+    <Content Include="dist\icon_collapse.png" />
+    <Content Include="dist\icon_expand.png" />
+    <Content Include="dist\index.html" />
+    <Content Include="dist\info.png" />
+    <Content Include="dist\loader-small.gif" />
+    <Content Include="dist\loader.gif" />
+    <Content Include="dist\mail.png" />
+    <Content Include="dist\main.js" />
+    <Content Include="dist\map-hue.png" />
+    <Content Include="dist\map-saturation-overlay.png" />
+    <Content Include="dist\map-saturation.png" />
+    <Content Include="dist\multi-arrow.gif" />
+    <Content Include="dist\pin.png" />
+    <Content Include="dist\pinned.png" />
+    <Content Include="dist\plus.png" />
+    <Content Include="dist\pointer.png" />
+    <Content Include="dist\polyfills.js" />
+    <Content Include="dist\red_arrow_down.png" />
+    <Content Include="dist\red_arrow_up.png" />
+    <Content Include="dist\roundbg_check_black.png" />
+    <Content Include="dist\roundbg_check_indeterminate.png" />
+    <Content Include="dist\roundbg_classic_normal.png" />
+    <Content Include="dist\runtime.js" />
+    <Content Include="dist\scripts.js" />
+    <Content Include="dist\search.png" />
+    <Content Include="dist\sortascbutton.png" />
+    <Content Include="dist\sortdescbutton.png" />
+    <Content Include="dist\src-app-dashboard-dashboard-module.js" />
+    <Content Include="dist\src-app-forgotPassword-forgotPassword-module.js" />
+    <Content Include="dist\src-app-login-login-module.js" />
+    <Content Include="dist\src-app-resetPassword-resetPassword-module.js" />
+    <Content Include="dist\src-app-ticketViewer-createTicket-createTicket-module.js" />
+    <Content Include="dist\src-app-ticketViewer-crudOpsTicket-crudOpsTicket-module.js" />
+    <Content Include="dist\src-app-ticketViewer-ticketViewer-module.js" />
+    <Content Include="dist\star.png" />
+    <Content Include="dist\star_disabled.png" />
+    <Content Include="dist\star_hover.png" />
+    <Content Include="dist\stripes.png" />
+    <Content Include="dist\styles.js" />
+    <Content Include="dist\success.png" />
+    <Content Include="dist\themify.svg" />
+    <Content Include="dist\time.png" />
+    <Content Include="dist\vendor.js" />
+    <Content Include="dist\warning.png" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <TypeScriptCompile Include="ClientApp\e2e\src\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="ClientApp\e2e\src\app.po.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\admin.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\admin.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\admin.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\admin.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\employeeMaster.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\employeeMaster.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\employeeMaster.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\manage\duplicateRegionValidation.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\roleMaster\roleMaster.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\roleMaster\roleMaster.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\roleMaster\roleMaster.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\roleMaster\roleMaster.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.commonFunctionality.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.constants.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.headerTokenInterceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.routes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\CMSHttpInterceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\editemp\editemp.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\externalLayout\externalLayout.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\externalLayout\externalLayout.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\GlobalShareCode.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\mainLayout\mainLayout.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\mainLayout\mainLayout.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\picklist\picklist.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\picklist\picklist.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\resetPassword\resetPassword.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\resetPassword\resetPassword.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\resetPassword\resetPassword.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\resetPassword\resetPassword.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\resetPassword\resetPassword.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\resetPassword\resetPassword.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\scroll\scroll.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\AutoLogoutComponent.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\AutoLogoutService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\DataService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\accordion\accordion.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\accordion\accordionanchor.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\accordion\accordionlink.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\accordion\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\breadcrumbs\breadcrumbs.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\card\card-animation.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\card\card-refresh.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\card\card-toggle.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\card\card.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\components\linkView.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\components\LinkViewRef.Component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\directives\equalValidator.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\directives\numberOnly.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\directives\slimscroll.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\directives\UniqueCodeValidator.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\elements\animation.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\elements\parent-remove.directive.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\enums\globalEnums.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\menu-items\menu-items.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\model\BaseResponseModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\model\Company.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\model\Credential.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\model\DepositTransactionModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\model\EmployeeMaster.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\model\TransactionModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\pipes\CountdownPipe.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\Security\auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\shared.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\smartTableExtention\CmsSourceDataSource.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\smartTableExtention\emptyEditor.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\smartTableExtention\helpers.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\smartTableExtention\server-source.config.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\title\title.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\showemployee\showemployee.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\spinner\spinkits.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\spinner\spinner.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\spinner\spinner.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\commentsComponent\commentsComponent.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\commentsComponent\commentsComponent.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\createTicket\createTicket.validator.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\crudOpsTicket\crudOpsTicket.validator.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.routing.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="ClientApp\src\environments\environment.ts" />
+    <TypeScriptCompile Include="ClientApp\src\main.ts" />
+    <TypeScriptCompile Include="ClientApp\src\polyfills.ts" />
+    <TypeScriptCompile Include="ClientApp\src\test.ts" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ClientApp\e2e\tsconfig.e2e.json" />
+    <Content Include="ClientApp\src\app\shared\elements\animation.js.map" />
+    <Content Include="ClientApp\src\app\shared\elements\parent-remove.directive.js.map" />
+    <Content Include="ClientApp\src\assets\.gitkeep" />
+    <Content Include="ClientApp\src\browserslist" />
+    <Content Include="ClientApp\src\tsconfig.app.json" />
+    <Content Include="ClientApp\src\tsconfig.spec.json" />
+    <Content Include="ClientApp\src\tslint.json" />
+    <Content Include="assets\icon\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\icon\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\icon\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\icon\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\icon\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="assets\icon\font-awesome\less\animated.less" />
+    <Content Include="assets\icon\font-awesome\less\bordered-pulled.less" />
+    <Content Include="assets\icon\font-awesome\less\core.less" />
+    <Content Include="assets\icon\font-awesome\less\fixed-width.less" />
+    <Content Include="assets\icon\font-awesome\less\font-awesome.less" />
+    <Content Include="assets\icon\font-awesome\less\icons.less" />
+    <Content Include="assets\icon\font-awesome\less\larger.less" />
+    <Content Include="assets\icon\font-awesome\less\list.less" />
+    <Content Include="assets\icon\font-awesome\less\mixins.less" />
+    <Content Include="assets\icon\font-awesome\less\path.less" />
+    <Content Include="assets\icon\font-awesome\less\rotated-flipped.less" />
+    <Content Include="assets\icon\font-awesome\less\screen-reader.less" />
+    <Content Include="assets\icon\font-awesome\less\stacked.less" />
+    <Content Include="assets\icon\font-awesome\less\variables.less" />
+    <Content Include="assets\icon\font-awesome\scss\font-awesome.css.map" />
+    <Content Include="assets\icon\font-awesome\scss\font-awesome.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_animated.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_core.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_icons.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_larger.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_list.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_mixins.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_path.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_stacked.scss" />
+    <Content Include="assets\icon\font-awesome\scss\_variables.scss" />
+    <Content Include="assets\icon\ico-fonts\fonts\icofont.eot" />
+    <Content Include="assets\icon\ico-fonts\fonts\icofont.ttf" />
+    <Content Include="assets\icon\ico-fonts\fonts\icofont.woff" />
+    <Content Include="assets\icon\icofont\fonts\icofont.eot" />
+    <Content Include="assets\icon\icofont\fonts\icofont.ttf" />
+    <Content Include="assets\icon\icofont\fonts\icofont.woff" />
+    <Content Include="ClientApp\.editorconfig" />
+    <Content Include="ClientApp\.gitignore" />
+    <Content Include="ClientApp\angular.json" />
+    <Content Include="ClientApp\package.json" />
+    <Content Include="ClientApp\README.md" />
+    <Content Include="ClientApp\tsconfig.json" />
+    <Content Include="ClientApp\tslint.json" />
+    <Content Include="dist\common.js.map" />
+    <Content Include="dist\icomoon.eot" />
+    <Content Include="dist\icomoon.ttf" />
+    <Content Include="dist\icomoon.woff" />
+    <Content Include="dist\main.js.map" />
+    <Content Include="dist\polyfills.js.map" />
+    <Content Include="dist\runtime.js.map" />
+    <Content Include="dist\scripts.js.map" />
+    <Content Include="dist\src-app-dashboard-dashboard-module.js.map" />
+    <Content Include="dist\src-app-forgotPassword-forgotPassword-module.js.map" />
+    <Content Include="dist\src-app-login-login-module.js.map" />
+    <Content Include="dist\src-app-resetPassword-resetPassword-module.js.map" />
+    <Content Include="dist\styles.js.map" />
+    <Content Include="dist\themify.eot" />
+    <Content Include="dist\themify.ttf" />
+    <Content Include="dist\themify.woff" />
+    <Content Include="dist\vendor.js.map" />
+    <Content Include="dist\src-app-ticketViewer-createTicket-createTicket-module.js.map" />
+    <Content Include="dist\src-app-ticketViewer-ticketViewer-module.js.map" />
+    <Content Include="dist\src-app-ticketViewer-crudOpsTicket-crudOpsTicket-module.js.map" />
+    <Content Include="dist\default~src-app-ticketViewer-createTicket-createTicket-module~src-app-ticketViewer-crudOpsTicket-cru~e0d58778.js.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Security.cs" />
+    <Compile Include="App_Start\TokenManagement.cs" />
+    <Compile Include="App_Start\UserData.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TicketViewerController.cs" />
+    <Compile Include="CustomFilters\CustomExceptionAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\CommonConstant.cs" />
+    <Compile Include="Utility\CommonUtility.cs" />
+    <Compile Include="Utility\ConnectToSharedFolder.cs" />
+    <Compile Include="Utility\UserPrincipalExtended.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_appPlaceHolder.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\TicketViewer\Index.cshtml" />
+    <Content Include="Views\TicketViewer\CreateTicket.cshtml" />
+    <Content Include="Views\TicketViewer\TicketSummary.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Models\" />
+    <Folder Include="Template\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMS_DTO\CMS_DTO.csproj">
+      <Project>{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16}</Project>
+      <Name>CMS_DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>14600</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:14600/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

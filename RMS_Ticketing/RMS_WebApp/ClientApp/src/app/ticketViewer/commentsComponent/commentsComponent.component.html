@@ -1,0 +1,52 @@
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="col-sm-12">
+            <div class="icofont-2x" style="color:dodgerblue">Comments</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="col-sm-12">
+            <a href="javascript:void(0);" (click)="onCloseClickEvent($event)" *ngIf="showClose" >
+              <i class="icofont icofont-close icofont-2x float-right icon_color_close comment_hover">
+                <span class="close_comment_text">Close Comments</span>
+              </i>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12" >
+
+
+          <kendo-chat class="float-right" [messages]="feed | async"
+                      [user]="user"
+                      (sendMessage)="sendMessage($event)">
+          </kendo-chat>
+
+
+          <!--<mat-card>
+    <div *ngFor="let message of messages | async">
+
+      <div class="message">
+        {{message.content}}
+      </div>
+
+    </div>
+
+  </mat-card>
+  <textarea [(ngModel)]="formValue" (keydown.tab)="sendMessage()" type="text" placeholder="Type your Comments"></textarea><br />
+  <button (click)="sendMessage()">Send</button>-->
+        </div>
+        </div>
+      </div>
+    </div>
+</div>

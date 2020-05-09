@@ -1,0 +1,180 @@
+<app-card [title]="'Ticket Viewer'" [blockClass]="'tran-data'" [showRightSection]="'false'"
+          [showBack]="mainGridShow" [showDownload]="showDownload" (onDownload)="downloadFile();"
+          [cardToggle]="cardToggleGrid">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form novalidate #f="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+
+          <div class="col-lg-2">
+            <label class="col-lg-12 col-form-label">MSP</label>
+            <input type="text" class="form-control withIcon textboxheight" placeholder="MSP"
+                   name="msp"
+                   [(ngModel)]="model.MSP"
+                   #MSP="ngModel" />
+          </div>
+
+          <div class="col-lg-2">
+            <label class="col-lg-12 col-form-label">Batch Id</label>
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Batch ID"
+                   name="batchId"
+                   [(ngModel)]="model.BatchID"
+                   #BatchID="ngModel" />
+          </div>
+
+          <div class="col-lg-2">
+            <label class="col-lg-12 col-form-label">Ticket Id</label>
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Ticket ID"
+                   name="ticketId"
+                   [(ngModel)]="model.TicketID"
+                   #TicketID="ngModel" />
+          </div>
+
+          <div class="col-lg-2">
+            <label class="col-lg-12 col-form-label">Atm ID</label>
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Atm ID"
+                   name="AtmID"
+                   [(ngModel)]="model.AtmID"
+                   #AtmID="ngModel" />
+          </div>
+
+          <div class="col-lg-2">
+            <label class="col-lg-12 col-form-label">Date Range</label>
+            <input class="form-control withIcon textboxheight" autocomplete="off" placeholder="Date Range"
+                   bsDaterangepicker [bsValue]="bsInlineRangeValue"
+                   [bsConfig]="{dateInputFormat: 'D-MMM-YYYY'}"
+                   [maxDate]="maxDate"
+                   [(ngModel)]="model.Date"
+                   name="Date"
+                   #Date="ngModel" />
+          </div>
+
+
+        </div>
+
+
+
+        <div class="row space">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-6">
+                <button type="submit" class="btn btn-primary float-right resetbtn btntype">Submit</button>
+              </div>
+              <div class="col-sm-6">
+                <button class="btn btn-inverse float-left resetbtn btntype" (click)="resetForm()">Reset</button>
+              </div>
+            </div>
+
+          </div>
+          <!--<div class="col-sm-12">
+            <div class="form-group row">
+
+              <div class="col-sm-12 button-page">
+                <button class="btn btn-inverse float-left" (click)="resetForm()">Reset</button>
+
+
+              </div>
+            </div>
+          </div>-->
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <ng-sidebar-container style="height: 110vh">
+
+    <ng-sidebar [(opened)]="_opened" position="right" mode="push">
+      <div class="col-sm-12 float-right">
+        <CommentsComponent [commentTicketID]="requestTicketId" *ngIf="childComponentShow" [showClose]="'true'" (onClose)="closeComments()">
+
+        </CommentsComponent>
+      </div>
+
+    </ng-sidebar>
+
+
+
+    <div class="row" ng-sidebar-content>
+      <div class="col-sm-12 ">
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="col-sm-12">
+                  <div class="icofont-2x" style="color:dodgerblue">Ticket Details</div>
+                </div>
+              </div>
+              <div class="col-sm-6" [hidden]="hidefromLocation">
+                <div class="col-sm-12">
+                  <a href="javascript:void(0);" (click)="addTicket($event)">
+                    <i class="icofont icofont-contact-add float-right icofont-3x icon_color add_hover">
+                      <span class="add_text">Add Ticket</span>
+                    </i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12">
+                <jqxGrid #gridReference
+                         (onRowexpand)="Rowexpand($event)"
+                         (onRowcollapse)="Rowcollapse($event)"
+                         (onPagechanged)="onPageChanged($event)"
+                         (onCellselect)="myGridOnCellSelect($event)"
+                         [sortable]="false"
+                         [width]='getWidth()'
+                         [height]='620'
+                         [source]='dataAdapter'
+                         [theme]="'energyblue'"
+                         [filterable]='false'
+                         [pageable]='true'
+                         [pagermode]="'simple'"
+                         [virtualmode]='true'
+                         [rendergridrows]="rendergridrows"
+                         [rowsheight]="55"
+                         [initrowdetails]="initRowDetails"
+                         [rowdetailstemplate]="rowdetailstemplate"
+                         [editable]='false'
+                         [columns]='columns'
+                         [selectionmode]='"singlecell"'
+                         [ready]="ready"
+                         [columnsmenu]='false'
+                         [updatefilterconditions]="updatefilterconditions"
+                         [showheader]="false">
+                </jqxGrid>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </ng-sidebar-container>
+
+
+  </app-card>
+
+
+
+<form style="display:none;" name="download" id="downloadExportTickets" target="_blank" action="{{downloadUrl}}" method="post">
+  <ng-container *ngFor="let inputlist of filterDataExport; let a = index">
+    <ng-container *ngFor="let input of inputlist; let i = index">
+      <ng-container *ngFor="let filter of input.filters; let j = index">
+        <input name="filterGroups[{{i}}][filters][{{j}}][label]" [value]="filter.label" />
+        <input name="filterGroups[{{i}}][filters][{{j}}][value]" [value]="filter.value" />
+        <input name="filterGroups[{{i}}][filters][{{j}}][condition]" [value]="filter.condition" />
+        <input name="filterGroups[{{i}}][filters][{{j}}][operator]" [value]="filter.operator" />
+        <input name="filterGroups[{{i}}][filters][{{j}}][field]" [value]="filter.field" />
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</form>

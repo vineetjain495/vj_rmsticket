@@ -1,0 +1,39 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ClientApp</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <link href="@Url.Content("~/assets/icon/icofont/css/icofont.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/icon/font-awesome/css/font-awesome.min.css")" rel="stylesheet" />
+
+
+
+    <style type="text/css">
+        html, body {
+            min-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    @RenderBody()
+    <link href="@Url.Content("~/assets/styles/styles.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/styles/custom.css")" rel="stylesheet" />
+    <script>
+        var serverBaseUrl = '@Url.Content("~/")';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/dist/runtime.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/dist/polyfills.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/dist/styles.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/dist/vendor.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/dist/main.js")"></script>
+</body>
+</html>

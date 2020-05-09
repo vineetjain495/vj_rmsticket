@@ -1,0 +1,875 @@
+<app-card [title]="'Ticket Summary'" [blockClass]="'tran-data'"  [showRightSection]="'false'"  [cardToggle]="cardToggleGrid" [showExternalUpload]="'true'"
+          (onExternalUpload)="toggle()">
+
+  <ng-sidebar-container style="height: 200vh">
+
+    <ng-sidebar [(opened)]="_opened" position="right" mode="push">
+      <div class="col-sm-12 float-right">
+        <CommentsComponent [commentTicketID]="viewTicketId" *ngIf="childComponentShow" [showClose]="'true'" (onClose)="closeComments()">
+
+        </CommentsComponent>
+      </div>
+    </ng-sidebar>
+
+
+
+    <div ng-sidebar-content>
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="col-sm-12">
+                  <a class="icofont-2x" style="color:dodgerblue"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form name="form" [formGroup]="ticketSummaryForm" novalidate (ngSubmit)="onSubmit()">
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+
+                <!--batchID-->
+                <div class="col-lg-3">
+                  <label class="col-lg-12 col-form-label">Batch ID</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="batchID"
+                         id="batchID"
+                         [(ngModel)]="model.BatchID" />
+                </div>
+
+                <!--ticketID-->
+                <div class="col-lg-3">
+                  <label class="col-lg-12 col-form-label">Ticket Id</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="ticketID"
+                         id="ticketID"
+                         [(ngModel)]="model.TicketID" />
+                </div>
+
+                <!--oldTicketID-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Old Ticket ID</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="oldTicketID"
+                         id="oldTicketID"
+                         [(ngModel)]="model.OldTicketID" />
+                </div>
+
+                <!--queryType-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Query Type</label>
+                  <ng-select class="textboxheight" [items]="queryTypeOptions"
+                             formControlName="queryType"
+                             id="queryType"
+                             [(ngModel)]="model.QueryType"
+                             (change)="selectionChangedQT($event)">
+                  </ng-select>
+                </div>
+
+                <!--MSP-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData">
+                  <label class="col-sm-12 col-form-label">MSP</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="msp"
+                         id="msp"
+                         [(ngModel)]="model.MSP" />
+                </div>
+
+                <!--ATMID-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">ATM ID</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="atmID"
+                         id="atmID"
+                         [(ngModel)]="model.ATMID" />
+                </div>
+
+                <!--ATMRemarks-->
+                <div class="col-sm-3" [hidden]="hindATMStatus">
+                  <label class="col-sm-12 col-form-label">ATM Remark</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="atmStatus"
+                         id="atmStatus"
+                         [(ngModel)]="model.ATMStatus" />
+                </div>
+
+                <!--ATM TYPE-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData">
+                  <label class="col-sm-12 col-form-label">ATM Type</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="atmType"
+                         id="atmType"
+                         [(ngModel)]="model.ATMType" />
+                </div>
+
+                <!--queryCategory-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Query Category</label>
+                  <ng-select class="textboxheight" [items]="queryCategoryOptions"
+                             formControlName="queryCategory"
+                             id="queryCategory"
+                             [(ngModel)]="model.QueryCategory"
+                             (change)="selectionChangedQC($event)">
+                  </ng-select>
+                </div>
+
+                <!--Bank-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData">
+                  <label class="col-sm-12 col-form-label">Bank</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="bank"
+                         id="bank"
+                         [(ngModel)]="model.Bank" />
+                </div>
+
+                <!--Transaction Date-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Transaction Date</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="incidentDate"
+                         id="incidentDate"
+                         [(ngModel)]="model.IncidentDate" />
+                </div>
+
+                <!--Transaction Time-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Transaction Time</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="transactionTime"
+                         id="transactionTime"
+                         [(ngModel)]="model.TransactionTime" />
+                </div>
+
+                <!--Dispute Amount-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Disputed Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="disputedAmount"
+                         id="disputedAmount"
+                         [(ngModel)]="model.DisputedAmount" />
+                </div>
+
+                <!--Transaction Amount-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Transaction Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="transactionAmount"
+                         id="transactionAmount"
+                         [(ngModel)]="model.TransAmount" />
+                </div>
+
+                <!--Transaction Number-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Transaction Number</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="transactionNo"
+                         id="transactionNo"
+                         [(ngModel)]="model.TransactionNo" />
+                </div>
+
+                <!--Reference Number-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Reference Number</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="referenceNo"
+                         id="referenceNo"
+                         [(ngModel)]="model.ReferenceNo" />
+                </div>
+
+                <!--Account Number-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Account Number</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="accountNumber"
+                         id="accountNumber"
+                         [(ngModel)]="model.AccountNo" />
+                </div>
+
+                <!--Card NUmber-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Card Number</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="cardNumber"
+                         id="cardNumber"
+                         [(ngModel)]="model.CardNo" />
+                </div>
+
+                <!--Card Exception-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Card Exception</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="cardException"
+                         id="cardException"
+                         [(ngModel)]="model.CardException" />
+                </div>
+
+                <!--Atm Exception-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">ATM Exception</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="atmException"
+                         id="atmException"
+                         [(ngModel)]="model.AtmException" />
+                </div>
+
+                <!--RouteException-->
+                <div class="col-sm-3" [hidden]="hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Route Exception</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="routeException"
+                         id="routeException"
+                         [(ngModel)]="model.RouteException" />
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+
+                <!--Zone-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Zone</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="zone"
+                         id="zone"
+                         [(ngModel)]="model.Zone" />
+                </div>
+
+                <!--Region-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Region</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="roCode"
+                         id="roCode"
+                         [(ngModel)]="model.RoCode" />
+                </div>
+
+                <!--Location-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Location</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="location"
+                         id="location"
+                         [(ngModel)]="model.Location" />
+                </div>
+
+                <!--Hub-Location-->
+                <div class="col-sm-3" [hidden]="hideATMMasterData || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Hub Location</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="hubLocation"
+                         id="hubLocation"
+                         [(ngModel)]="model.HubLocation" />
+                </div>
+
+                <!--Email RecivedDate-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation">
+                  <label class="col-sm-12 col-form-label">Email Received Date</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="emailDate"
+                         id="emailDate"
+                         [(ngModel)]="model.EmailDate" />
+                </div>
+
+                <!--Email RecivedTime-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation">
+                  <label class="col-sm-12 col-form-label">Email Time</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="emailTime"
+                         id="emailTime"
+                         [(ngModel)]="model.EmailTime" />
+                </div>
+
+                <!--Email Received From-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation">
+                  <label class="col-sm-12 col-form-label">Email Received From</label>
+                  <textarea placeholder="Email Subject" class="form-control withIcon" style="max-height:50px;min-height:50px"
+                            formControlName="emailId"
+                            id="emailId"
+                            [(ngModel)]="model.EmailID"></textarea>
+                </div>
+
+                <!--Email Subject-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation">
+                  <label class="col-sm-12 col-form-label">Email Subject</label>
+                  <textarea placeholder="Email Subject" class="form-control withIcon" style="max-height:50px;min-height:50px"
+                            formControlName="subject"
+                            id="subject"
+                            [(ngModel)]="model.Subject"></textarea>
+                </div>
+
+                <!--FromDate-->
+                <div class="col-sm-3" [hidden]="hideFromToDateFields">
+                  <label class="col-sm-12 col-form-label">From Date</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="fromDate"
+                         id="fromDate"
+                         [(ngModel)]="model.FromDate" />
+                </div>
+
+                <!--ToDate-->
+                <div class="col-sm-3" [hidden]="hideFromToDateFields">
+                  <label class="col-sm-12 col-form-label">To Date</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="toDate"
+                         id="toDate"
+                         [(ngModel)]="model.ToDate" />
+                </div>
+
+                <div class="col-sm-3" [hidden]="hiddenforAdmin || hideFromToDateFields">
+
+                </div>
+
+                <div class="col-sm-3" [hidden]="hiddenforAdmin || hideFromToDateFields">
+
+                </div>
+
+                <!--Error Code-->
+                <div class="col-sm-6">
+                  <label class="col-sm-12 col-form-label">Error Code<a style="color:red">*</a></label>
+                  <ng-select class="textboxheight" [items]="errorCodeOptions"
+                             formControlName="errorCode"
+                             id="errorCode"
+                             [(ngModel)]="model.ErrorCode"
+                             (change)="selectionChangedEC($event)">
+                  </ng-select>
+                </div>
+
+                <!--Error Type-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Error Type</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="errorType"
+                         id="errorType"
+                         [(ngModel)]="model.ErrorType" />
+                </div>
+
+                <!--Error Bucket-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Error Bucket</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="errorBucket"
+                         id="errorBucket"
+                         [(ngModel)]="model.ErrorBucket" />
+                </div>
+
+                <!--Customer Status-->
+                <div class="col-sm-3" [hidden]="hideCustomerDetails">
+                  <label class="col-sm-12 col-form-label">Customer Status</label>
+                  <ng-select class="textboxheight" [items]="customerActionsOptions"
+                             formControlName="customerActions"
+                             id="customerActions"
+                             [(ngModel)]="model.CustomerActions"
+                             (change)="selectionChangedCA($event)">
+                  </ng-select>
+                </div>
+
+                <!--Acceptance and Rejection Justification-->
+                <div class="col-sm-6" [hidden]="hideCustomerDetails">
+                  <label class="col-sm-12 col-form-label">Acceptance \ Rejection Justification<a style="color:red">*</a></label>
+                  <ng-select class="textboxheight" [items]="justificationOptions"
+                             formControlName="hoRejectionJustification"
+                             id="hoRejectionJustification"
+                             [(ngModel)]="model.Justification"
+                             (change)="selectionChangedHORJ($event)">
+                  </ng-select>
+                </div>
+
+                <!--BLANK-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation">
+                </div>
+
+                <!--CMS Status-->
+                <div class="col-sm-3" [hidden]="hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">CMS Status<a style="color:red">*</a></label>
+                  <ng-select class="textboxheight" [items]="cmsStatusOptions"
+                             formControlName="cmsStatus"
+                             id="cmsStatus"
+                             [(ngModel)]="model.CMSStatus"
+                             (change)="selectionChangedCMSStatus($event)">
+                  </ng-select>
+                </div>
+
+                <!--Territory Acceptance \ Rejection Justification-->
+                <div class="col-sm-6" [hidden]="hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Territory Acceptance \ Rejection Justification</label>
+                  <ng-select class="textboxheight" [items]="territoryRejectionJustificationOptions"
+                             formControlName="territoryRejectionJustification"
+                             id="territoryRejectionJustification"
+                             [(ngModel)]="model.TerritoryRejectionJustification"
+                             (change)="selectionChangedTRJ($event)">
+                  </ng-select>
+                </div>
+
+                <!--Target Amount-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation || targetAmountFieldHidden || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Target Amount<a style="color:red">*</a></label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="targetAmount"
+                         id="targetAmount"
+                         [(ngModel)]="model.TargetAmount"
+                         [ngClass]="{ 'form-control-danger': form.targetAmount.invalid && (form.targetAmount.dirty || form.targetAmount.touched), 'form-control-success': form.targetAmount.valid && form.targetAmount.dirty }" />
+                  <div *ngIf="form.targetAmount.invalid && (form.targetAmount.dirty || form.targetAmount.touched)" class="messages text-danger">
+                    <div *ngIf="form.targetAmount.errors.required">Target Amount is required</div>
+                    <div *ngIf="form.targetAmount.errors.pattern">Special Characters Or Characters Not Allowed</div>
+                  </div>
+                </div>
+
+                <!--Assigned Targeted Amount-->
+                <div class="col-sm-3">
+                  <label class="col-sm-12 col-form-label">Assigned Target Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="assignedtargetAmount"
+                         id="assignedtargetAmount"
+                         [(ngModel)]="model.AssignedTargetAmount" />
+                </div>
+
+                <!--Recovered Amount-->
+                <div class="col-sm-3" [hidden]="hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Recovered Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="recoveredAmount"
+                         id="recoveredAmount"
+                         [(ngModel)]="model.RecoveredAmount" />
+                </div>
+
+                <!--Pending Amount-->
+                <div class="col-sm-3" [hidden]="hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Pending Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="pendingAmount"
+                         id="pendingAmount"
+                         [(ngModel)]="model.PendingAmount" />
+                </div>
+
+                <!--HO Approved Recovery Amt-->
+                <div class="col-sm-3" [hidden]="hiddenForHO || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">HO Approved Recovery Amt</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="hOApprovedRecoveryAmount"
+                         id="hOApprovedRecoveryAmount"
+                         [(ngModel)]="model.HOApprovedRecoveryAmount" />
+                </div>
+
+                <!--WO Order-->
+                <div class="col-sm-3" [hidden]="hiddenForLocation || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">WO Order</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="woOrder"
+                         id="woOrder"
+                         [(ngModel)]="model.WoOrder" />
+                </div>
+
+                <!--HO Overage Date-->
+                <div class="col-sm-3" [hidden]="overageModel.OverageFlag || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">HO Overage Date</label>
+                  <input class="form-control withIcon textboxheight" autocomplete="off"
+                         bsDatepicker [bsValue]="bsInlineRangeValue"
+                         [bsConfig]="{dateInputFormat: 'D-MMM-YYYY'}"
+                         [maxDate]="maxDate"
+                         formControlName="overageDate"
+                         id="overageDate"
+                         [(ngModel)]="overageModel.OverageDate" />
+                </div>
+
+                <!--HO Overage Amount-->
+                <div class="col-sm-3" [hidden]="overageModel.OverageFlag || hiddenforMSP">
+                  <label class="col-sm-12 col-form-label">Ho Overage Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="overageAmount"
+                         id="overageAmount"
+                         [(ngModel)]="overageModel.OverageAmount"
+                         [ngClass]="{ 'form-control-danger': form.overageAmount.invalid && (form.overageAmount.dirty || form.overageAmount.touched), 'form-control-success': form.overageAmount.valid && form.overageAmount.dirty }" />
+                  <div *ngIf="form.overageAmount.invalid && (form.overageAmount.dirty || form.overageAmount.touched)" class="messages text-danger">
+                    <div *ngIf="form.overageAmount.errors.pattern">Special Characters Or Characters Not Allowed</div>
+                    <div *ngIf="form.overageAmount.errors.cannotBeZero">HO Overage Amount Cannot be 0</div>
+                    <div *ngIf="form.overageAmount.errors.cannotStartAsZero">HO Overage Amount Cannot start from 0</div>
+                  </div>
+                </div>
+
+                <!--Territory Overage Date-->
+                <div class="col-sm-3" [hidden]="hiddenforMSP || hideDepositfromLocation">
+                  <label class="col-sm-12 col-form-label">Territory Overage Date</label>
+                  <input class="form-control withIcon textboxheight" autocomplete="off"
+                         bsDatepicker [bsValue]="bsInlineRangeValue"
+                         [bsConfig]="{dateInputFormat: 'D-MMM-YYYY'}"
+                         [maxDate]="maxDate"
+                         formControlName="depositDate"
+                         id="depositDate"
+                         [(ngModel)]="model.DepositDate" />
+                </div>
+
+                <!--Territory Overage Amount-->
+                <div class="col-sm-3" [hidden]="hiddenforMSP || hideDepositfromLocation">
+                  <label class="col-sm-12 col-form-label">Territory Overage Amount</label>
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="depositAmount"
+                         id="depositAmount"
+                         [(ngModel)]="model.DepositAmount"
+                         [ngClass]="{ 'form-control-danger': form.depositAmount.invalid && (form.depositAmount.dirty || form.depositAmount.touched), 'form-control-success': form.depositAmount.valid && form.depositAmount.dirty }" />
+                  <div *ngIf="form.depositAmount.invalid && (form.depositAmount.dirty || form.depositAmount.touched)" class="messages text-danger">
+                    <div *ngIf="form.depositAmount.errors.cannotBeZero">Deposit Amount Cannot be 0</div>
+                    <div *ngIf="form.depositAmount.errors.cannotStartAsZero">Deposit Amount Cannot start from 0</div>
+                    <div *ngIf="form.depositAmount.errors.pattern">Special Characters Or Characters Not Allowed</div>
+                  </div>
+                  </div>
+
+                  <div class="col-sm-3" [hidden]="hiddenforMSP || hideDepositfromLocation">
+                    <label class="col-sm-12 col-form-label">Processing Remarks</label>
+                    <textarea class="form-control withIcon" style="max-height:50px;min-height:50px"
+                              formControlName="processingRemarks"
+                              id="processingRemarks"
+                              [(ngModel)]="model.ProcessingRemarks"></textarea>
+                  </div>
+
+                  <div class="col-sm-3" [hidden]="hiddenForLocation">
+                    <label class="col-sm-12 col-form-label">CMS Remarks</label>
+                    <textarea class="form-control withIcon" style="max-height:50px;min-height:50px"
+                              formControlName="cmsRemarks"
+                              id="cmsRemarks"
+                              [(ngModel)]="model.CMSRemarks"></textarea>
+                  </div>
+
+
+
+                  <!--1st Custodian-->
+                  <div class="col-sm-3" [hidden]="hiddenforMSP || hidefirstCustodian">
+                    <label class="col-sm-12 col-form-label">1<sup>st</sup> Employee Code (Custodian Name)</label>
+                    <span class="custodianClass"><b>{{model.FirstCustodianCode}}</b></span> (<span><b>{{model.FirstCustodianName}}</b></span>)
+                  </div>
+
+                  <!--2nd Custodian-->
+                  <div class="col-sm-3" [hidden]="hiddenforMSP || hideSecondCustodian">
+                    <label class="col-sm-12 col-form-label">2<sup>nd</sup> Employee Code (Custodian Name)</label>
+                    <span class="custodianClass"><b>{{model.SecondCustodianCode}}</b></span> (<span><b>{{model.SecondCustodianName}}</b></span>)
+                  </div>
+
+                </div>
+            </div>
+
+          </div>
+
+          <!--<div class="row" [hidden]="hiddenForLocation">
+            
+            <div class="col-sm-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Delay Deposit Issue</label>
+                <div class="col-sm-12">
+
+                  <ng-select class="textboxheight" [items]="DelayDepositIssueOptions"
+                             formControlName="delayDepositIssue"
+                             id="delayDepositIssue"
+                             [(ngModel)]="model.DelayDepositIssue"
+                             (change)="selectionChangedDDI($event)">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6" [hidden]="reassignReasonFieldHidden">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Reassign Reason</label>
+                <div class="col-sm-12">
+
+                  <ng-select class="textboxheight" [items]="reassigneReasonOptions"
+                             formControlName="reassignReason"
+                             id="reassignReason"
+                             [(ngModel)]="model.ReassignReason"
+                             (change)="selectionChangedRR($event)">
+                  </ng-select>
+
+
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>-->
+
+          <!--<div class="row">
+            <div class="col-sm-4" [hidden]="hiddenForLocation">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">WO Order</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="woOrder"
+                         id="woOrder"
+                         [(ngModel)]="model.WoOrder" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4" [hidden]="hiddenForHO">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Territory Deposit Date</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="territoryDepositDate"
+                         id="territoryDepositDate"
+                         [(ngModel)]="model.TerritoryDepositDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4" [hidden]="hiddenForHO">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Deposit amount</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="depositAmount"
+                         id="depositAmount"
+                         [(ngModel)]="model.DepositAmount" />
+                </div>
+              </div>
+            </div>
+          </div>-->
+
+          <!--<div class="row" [hidden]="hiddenForHO">
+            <div class="col-sm-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">Dispute Target Amount</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="disputetargetAmount"
+                         id="disputetargetAmount"
+                         [(ngModel)]="model.DisputeTargetAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">To Be Recovered Amount</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="toBeRecoveredAmount"
+                         id="toBeRecoveredAmount"
+                         [(ngModel)]="model.ToBeRecoveredAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">HO Approved Recovery Amt</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="hOApprovedRecoveryAmount"
+                         id="hOApprovedRecoveryAmount"
+                         [(ngModel)]="model.HOApprovedRecoveryAmount" />
+                </div>
+              </div>
+            </div>
+          </div>-->
+
+          <!--<div class="row" [hidden]="hiddenforMSP">
+            <div class="col-sm-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">1<sup>st</sup> Employee Code</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="firstCustodianCode"
+                         id="firstCustodianCode"
+                         [(ngModel)]="model.FirstCustodianCode" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">2<sup>nd</sup> Employee Code</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="secondCustodianCode"
+                         id="secondCustodianCode"
+                         [(ngModel)]="model.SecondCustodianCode" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">1<sup>st</sup> Employee Name</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="firstCustodianName"
+                         id="firstCustodianName"
+                         [(ngModel)]="model.FirstCustodianName" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group row">
+                <label class="col-sm-12 col-form-label">2<sup>nd</sup> Employee Name</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control withIcon textboxheight"
+                         formControlName="secondCustodianName"
+                         id="secondCustodianName"
+                         [(ngModel)]="model.SecondCustodianName" />
+                </div>
+              </div>
+            </div>
+
+          </div>-->
+
+          <div class="row">
+            <div class="col-sm-6" >
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label" [hidden]="hideAttachment"><a href="javascript:void(0);" (click)="showUploadFile()"><u>Attach New File</u></a></label>
+                <div class="col-sm-6">
+                  <input type="file" class="form-control withIcon textboxheight" style="padding-top: 1px;padding-left: 0px;" [hidden]="hideUploadFileFlag"
+                         id="upload"
+                         (change)="onFileChange($event)"
+                         multiple
+                         [ngClass]="{ 'form-control-danger': form.upload.dirty }" />
+                  <div *ngIf=" form.upload.dirty" class="messages text-danger">Upload File is required</div>
+                </div>
+              </div>  
+            </div>
+            <!--<div class="col-sm-6" [hidden]="hiddenRe_RunRuleEngine">
+                <label class="col-form-label float-right"><a href="javascript:void(0);" (click)="RunRuleEngine()"><u>Re-run RuleEngine</u></a></label>
+            </div>-->
+            </div>
+
+
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-12">
+              <div class="form-group row" style="overflow-x:auto;">
+                <div class="col-sm-12">
+                  <table>
+
+                    <tr>
+                      <th>File Name</th>
+                      <th [hidden]="hideFileEditing">MSP</th>
+                      <th [hidden]="hideFileEditing">HO</th>
+                      <th [hidden]="hideFileEditing">Location</th>
+                      <th></th>
+                    </tr>
+                    <tr *ngFor="let file of files; let i=index;">
+
+                      <td>
+                        <div class="left">
+                          <div [ngSwitch]="file.TypeofAttatchent">
+                            <div *ngSwitchCase="'EJ'">
+                              {{i+1}}. <a href="javascript:void(0);" (click)="onClickEvent(i)" style="color:green">{{file.FileName}} (EJ File)</a>
+                            </div>
+                            <div *ngSwitchCase="'Log'">
+                              {{i+1}}. <a href="javascript:void(0);" (click)="onClickEvent(i)" style="color:brown">{{file.FileName}} (Justification File)</a>
+                            </div>
+                            <div *ngSwitchCase="'EmailFile'">
+                              {{i+1}}. <a href="javascript:void(0);" (click)="onClickEvent(i)" style="color:orangered">{{file.FileName}} (Email File)</a>
+                            </div>
+                            <div *ngSwitchCase="'EmailResponse'">
+                              {{i+1}}. <a href="javascript:void(0);" (click)="onClickEvent(i)" style="color:darkblue">{{file.FileName}} (Email Response)</a>
+                            </div>
+                            <div *ngSwitchCase="'others'">
+                              {{i+1}}. <a href="javascript:void(0);" (click)="onClickEvent(i)" style="color:orchid">{{file.FileName}} (Other File )</a>
+                            </div>
+                            <div *ngSwitchCase="'added'">
+                              {{i+1}}. <a href="javascript:void(0);" (click)="onClickEvent(i)" style="color:orchid">{{file.FileName}} (New Added)</a>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                      <td [hidden]="hideFileEditing">
+                        <div class="center">
+                          <input type="checkbox"
+                                 formControlName="mspActive"
+                                 id="mspActive"
+                                 (change)="changeMSPCheckbox(file.FileName)"
+                                 [checked]="file.MSPActive" />
+                        </div>
+                      </td>
+                      <td [hidden]="hideFileEditing">
+                        <div class="center">
+                          <input type="checkbox"
+                                 formControlName="hoActive"
+                                 id="hoActive"
+                                 (change)="changeHOCheckbox(file.FileName)"
+                                 [checked]="file.HOActive" />
+                        </div>
+                      </td>
+                      <td [hidden]="hideFileEditing">
+                        <div class="center">
+                          <input type="checkbox"
+                                 formControlName="locationActive"
+                                 id="locationActive"
+                                 (change)="changeLocationCheckbox(file.FileName)"
+                                 [checked]="file.LocationActive" />
+                        </div>
+                      </td>
+                      <td>
+                        <div [ngSwitch]="file.TypeofAttatchent">
+                          <div *ngSwitchCase="'added'">
+                            <a href="javascript:void(0);" (click)="removeUploadFile(file.FileName)" style="color:red"><i class="icofont icofont-bin"></i></a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row" >
+            
+              <div class="col-sm-12" >
+                <div class="row" [hidden]="hideSubmitButton">
+                  <div class="col-sm-6" >
+                    <button type="submit" class="btn btn-primary float-right ">Submit</button>
+                    
+                  </div>
+                  <div class="col-sm-6">
+                    <button class="btn btn-primary float-left " (click)="back()">Back</button>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="col-sm-6" [hidden]="!hideSubmitButton">
+                    <button class="btn btn-primary float-right " (click)="back()">Back</button>
+                  </div>
+                </div>
+
+            
+            </div>
+
+            <!--<div class="col-sm-12">
+              <div class="form-group row">
+                <div class="col-sm-12" style="text-align:center">
+                  <button type="submit" class="btn btn-primary btntype">Submit</button>
+                </div>
+              </div>
+            </div>-->
+          </div>
+
+
+
+        </form>
+      </div>
+    </div>
+
+  </ng-sidebar-container>
+
+
+
+</app-card>
+
+
+<form style="display:none;" name="showFiles" id="showFilesTran" target="_blank" action={{showFilesURL}} method="post">
+  <input name="FilePath" />
+  <input name="TypeofAttatchent" />
+  <input name="FileName" />
+</form>
+

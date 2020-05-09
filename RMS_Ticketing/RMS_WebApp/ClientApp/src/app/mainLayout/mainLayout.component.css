@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+
+.header-navbar .navbar-wrapper .navbar-logo {
+  height: 3.5rem !important;
+  width: 109px !important;
+}
+
+aside.pcoded-slider.ng-sidebar {
+  top: 56px;
+}
+
+.slimscroll-wrapper, .scroll-window {
+    width: 100% !important;
+}
+
+.userlist-box.show {
+    display: -webkit-box;
+}
+
+.userlist-box.hide {
+    display: none;
+}
+
+.header-navbar {
+  min-height: 3em !important;
+}
+
+.pcoded[theme-layout="vertical"][vertical-nav-type="expanded"] .pcoded-navbar {
+  width: 125px !important;
+}
+
+.pcoded .pcoded-navbar .pcoded-item > li > a {
+  font-size: 12px !important;
+}
+
+.page-body {
+  margin-right: -24px;
+  margin-left: -45px;
+  margin-top: -14px;
+}
+
+.pcoded[theme-layout="vertical"] .pcoded-header .sidebar_toggle a {
+  top: 2px !important;
+}
+
+a {
+  font-size: 13px !important;
+}
+
+.btntype {
+  border-radius: 6px !important;
+  font-size: 9px !important;
+  height: 25px;
+  width: 50px;
+}
+

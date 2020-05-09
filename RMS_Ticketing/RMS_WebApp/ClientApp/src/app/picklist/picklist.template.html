@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <ng2-smart-table #grdTags [settings]="settings" [source]="source" (userRowSelect)="onRowSelect($event)"></ng2-smart-table>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="selectItem()"
+            [ngClass]="{ 'disabled': !selectedRowItem }"
+            [disabled]="!selectedRowItem">
+        Select
+    </button>
+</div>

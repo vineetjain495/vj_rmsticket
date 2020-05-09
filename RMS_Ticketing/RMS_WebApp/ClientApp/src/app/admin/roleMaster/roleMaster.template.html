@@ -1,0 +1,6 @@
+<app-card [title]="'Role Master'" [blockClass]="'tran-data'" [showRightSection]="'true'">
+    <ng2-smart-table [settings]="settings" [source]="source"
+                     (createConfirm)="onSaving($event);"
+                     (editConfirm)="onSaving($event);"
+                     (deleteConfirm)="onDeleting($event);"></ng2-smart-table>
+</app-card>

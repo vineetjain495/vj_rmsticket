@@ -1,0 +1,144 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">
+        &times;
+      </span>
+    </button>
+  </div>
+
+  <app-card [title]="'Ticket Details'" [blockClass]="'tran-data'" [showRightSection]="'false'">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="topTable topTable-table">
+            <tr>
+              <th class="topTable topTable-table-th">Batch ID</th>
+              <th class="topTable topTable-table-th">Ticket ID</th>
+              <th class="topTable topTable-table-th">Query Type</th>
+              <th class="topTable topTable-table-th">MSP</th>
+              <th class="topTable topTable-table-th">Created Date</th>
+              <th class="topTable topTable-table-th">Modified Date</th>
+            </tr>
+            <tr>
+              <td class="topTable topTable-table-td">{{model.BatchID}}</td>
+              <td class="topTable topTable-table-td">{{model.TicketID}}</td>
+              <td class="topTable topTable-table-td">{{model.QueryType}}</td>
+              <td class="topTable topTable-table-td">{{model.MSP}}</td>
+              <td class="topTable topTable-table-td">{{model.CreatedDate}}</td>
+              <td class="topTable topTable-table-td">{{model.ModifiedDate}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <table>
+            <tr class="table-space">
+              <td colspan="6"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="topTable topTable-table">
+            <tr>
+              <th class="topTable topTable-table-th">ATM ID</th>
+              <td class="topTable topTable-table-td">{{model.ATMID}}</td>
+              <th class="topTable topTable-table-th">ATM Type</th>
+              <td class="topTable topTable-table-td">{{model.ATMType}}</td>
+              <th class="topTable topTable-table-th">Bank</th>
+              <td class="topTable topTable-table-td">{{model.Bank}}</td>
+            </tr>
+            <tr>
+              <th class="topTable topTable-table-th">Created By</th>
+              <td class="topTable topTable-table-td">{{model.CreatedBy}}</td>
+              <th class="topTable topTable-table-th">Assigned To</th>
+              <td class="topTable topTable-table-td">{{model.AssignedTo}}</td>
+              <th class="topTable topTable-table-th">Location</th>
+              <td class="topTable topTable-table-td">{{model.Location}}</td>
+            </tr>
+            <tr>
+              <th class="topTable topTable-table-th">Transaction Amount</th>
+              <td class="topTable topTable-table-td">{{model.TransAmount}}</td>
+              <th class="topTable topTable-table-th">Transaction Number</th>
+              <td class="topTable topTable-table-td">{{model.TransactionNo}}</td>
+              <th class="topTable topTable-table-th">Account</th>
+              <td class="topTable topTable-table-td">{{model.Account}}</td>
+            </tr>
+            <tr>
+              <th class="topTable topTable-table-th">Disputed Amount</th>
+              <td class="topTable topTable-table-td">{{model.DisputedAmount}}</td>
+              <th class="topTable topTable-table-th">Status</th>
+              <td class="topTable topTable-table-td">
+                <i class="icofont icofont-square" style="font-size: 20px;color:limegreen" *ngIf="newStatus"></i>
+                <i class="icofont icofont-square" style="font-size: 20px;color:saddlebrown" *ngIf="pendingStatus"></i>
+                <i class="icofont icofont-square" style="font-size: 20px;color:red" *ngIf="closeStatus"></i>
+                &nbsp;{{model.Status}}
+              </td>
+              <th class="topTable topTable-table-th">Email ID</th>
+              <td class="topTable topTable-table-td">{{model.EmailID}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <table>
+            <tr class="table-space">
+              <td colspan="6"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <table class="thirdTable thirdTable-table">
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">Dispute Comment</th>
+              <td class="thirdTable third-table-td">{{model.DisputeComments}}</td>
+            </tr>
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">Justification</th>
+              <td class="thirdTable third-table-td">{{model.Justification}}</td>
+            </tr>
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">HO Comments</th>
+              <td class="thirdTable third-table-td">{{model.HOComments}}</td>
+            </tr>
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">Internal Action</th>
+              <td class="thirdTable third-table-td">{{model.InternalAction}}</td>
+            </tr>
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">Customer Comments</th>
+              <td class="thirdTable third-table-td">{{model.CustComments}}</td>
+            </tr>
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">Uploaded File</th>
+              <td class="thirdTable third-table-td"><a href="" target="_blank">{{model.UploadFile}}</a></td>
+            </tr>
+            <tr>
+              <th class="thirdTable topTable-table-th third-table-th">EJ File</th>
+              <td class="thirdTable third-table-td"><a href="" target="_blank">{{model.EJFilePath}}</a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+</app-card>
+
+  <!--<div class="modal-footer">
+    <button type="button" class="btn btn-primary " (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    <button type="submit" class="btn btn-primary mr-auto" value="Submit" (click)="Submit()" [disabled]="isSaveButtonDisable" [ngClass]="{ 'disabled': isSaveButtonDisable }">Submit</button>
+    <button type="reset" class="btn btn-secondary " value="Reset" (click)="Reset()">Reset</button>
+  </div>-->
+</div>
+

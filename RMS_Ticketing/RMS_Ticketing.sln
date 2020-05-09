@@ -1,0 +1,128 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS_Ticketing", "RMS_Ticketing\RMS_Ticketing.csproj", "{9B652D27-5E6E-461D-B932-768451B5EDE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E3C1E257-AACB-45C3-A1BD-862DBF63E657}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RMS_TicketingAPI", "RMS_TicketingAPI", "{67260373-7C7D-4D94-9F4E-96BCE6AAEB9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{4320451A-6AF9-46CB-A2DF-A22F17A11591}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RMS_WebApp", "RMS_WebApp", "{7121CB3C-1A41-4A13-8A2E-E4228B5481EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS_WebApp", "RMS_WebApp\RMS_WebApp.csproj", "{AE6A4662-6DBE-4347-89F0-56A67208F678}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DTO", "DTO", "{9CAD06BD-4A6D-42C6-B564-B4627322A405}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{F712AA2E-7E7F-49F6-BA2A-7E4284E4C018}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScript", "DatabaseScript", "{E9B006BB-CF48-43CE-8DBA-1673ADEB1136}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{1AAA6715-014A-44B2-8174-1F678EEA15C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RMSDatabaseScript", "RMSDatabaseScript", "{3E012CA7-0155-4D8A-9606-9BD45832D3ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMS_DatabaseScript", "RMS_DatabaseScript\RMS_DatabaseScript.csproj", "{8748EAD2-8F6E-475A-9150-1663BAD49307}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS_DTO", "CMS_DTO\CMS_DTO.csproj", "{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS_DAL", "CMS_DAL\CMS_DAL.csproj", "{70122568-E98D-4FEB-A654-4C7530992AEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS_Repository", "CMS_Repository\CMS_Repository.csproj", "{60EAB9D5-77F7-4F69-A817-DA16E72B8BF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Login", "Login", "{97FD4D6C-A6EB-4ACF-9378-21BB08DBF864}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginAPI", "LoginAPI\LoginAPI.csproj", "{53DF3E20-01E8-42C7-8E87-4EC651E823C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B652D27-5E6E-461D-B932-768451B5EDE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B652D27-5E6E-461D-B932-768451B5EDE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B652D27-5E6E-461D-B932-768451B5EDE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B652D27-5E6E-461D-B932-768451B5EDE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6A4662-6DBE-4347-89F0-56A67208F678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6A4662-6DBE-4347-89F0-56A67208F678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6A4662-6DBE-4347-89F0-56A67208F678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6A4662-6DBE-4347-89F0-56A67208F678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8748EAD2-8F6E-475A-9150-1663BAD49307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8748EAD2-8F6E-475A-9150-1663BAD49307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8748EAD2-8F6E-475A-9150-1663BAD49307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8748EAD2-8F6E-475A-9150-1663BAD49307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70122568-E98D-4FEB-A654-4C7530992AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70122568-E98D-4FEB-A654-4C7530992AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70122568-E98D-4FEB-A654-4C7530992AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70122568-E98D-4FEB-A654-4C7530992AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60EAB9D5-77F7-4F69-A817-DA16E72B8BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60EAB9D5-77F7-4F69-A817-DA16E72B8BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60EAB9D5-77F7-4F69-A817-DA16E72B8BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60EAB9D5-77F7-4F69-A817-DA16E72B8BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53DF3E20-01E8-42C7-8E87-4EC651E823C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53DF3E20-01E8-42C7-8E87-4EC651E823C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53DF3E20-01E8-42C7-8E87-4EC651E823C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53DF3E20-01E8-42C7-8E87-4EC651E823C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B652D27-5E6E-461D-B932-768451B5EDE0} = {67260373-7C7D-4D94-9F4E-96BCE6AAEB9D}
+		{67260373-7C7D-4D94-9F4E-96BCE6AAEB9D} = {E3C1E257-AACB-45C3-A1BD-862DBF63E657}
+		{7121CB3C-1A41-4A13-8A2E-E4228B5481EF} = {4320451A-6AF9-46CB-A2DF-A22F17A11591}
+		{AE6A4662-6DBE-4347-89F0-56A67208F678} = {7121CB3C-1A41-4A13-8A2E-E4228B5481EF}
+		{3E012CA7-0155-4D8A-9606-9BD45832D3ED} = {E9B006BB-CF48-43CE-8DBA-1673ADEB1136}
+		{8748EAD2-8F6E-475A-9150-1663BAD49307} = {3E012CA7-0155-4D8A-9606-9BD45832D3ED}
+		{F3B5EF1B-4743-4B2A-9BDF-6FA73B675E16} = {9CAD06BD-4A6D-42C6-B564-B4627322A405}
+		{70122568-E98D-4FEB-A654-4C7530992AEB} = {F712AA2E-7E7F-49F6-BA2A-7E4284E4C018}
+		{60EAB9D5-77F7-4F69-A817-DA16E72B8BF5} = {1AAA6715-014A-44B2-8174-1F678EEA15C4}
+		{97FD4D6C-A6EB-4ACF-9378-21BB08DBF864} = {E3C1E257-AACB-45C3-A1BD-862DBF63E657}
+		{53DF3E20-01E8-42C7-8E87-4EC651E823C7} = {97FD4D6C-A6EB-4ACF-9378-21BB08DBF864}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B20147F8-26EF-4AD2-B2DD-B130FDF2FA16}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://172.19.100.51:8080/tfs/cmsprojectcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CMS_DAL\\CMS_DAL.csproj
+		SccProjectTopLevelParentUniqueName1 = RMS_Ticketing.sln
+		SccProjectName1 = CMS_DAL
+		SccLocalPath1 = CMS_DAL
+		SccProjectUniqueName2 = CMS_DTO\\CMS_DTO.csproj
+		SccProjectTopLevelParentUniqueName2 = RMS_Ticketing.sln
+		SccProjectName2 = CMS_DTO
+		SccLocalPath2 = CMS_DTO
+		SccProjectUniqueName3 = CMS_Repository\\CMS_Repository.csproj
+		SccProjectTopLevelParentUniqueName3 = RMS_Ticketing.sln
+		SccProjectName3 = CMS_Repository
+		SccLocalPath3 = CMS_Repository
+		SccProjectUniqueName4 = LoginAPI\\LoginAPI.csproj
+		SccProjectTopLevelParentUniqueName4 = RMS_Ticketing.sln
+		SccProjectName4 = LoginAPI
+		SccLocalPath4 = LoginAPI
+		SccProjectUniqueName5 = RMS_DatabaseScript\\RMS_DatabaseScript.csproj
+		SccProjectTopLevelParentUniqueName5 = RMS_Ticketing.sln
+		SccProjectName5 = RMS_DatabaseScript
+		SccLocalPath5 = RMS_DatabaseScript
+		SccProjectUniqueName6 = RMS_Ticketing\\RMS_Ticketing.csproj
+		SccProjectTopLevelParentUniqueName6 = RMS_Ticketing.sln
+		SccProjectName6 = RMS_Ticketing
+		SccLocalPath6 = RMS_Ticketing
+		SccProjectUniqueName7 = RMS_WebApp\\RMS_WebApp.csproj
+		SccProjectTopLevelParentUniqueName7 = RMS_Ticketing.sln
+		SccProjectName7 = RMS_WebApp
+		SccLocalPath7 = RMS_WebApp
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+E:\RMS_Ticketing\RMS_Ticketing\RMS_DatabaseScript\bin\Debug\RMS_DatabaseScript.dll
+E:\RMS_Ticketing\RMS_Ticketing\RMS_DatabaseScript\bin\Debug\RMS_DatabaseScript.pdb
+E:\RMS_Ticketing\RMS_Ticketing\RMS_DatabaseScript\obj\Debug\RMS_DatabaseScript.csprojAssemblyReference.cache
+E:\RMS_Ticketing\RMS_Ticketing\RMS_DatabaseScript\obj\Debug\RMS_DatabaseScript.csproj.CoreCompileInputs.cache
+E:\RMS_Ticketing\RMS_Ticketing\RMS_DatabaseScript\obj\Debug\RMS_DatabaseScript.dll
+E:\RMS_Ticketing\RMS_Ticketing\RMS_DatabaseScript\obj\Debug\RMS_DatabaseScript.pdb

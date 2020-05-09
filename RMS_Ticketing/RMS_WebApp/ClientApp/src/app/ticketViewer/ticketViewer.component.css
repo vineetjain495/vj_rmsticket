@@ -1,0 +1,58 @@
+.topleft {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+
+.addButton {
+  font-size: 30px;
+  margin-left: 115px;
+  color: green;
+  
+}
+
+.icon_color{
+  color:green;
+}
+
+.k-chat {
+  height: 622px;
+}
+
+.add_hover {
+  position: relative;
+}
+
+.add_text {
+  visibility: hidden;
+  width: 68px;
+  background-color: #fff;
+  color: #007bff;
+  text-align: left;
+  font-size: 15px;
+  position: absolute;
+  top: 11px;
+  left: -70px;
+}
+
+.add_hover:hover .add_text {
+  visibility: visible;
+}
+
+.form-control {
+  font-size: 11px !important;
+}
+
+.textboxheight {
+  height: 28px;
+}
+
+.resetbtn {
+  width: 45px;
+}
+
+.space{
+  margin-top:7px;
+}

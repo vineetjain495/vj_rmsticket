@@ -1,0 +1,90 @@
+.k-input {
+  color:blue;
+}
+
+.k-message-box .k-button{
+  color:orangered;
+}
+
+.icon_color_close {
+  color: red;
+  padding-top: 9px;
+}
+/*.k-chat {
+  height: 622px;
+}*/
+.k-chat .k-message-group.k-alt {
+  font-size: 12px;
+}
+
+.comment_hover {
+  position: relative;
+}
+
+
+.close_comment_text {
+  visibility: hidden;
+  width: 103px;
+  background-color: #fff;
+  color: #007bff;
+  text-align: left;
+  font-size: 15px;
+  position: absolute;
+  top: -1px;
+  left: -45px;
+}
+
+.comment_hover:hover .close_comment_text {
+  visibility: visible;
+}
+
+.k-chat .k-message-group:not(.k-alt) .k-message-time {
+  margin-top: 41px;
+  color: blue;
+  left: 0;
+}
+
+.k-chat .k-message-list-content {
+  width: 337px;
+}
+
+
+.k-chat .k-message {
+  max-width: 96%;
+}
+
+.k-chat .k-alt .k-bubble {
+  border-color: #87ceeb;
+  color: black;
+  background-color: #87ceeb;
+}
+
+.k-chat .k-bubble {
+  border-color: #C0C0C0;
+  color: #656565;
+  background-color: #C0C0C0;
+}
+  /*.message {
+  border-radius: 50px;
+  margin: 0 15px 10px;
+  padding: 15px 20px;
+  position: relative;
+  font-weight: bold;
+}
+.message.to {
+    background-color: #2095FE;
+    color: #fff;
+    margin-left: 100px;
+    text-align: right;
+
+}
+.message.from {
+    background-color: #E5E4E9;
+    color: #363636;
+    margin-right: 100px;
+  }
+
+.message.to + .message.to,
+.message.from + .message.from {
+      margin-top: -10px;
+    }*/

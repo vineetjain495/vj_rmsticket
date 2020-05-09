@@ -1,0 +1,75 @@
+<!--bg-secondary-->
+<section class="login p-fixed d-flex text-center  common-img-bg">
+  <!-- starts -->
+  <!--<img src="http://www.cms.com/wp-content/themes/cms/images/cms_footer_logo.jpg" class="topleft" width="322" height="70">-->
+  <div class="auth-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="login-card card-body auth-body">
+          <form class="md-float-material" novalidate #f="ngForm" (ngSubmit)="onSubmit()">
+            <div class="text-center">
+
+            </div>
+            <div class="auth-box">
+
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <img src="{{logo}}" />
+                </div>
+              </div>
+
+                <div class="row m-b-20">
+                  <div class="col-md-12">
+                    <h3 class="text-center txt-primary">LogIn</h3>
+                  </div>
+
+                </div>
+
+                <div class="input-group">
+                  <input type="text" class="form-control" [(ngModel)]="model.UserID" name="userID"
+                         required
+                         #userID="ngModel"
+                         [ngClass]="{ 'form-control-danger': userID.invalid && userID.dirty, 'form-control-success': userID.valid && userID.dirty}"
+                         placeholder="Username">
+                  <span class="md-line"></span>
+                </div>
+                <div class="input-group">
+                  <input type="password" class="form-control" name="password"
+                         [(ngModel)]="model.Password"
+                         required
+                         #password="ngModel"
+                         [ngClass]="{ 'form-control-danger': password.invalid && password.dirty, 'form-control-success': password.valid && password.dirty }"
+                         placeholder="password">
+                  <span class="md-line"></span>
+                </div>
+                <div class="row m-t-25 text-left">
+                  <div class="col-sm-6 col-xs-12">
+                    <div class="checkbox-fade fade-in-primary">
+                      <label>
+                        <input type="checkbox" value="">
+                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                        <span class="text-inverse">Remember me</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-xs-12 forgot-phone text-right">
+                    <a [routerLink]="['/Login/ForgotPassword']" class="text-right f-w-600 text-inverse"> Forget Password?</a>
+                  </div>
+                </div>
+                <div class="row m-t-30">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                            [ngClass]="{ 'disabled': !f.form.valid }"
+                            [disabled]="!f.form.valid">
+                      LOGIN
+                    </button>
+                  </div>
+                </div>
+              </div>
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

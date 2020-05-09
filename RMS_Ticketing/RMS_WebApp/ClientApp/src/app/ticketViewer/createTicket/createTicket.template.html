@@ -1,0 +1,382 @@
+<app-card [title]="'Create Ticket'" [blockClass]="'tran-data'" [showBack]="true" [showRightSection]="'false'" (onBack)="back()" [cardToggle]="cardToggleGrid">
+  <form name="form" [formGroup]="createTicketForm" novalidate (ngSubmit)="onSubmit()">
+
+    <!--#queryType #queryCategory #emailDate-->
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Query Type<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <ng-select class="textboxheight" [items]="queryTypeOptions"
+                       formControlName="queryType"
+                       id="queryType"
+                       [(ngModel)]="model.QueryType"
+                       (change)="selectionChanged($event)">
+            </ng-select>
+            <div *ngIf="form.queryType.invalid && (form.queryType.dirty || form.queryType.touched)" class="messages text-danger">
+              <div *ngIf="form.queryType.errors.required">Query Type is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Query Category<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <ng-select class="textboxheight" [items]="queryCategoryOptions"
+                       formControlName="queryCategory" id="queryCategory"
+                       [(ngModel)]="model.QueryCategory">
+            </ng-select>
+            <div *ngIf="form.queryCategory.invalid && (form.queryCategory.dirty || form.queryCategory.touched)" class="messages text-danger">
+              <div *ngIf="form.queryCategory.errors.required">Query Category is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4" [hidden]="hideEmailDate">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Email Date<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input class="form-control textboxheight" placeholder="Email Date" autocomplete="off"
+                   bsDatepicker [(bsValue)]="emailDateValue"
+                   [maxDate]="maxDate"
+                   [bsConfig]="{dateInputFormat: 'D/MM/YYYY'}"
+                   formControlName="emailDateValidations"
+                   id="emailDateValidations"
+                   [(ngModel)]="model.EmailDate"
+                   (ngModelChange)="onEmailDatePickerChanged(showIncidentDate)"
+                   [ngClass]="{ 'form-control-danger': form.emailDateValidations.invalid && (form.emailDateValidations.dirty || form.emailDateValidations.touched), 'form-control-success': form.emailDateValidations.valid && form.emailDateValidations.dirty }" />
+
+            <div *ngIf="form.emailDateValidations.invalid && (form.emailDateValidations.dirty || form.emailDateValidations.touched)" class="messages text-danger">
+              <div *ngIf="form.emailDateValidations.errors.required">Email Date is required</div>
+            </div>
+            <a class="fieldActionIcon datePickerIconRightPos">
+              <i class="icofont icofont-ui-calendar"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4" [hidden]="hideDate">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Date</label>
+          <div class="col-sm-12">
+            <input class="form-control textboxheight" placeholder="Date" autocomplete="off"
+                   bsDatepicker [(bsValue)]="dateValue"
+                   [bsConfig]="{dateInputFormat: 'D/MM/YYYY'}"
+                   formControlName="dateValidations"
+                   id="dateValidations"
+                   [(ngModel)]="model.EmailDate"
+                    />
+            <!--<a class="fieldActionIcon datePickerIconRightPos">
+              <i class="icofont icofont-ui-calendar"></i>
+            </a>-->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--#incidentDate #disputeAmount #AtmID-->
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label ">Incident Date<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input class="form-control withIcon textboxheight" placeholder="Incident Date" autocomplete="off"
+                   bsDatepicker [(bsValue)]="incidentDateValue"
+                   [maxDate]="incidentMaxDate"
+                   [bsConfig]="{dateInputFormat: 'D/MM/YYYY'}"
+                   id="incidentDateValidation"
+                   formControlName="incidentDateValidation"
+                   [(ngModel)]="model.IncidentDate"
+                   [ngClass]="{ 'form-control-danger': form.incidentDateValidation.invalid && (form.incidentDateValidation.dirty || form.incidentDateValidation.touched), 'form-control-success':form.incidentDateValidation.valid && form.incidentDateValidation.dirty }" />
+            <div *ngIf="form.incidentDateValidation.invalid && (form.incidentDateValidation.dirty || form.incidentDateValidation.touched)" class="messages text-danger">Incident Date is required</div>
+            <a class="fieldActionIcon datePickerIconRightPos">
+              <i class="icofont icofont-ui-calendar"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Disputed Amount<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Disputed Amount"
+                   formControlName="disputedAmount"
+                   id="disputedAmount"
+                   [(ngModel)]="model.DisputedAmount"
+                   [ngClass]="{ 'form-control-danger': form.disputedAmount.invalid && (form.disputedAmount.dirty || form.disputedAmount.touched), 'form-control-success': form.disputedAmount.valid && form.disputedAmount.dirty }" />
+
+            <div *ngIf="form.disputedAmount.invalid && (form.disputedAmount.dirty || form.disputedAmount.touched)" class="messages text-danger">
+              <div *ngIf="form.disputedAmount.errors.required">Disputed Amount is required</div>
+              <div *ngIf="form.disputedAmount.errors.pattern">Special Characters Or Characters Not Allowed</div>
+              <div *ngIf="form.disputedAmount.errors.cannotBeZero">Dispute Amount Cannot be 0</div>
+              <div *ngIf="form.disputedAmount.errors.cannotStartAsZero">Dispute Amount Cannot start from 0</div>
+              <div *ngIf="form.disputedAmount.errors.multiplesOf10">Dispute Amount should be Multiples of 10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">ATM ID<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control  textboxheight" placeholder="ATM ID" (keydown.tab)="onAtmIdEntered($event)"
+                   formControlName="atmID"
+                   id="atmID"
+                   [(ngModel)]="model.ATMID"
+                   [ngClass]="{ 'form-control-danger': form.atmID.invalid && (form.atmID.dirty || form.atmID.touched), 'form-control-success': form.atmID.valid && form.atmID.dirty }" />
+            <div *ngIf="form.atmID.invalid && (form.atmID.dirty || form.atmID.touched)" class="messages text-danger">
+              <div *ngIf="form.atmID.errors.required">ATM ID is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--#bank #account #location-->
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Bank</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Bank" 
+                   formControlName="bank"
+                   id="bank"
+                   [(ngModel)]="model.Bank"
+                   [ngClass]="{ 'form-control-danger': form.atmID.invalid && (form.atmID.dirty || form.atmID.touched), 'form-control-success': form.atmID.valid && form.atmID.dirty }" />
+            <!--<div *ngIf="form.atmID.invalid && (form.atmID.dirty || form.atmID.touched)" class="messages text-danger">Bank is required</div>-->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Account</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Account"
+                   formControlName="account"
+                   id="account"
+                   [(ngModel)]="model.Account"
+                   [ngClass]="{ 'form-control-danger': form.atmID.invalid && (form.atmID.dirty || form.atmID.touched), 'form-control-success': form.atmID.valid && form.atmID.dirty }" />
+            <!--<div *ngIf="form.atmID.invalid && (form.atmID.dirty || form.atmID.touched)" class="messages text-danger">Account is required</div>-->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Location</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Location"
+                   [(ngModel)]="model.Location"
+                   formControlName="location"
+                   id="location"
+                   [ngClass]="{ 'form-control-danger': form.atmID.invalid && (form.atmID.dirty || form.atmID.touched), 'form-control-success': form.atmID.valid && form.atmID.dirty }" />
+            <!--<div *ngIf="form.atmID.invalid && (form.atmID.dirty || form.atmID.touched)" class="messages text-danger">Location is required</div>-->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--#transactionAmount #transactionNumber #cardNumber-->
+    <div class="row" [hidden]="hideCustomerShortagefields">
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Transaction Amount<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Transaction Amount"
+                   formControlName="transactionAmount"
+                   id="transactionAmount"
+                   [(ngModel)]="model.TransactionAmount"
+                   [ngClass]="{ 'form-control-danger': form.transactionAmount.invalid && (form.transactionAmount.dirty || form.transactionAmount.touched), 'form-control-success': form.transactionAmount.valid && form.transactionAmount.dirty }" />
+
+            <div *ngIf="form.transactionAmount.invalid && (form.transactionAmount.dirty || form.transactionAmount.touched)" class="messages text-danger">
+              <div *ngIf="form.transactionAmount.errors.required">Transaction Amount is required</div>
+              <div *ngIf="form.transactionAmount.errors.pattern">Special Characters Or Characters Not Allowed</div>
+              <div *ngIf="form.transactionAmount.errors.cannotBeZero">Transaction Amount Cannot be 0</div>
+              <div *ngIf="form.transactionAmount.errors.cannotStartAsZero">Transaction Amount Cannot start from 0</div>
+              <div *ngIf="form.transactionAmount.errors.transactionAmountValidation">Transaction Amount Cannot be Greater than Disputed Amount</div>
+              <div *ngIf="form.transactionAmount.errors.multiplesOf10">Transaction Amount should be Multiples of 10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Transaction Number<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Transaction Number"
+                   [(ngModel)]="model.TransactionNo"
+                   formControlName="transactionNo"
+                   id="transactionNo"
+                   [ngClass]="{ 'form-control-danger': form.transactionNo.invalid && (form.transactionNo.dirty || form.transactionNo.touched), 'form-control-success': form.transactionNo.valid && form.transactionNo.dirty }" />
+            <div *ngIf="form.transactionNo.invalid && (form.transactionNo.dirty || form.transactionNo.touched)" class="messages text-danger">
+              <div *ngIf="form.transactionNo.errors.required">Transaction Number is required</div>
+              <div *ngIf="form.transactionNo.errors.pattern">Special Characters Or Characters Not Allowed</div>
+              <div *ngIf="form.transactionNo.errors.minlength" class="messages text-danger">Minimum 4 Characters Allowed</div>
+              <div *ngIf="form.transactionNo.errors.maxlength" class="messages text-danger">Maximum 12 Characters Allowed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Card Number<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control withIcon textboxheight" placeholder="Card Number"
+                   formControlName="cardNo"
+                   id="cardNo"
+                   [(ngModel)]="model.CardNo"
+                   [ngClass]="{ 'form-control-danger': form.cardNo.invalid && (form.cardNo.dirty || form.cardNo.touched), 'form-control-success': form.cardNo.valid && form.cardNo.dirty }" />
+            <div *ngIf="form.cardNo.invalid &&  (form.cardNo.dirty || form.cardNo.touched)" class="messages text-danger">
+              <div *ngIf="form.cardNo.errors.required">Card Number is required</div>
+              <div *ngIf="form.cardNo.errors.minlength" class="messages text-danger">Minimum 16 Characters Allowed</div>
+              <div *ngIf="form.cardNo.errors.maxlength" class="messages text-danger">Maximum 19 Characters Allowed</div>
+              <div *ngIf="form.cardNo.errors.pattern" class="messages text-danger">Card Number Accepts Numerics and Character X</div>
+              <div *ngIf="form.cardNo.errors.CardNo" class="messages text-danger">Card Number Accepts 16 Or 19 Characters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--#fromDate #toDate-->
+    <div class="row" [hidden]="hideShortageQueryfield">
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label ">From Date</label>
+          <div class="col-sm-12">
+            <input class="form-control withIcon textboxheight" placeholder="From Date" autocomplete="off"
+                   bsDatepicker [bsValue]="bsInlineRangeValue"
+                   [bsConfig]="{dateInputFormat: 'D/MM/YYYY'}"
+                   formControlName="fromDateValidations"
+                   [minDate]="fromDateMinDate"
+                   id="fromDateValidations"
+                   [(ngModel)]="model.FromDate"
+                   (ngModelChange)="onFromDatePickerChanged(model.FromDate)"
+                   [ngClass]="{'form-control-success': form.fromDateValidations.valid && form.fromDateValidations.dirty}"/>
+            <a class="fieldActionIcon datePickerIconRightPos">
+              <i class="icofont icofont-ui-calendar"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+      <div class="form-group row" >
+        <label class="col-sm-12 col-form-label ">To Date</label>
+        <div class="col-sm-12">
+          <input class="form-control withIcon textboxheight" placeholder="To Date" autocomplete="off"
+                 id="toDateValidations"
+                 formControlName="toDateValidations"
+                 bsDatepicker [bsValue]="bsInlineRangeValue"
+                 [bsConfig]="{dateInputFormat: 'D/MM/YYYY'}"
+                 [(ngModel)]="model.ToDate"
+                 [minDate]="minDate"
+                 [ngClass]="{'form-control-success': form.toDateValidations.valid && form.toDateValidations.dirty }" />
+          <a class="fieldActionIcon datePickerIconRightPos">
+            <i class="icofont icofont-ui-calendar"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <!--#referenceNumber #fileUpload #accountNumber #disputeComments-->
+    <div class="row">
+
+      <div class="col-sm-4">
+      <div class="form-group row">
+        <label class="col-sm-12 col-form-label">Reference Number</label>
+        <div class="col-sm-12">
+          <input type="text" class="form-control withIcon textboxheight" placeholder="Reference Number"
+                 id="referenceNumber"
+                 formControlName="referenceNumber"
+                 [(ngModel)]="model.ReferenceNo"
+                 [ngClass]="{'form-control-danger': form.referenceNumber.errors,'form-control-success': form.referenceNumber.valid && form.referenceNumber.dirty }" />
+            <div *ngIf="form.referenceNumber.invalid && (form.referenceNumber.dirty || form.referenceNumber.touched)" class="messages text-danger">
+            <div *ngIf="form.referenceNumber.errors.pattern" class="messages text-danger">Reference Number Accepts Numerics and Character</div>
+          </div>
+          </div>
+        </div>
+      <div class="form-group row">
+        <label class="col-sm-12 col-form-label">Upload File<a style="color:red">*</a></label>
+        <div class="col-sm-12">
+          <input type="file" class="form-control withIcon textboxheight" style="padding-top: 1px;padding-left: 0px;"
+                 id="upload"
+                 formControlName="upload"
+                 [ngModel]="fileContent"
+                 (change)="onFileChange($event)"
+                 [ngClass]="{ 'form-control-danger': form.upload.invalid && (form.upload.dirty || form.upload.touched), 'form-control-success': form.upload.valid && form.upload.dirty }" />
+          <div *ngIf="form.upload.invalid && (form.upload.dirty || form.upload.touched)" class="messages text-danger">
+            <div *ngIf="form.upload.errors.required">Upload File is required</div>
+            <div *ngIf="form.upload.errors.requiredFileType">Only txt,doc,docx files are supported</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="col-sm-4" [hidden]="hideAccountNumber">
+      <div class="form-group row">
+        <label class="col-sm-12 col-form-label">Account Number</label>
+        <div class="col-sm-12">
+          <input type="text" class="form-control withIcon textboxheight" placeholder="Account Number"
+                 id="accountNo"
+                 formControlName="accountNo"
+                 [(ngModel)]="model.AccountNo"
+                 [ngClass]="{ 'form-control-danger':form.accountNo.errors ,'form-control-success': form.accountNo.valid && form.accountNo.dirty }" />
+          <div *ngIf="form.accountNo.invalid && (form.accountNo.dirty || form.accountNo.touched)" class="messages text-danger">
+            <div *ngIf="form.accountNo.errors.pattern" class="messages text-danger">Account Number Accepts Numerics Only</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="col-sm-4">
+      <div class="form-group row">
+        <label class="col-sm-12 col-form-label">Dispute Comments</label>
+        <div class="col-sm-12">
+          <textarea placeholder="Dispute Comments" class="form-control withIcon" style="max-height:117px;min-height:117px"
+                    id="disputeComments"
+                    formControlName="disputeComments"
+                    [(ngModel)]="model.DisputeComments"
+                    [ngClass]="{ 'form-control-success': form.disputeComments.valid && (form.disputeComments.dirty || form.disputeComments.touched) }"></textarea>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <!--#submitButton #resetButton-->
+    <div class="row">
+    <div class="col-sm-4">
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary float-left" [disabled]="!submitted">Submit</button>
+          <button type="reset" class="btn btn-primary float-right" (click)="Reset()">Reset</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </form>
+</app-card>

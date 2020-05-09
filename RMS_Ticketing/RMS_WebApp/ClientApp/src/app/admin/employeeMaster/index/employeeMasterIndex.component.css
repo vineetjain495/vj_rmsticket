@@ -1,0 +1,64 @@
+﻿:host /deep/ .tran-data.card-body {
+    overflow-x: auto;
+}
+
+:host /deep/ table {
+    display: table-caption !important;
+    border-collapse: inherit !important;
+    background-color: #fff;
+    box-shadow: 1px 1px 1px 1px #f3f3f3;
+    min-width: 700px !important;
+    border-top: 4px solid #07002A;
+    overflow-x: hidden;
+}
+
+    :host /deep/ table tr {
+        min-width: 1500px;
+    }
+
+:host /deep/ .page-body {
+    /*overflow-x: scroll;*/
+}
+
+:host /deep/ a {
+    color: #000 !important;
+    font-weight: 500;
+}
+
+:host /deep/ table tr {
+    box-shadow: 0px 1px 0px #eae9e9;
+}
+
+:host /deep/ table tbody {
+    box-shadow: 0px 0px 3px 0px #828181;
+}
+
+:host /deep/ table th {
+    font-size: 10px;
+}
+
+:host /deep/ h1 {
+    font-weight: 600;
+    color: #4a6076;
+    font-size: 20px;
+}
+
+:host /deep/ .page-link-prev {
+    font-size: 14px !important;
+}
+
+:host /deep/ .page-link-next {
+    font-size: 14px !important;
+}
+
+:host /deep/ .ng2-smart-filter[_ngcontent-c7] input, [_nghost-c7] .ng2-smart-filter[_ngcontent-c7] select {
+    width: 100%;
+    line-height: normal;
+    padding: .375em .75em;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+:host /deep/ .ng2-smart-action.ng2-smart-action-add-add {
+    display: none;
+}

@@ -1,0 +1,9 @@
+<app-card [title]="'Employee Master'" [blockClass]="'tran-data'" [showRightSection]="'true'">
+    <div class="col-sm-12 button-page text-left">
+
+        <button type="submit" class="btn btn-primary" (click)="AddData()">
+            Add
+        </button>
+    </div>
+    <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustom($event);"></ng2-smart-table>
+</app-card>

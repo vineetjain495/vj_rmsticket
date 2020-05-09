@@ -1,0 +1,48 @@
+p 
+{
+  font-family: Lato;
+}
+
+.topTable{
+  border: 1px solid #07002A;
+}
+
+.thirdTable {
+  border: 1px solid #07002A;
+}
+
+.topTable-table{
+  width: 100%
+}
+
+.thirdTable-table {
+  width: 100%
+}
+
+.topTable-table-th {
+  height: 20px;
+  text-align: center;
+  background-color: dodgerblue;
+  color:white
+}
+
+.topTable-table-td {
+  text-align: center;
+}
+
+th, td {
+  padding: 5px;
+}
+
+.table-space{
+  background-color:white;
+  height:3px;
+}
+
+.third-table-th {
+  width: 23%;
+}
+
+.third-table-td {
+  text-align: left;
+}
