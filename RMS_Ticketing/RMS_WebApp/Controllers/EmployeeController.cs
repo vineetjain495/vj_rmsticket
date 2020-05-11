@@ -97,12 +97,25 @@ namespace WebApp.Controllers
                 // Add an Accept header for JSON format.    
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 // List all Names.    
-                HttpResponseMessage response = client.PostAsJsonAsync(serviceUrl, employee_Role).Result;  // Blocking call!    
+                HttpResponseMessage response = client.PutAsJsonAsync(serviceUrl, employee_Role).Result;  // Blocking call!    
 
                 if (response.IsSuccessStatusCode)
                 {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    if (jsonString == "0")
+                    {
+                        //object a = j.Deserialize(jsonString, typeof(object));
+                        return Json(jsonString, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json("success");
+                    }
+                   
 
-                    return Json("success");
+                   
                 }
                 else
                 {
@@ -157,7 +170,41 @@ namespace WebApp.Controllers
             }
             return null;
         }
-        
+        [HttpGet]
+        public JsonResult LocatioDetail()
+        {
+            try
+            {
+
+                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+
+                var serviceUrl = "Api/Login/GetLocatioDetail";
+              
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:59390/");
+               
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                
+                HttpResponseMessage response = client.GetAsync(serviceUrl).Result;  // Blocking call!    
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    object a = j.Deserialize(jsonString, typeof(object));
+                    return Json(a, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
         [HttpGet]
         public ActionResult EmployeeDetailsById(string employeeId)
         {

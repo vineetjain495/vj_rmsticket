@@ -1,0 +1,49 @@
+.textboxheight {
+  height: 30px;
+}
+
+.topTable {
+  border: 1px solid #07002A;
+}
+
+.topTable-table {
+  width: 100%
+}
+
+.topTable-table-th {
+  height: 20px;
+  text-align: center;
+  background-color: dodgerblue;
+  color: white
+}
+
+.topTable-table-td {
+  text-align: center;
+}
+
+.ng-select.ng-invalid.ng-touched .ng-select-container {
+  border-color: #dc3545;
+}
+
+.ng-select.ng-valid.ng-touched .ng-select-container {
+  border-color: #2ecc71;
+  color: #2ecc71;
+}
+
+
+
+.ng-select .ng-select-container {
+  min-height: 29px;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 29px;
+}
+
+.ng-select .ng-select-container .ng-value-container {
+  padding-top: 4px;
+}
+
+.ng-select .ng-clear-wrapper {
+  padding-top: 4px;
+}

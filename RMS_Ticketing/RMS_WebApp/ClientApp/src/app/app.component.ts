@@ -28,4 +28,5 @@ export class AppComponent {
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
   }
+  
 }

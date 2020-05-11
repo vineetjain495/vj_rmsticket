@@ -1,0 +1,27 @@
+<app-card [title]="'Employee Viewer'" [blockClass]="'tran-data'" [showRightSection]="'false'"
+          [showBack]="mainGridShow" [showDownload]="showDownload" (onDownload)="downloadFile();"
+          [cardToggle]="cardToggleGrid">
+  <div class="container py-5" style="font-size: 13px; font-family: Verdana; ">
+    <button class="btn btn-primary" (click)="goToPage('/show_data');">Show</button>
+    <button class="btn btn-primary" (click)="goToPage('/Employee/CreateEmployee');">Create</button>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <jqxGrid jqx-grid-energyblue #myGrid [width]=getWidth()
+                     [source]="dataAdapter" [autoheight]="true"
+                     [altrows]="true" [columns]="columns"
+                     (onCellselect)="myGridOnCellSelect($event)"
+                     [filterable]="false" [columnsresize]="true"
+                     [sortable]="true" [autoshowloadelement]="true"
+                     [height]='620'
+                     [theme]="'energyblue'" [rowsheight]="75"
+                     [pageable]="true" [pagesizeoptions]="['10', '20', '30']"
+                     [selectionmode]="'multiplecellsadvanced'">
+            </jqxGrid>
+          </div>
+          </div>
+        </div>
+      </div>
+</app-card>

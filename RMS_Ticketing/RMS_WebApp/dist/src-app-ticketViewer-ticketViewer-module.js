@@ -60141,14 +60141,13 @@ var TicketViewerComponent = /** @class */ (function () {
         this.submitted = true;
         downaloadformSubmit.submit();
     };
-    var _a, _b, _c;
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('gridReference'),
-        __metadata("design:type", typeof (_a = typeof jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_2__["jqxGridComponent"] !== "undefined" && jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_2__["jqxGridComponent"]) === "function" ? _a : Object)
+        __metadata("design:type", jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_2__["jqxGridComponent"])
     ], TicketViewerComponent.prototype, "myGrid", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('commentgridReference'),
-        __metadata("design:type", typeof (_b = typeof jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_2__["jqxGridComponent"] !== "undefined" && jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_2__["jqxGridComponent"]) === "function" ? _b : Object)
+        __metadata("design:type", jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_2__["jqxGridComponent"])
     ], TicketViewerComponent.prototype, "commentmyGrid", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
@@ -60161,7 +60160,7 @@ var TicketViewerComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./ticketViewer.component.css */ "./src/app/ticketViewer/ticketViewer.component.css")],
             encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
         }),
-        __metadata("design:paramtypes", [typeof (_c = typeof _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"] !== "undefined" && _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]) === "function" ? _c : Object, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["BsModalService"], src_app_services_DataService__WEBPACK_IMPORTED_MODULE_6__["DataService"],
+        __metadata("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["BsModalService"], src_app_services_DataService__WEBPACK_IMPORTED_MODULE_6__["DataService"],
             _ticketViewer_service__WEBPACK_IMPORTED_MODULE_8__["TicketViewerServices"], _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_10__["CommonFunctionality"]])
     ], TicketViewerComponent);
     return TicketViewerComponent;

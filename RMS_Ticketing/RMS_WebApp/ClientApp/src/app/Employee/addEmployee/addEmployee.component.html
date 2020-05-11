@@ -1,0 +1,301 @@
+<app-card [title]="'Create Employee'" [blockClass]="'tran-data'" [showBack]="true" [showRightSection]="'false'" (onBack)="back()" [cardToggle]="cardToggleGrid">
+
+  <!------ Include the above in your HEAD tag ---------->
+  <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit()">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Employee Code<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" formControlName="Type_EmpCode" id="Type_EmpCode"
+                   class="form-control input-sm" placeholder="Code *" required>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Employee Name<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" formControlName="EmployeeName" id="EmployeeName"
+                   class="form-control input-sm" placeholder="Name *" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label">Mobile Number<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="number" formControlName="MobileNumber" id="MobileNumber"
+                   class="form-control input-sm" placeholder="Mobile *" required>
+            <div *ngIf="employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid">
+              <div class="alert-danger"> Enter valid Mobile Number </div>
+            </div>
+            <div *ngIf="!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched">
+              <div class="alert-danger"> Enter Mobile Number </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--#incidentDate #disputeAmount #AtmID-->
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label ">Email Address<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="email" formControlName="EmailId" id="EmailId"
+                   class="form-control input-sm" placeholder="Email *" required email>
+            <div *ngIf="!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched">
+              <div class="alert-danger"> Enter Email ID </div>
+            </div>
+            <div *ngIf="employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid">
+              <div class="alert-danger"> Enter valid email address </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label ">Select Rights</label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="RightsCode">
+
+              <option value="1">View</option>
+              <option value="2">Edit</option>
+              <option value="3">Both</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label ">Select Roles</label>
+          <div class="col-sm-12">
+            <select class="form-control" (change)="RolesInput($event)"
+                    formControlName="RoleCode">
+
+              <option value="1">ADMIN</option>
+              <option value="2">HO</option>
+              <option value="3">MSP</option>
+              <option value="4">Location</option>
+              <option value="5">HO_Manager</option>
+              <option value="6">Location_Manager</option>
+              <option value="7">MIS_User</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-sm-4">
+        <div class="form-group row" *ngIf="isLocationSelected">
+          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <ng-multiselect-dropdown name="region"
+                                     [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region"
+                                     [settings]="dropdownSettings2" (onDeSelect)="removeCountry($event)" (onSelect)="changeCountry($event)">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group row" *ngIf="isLocationSelected">
+          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
+                                     [placeholder]="'Select Location'" [data]="states2" formControlName="Location"
+                                     [settings]="dropdownSettings2" (onDeSelect)="removeState($event)" (onSelect)="changeState($event)">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group row" *ngIf="isLocationSelected">
+          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub"
+                                     [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub"
+                                     [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+            </ng-multiselect-dropdown>
+            <div *ngIf="isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched">
+              <div class="alert-danger"> Enter Hub Catogory </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <input type="submit" [disabled]="!employeeForm.valid" value="Add"
+                   class="btn btn-info btn-block">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</app-card>
+
+
+
+
+  <!--<div class="container">
+    <div class="row centered-form">
+      <div class="col-xs-12 col-sm-10 col-md-6 col-lg-offset-2 col-md-offset-3">
+        <button class="btn btn-primary" (click)="goToPage('/show_data');">Show</button>
+        <button class="btn btn-primary" (click)="goToPage('/create_element');">Create</button>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+          
+            <h2 class="text-center"> Add Employee Detail </h2>
+          </div>
+          <div class="panel-body">
+            <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit()">
+              <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold"
+                 Class="success">
+                {{massage}}
+              </p>
+              <span *ngIf="errorFound">
+                <span class="alert-danger"> {{massage}} </span>
+              </span>
+              <div class="form-group">
+                <input type="text" formControlName="EmployeeName" id="EmployeeName"
+                       class="form-control input-sm" placeholder="Name *" required>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input type="number" formControlName="MobileNumber" id="MobileNumber"
+                           class="form-control input-sm" placeholder="Mobile *" required>
+                    <span *ngIf="employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid">
+                      <span class="alert-danger"> Enter valid Mobile Number </span>
+                    </span>
+                    <span *ngIf="!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched">
+                      <span class="alert-danger"> Enter Mobile Number </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input type="email" formControlName="EmailId" id="EmailId"
+                           class="form-control input-sm" placeholder="Email *" required email>
+                    <span *ngIf="!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched">
+                      <span class="alert-danger"> Enter Email ID </span>
+                    </span>
+                    <span *ngIf="employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid">
+                      <span class="alert-danger"> Enter valid email address </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input type="text" formControlName="Type_EmpCode" id="Type_EmpCode"
+                           class="form-control input-sm" placeholder="Code *" required>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <select class="form-control" (change)="RolesInput($event)"
+                            formControlName="RoleCode">
+                      <option selected="">Roles</option>
+                      <option value="1">ADMIN</option>
+                      <option value="2">HO</option>
+                      <option value="3">MSP</option>
+                      <option value="4">Location</option>
+                      <option value="5">HO_Manager</option>
+                      <option value="6">Location_Manager</option>
+                      <option value="7">MIS_User</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <input type="text" formControlName="MspCategory" id="mspcategory"
+                           *ngIf="isMSPSelected" class="form-control input-sm" placeholder="MSP Category">
+                    <span *ngIf="isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched">
+                      <span class="alert-danger"> Enter MSP Catogory </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
+                                             [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region"
+                                             [settings]="dropdownSettings2" (onDeSelect)="removeCountry($event)" (onSelect)="changeCountry($event)">
+                    </ng-multiselect-dropdown>
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
+                                                 [placeholder]="'Select Location'" [data]="states2" formControlName="Location"
+                                                 [settings]="dropdownSettings2" (onDeSelect)="removeState($event)" (onSelect)="changeState($event)">
+
+                        </ng-multiselect-dropdown>
+                       
+                      </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+
+                      <div class="form-group">
+                        <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub"
+                                                 [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub"
+                                                 [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+                        </ng-multiselect-dropdown>
+                        <span *ngIf="isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched">
+                          <span class="alert-danger">"> Enter Hub Catogory </span>
+                        </span>
+                      
+                      </div>
+                    </div>
+
+
+              </div>
+
+
+
+              <input type="submit" [disabled]="!employeeForm.valid" value="Add"
+                     class="btn btn-info btn-block">
+            </form>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+   
+  </div>-->

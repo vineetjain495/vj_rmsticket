@@ -46,5 +46,6 @@ namespace CMS_DTO.Entity.RMS_Ticketing
         public int? RightsCode{get;set;}
         public string MspCategory { get; set; }
         public List<string> Hub { get; set; }
+
     }
 }

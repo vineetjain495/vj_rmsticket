@@ -32,6 +32,7 @@ namespace CMS_DTO.Models.Logins
         public Nullable<bool> PassChangeFlag { get; set; }
         public Nullable<bool> UserNotAllocation { get; set; }
         public string MspCategory { get; set; }
+        public string Viewcomment { get; set; }
         //public List<string> Hub { get; set; }
     }
 }

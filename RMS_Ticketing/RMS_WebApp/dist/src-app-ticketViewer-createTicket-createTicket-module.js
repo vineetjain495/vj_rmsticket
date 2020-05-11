@@ -292,7 +292,6 @@ var CreateTicketComponent = /** @class */ (function () {
             this.model[key] = null;
         }
     };
-    var _a;
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ViewChild"])('fromDate'),
         __metadata("design:type", Object)
@@ -308,7 +307,7 @@ var CreateTicketComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./createTicket.component.css */ "./src/app/ticketViewer/createTicket/createTicket.component.css")],
             encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_2__["ViewEncapsulation"].None,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"] !== "undefined" && _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]) === "function" ? _a : Object, _ticketViewer_service__WEBPACK_IMPORTED_MODULE_3__["TicketViewerServices"], src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"], src_app_app_commonFunctionality__WEBPACK_IMPORTED_MODULE_6__["CommonFunctionality"]])
+        __metadata("design:paramtypes", [_angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"], _ticketViewer_service__WEBPACK_IMPORTED_MODULE_3__["TicketViewerServices"], src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormBuilder"], src_app_app_commonFunctionality__WEBPACK_IMPORTED_MODULE_6__["CommonFunctionality"]])
     ], CreateTicketComponent);
     return CreateTicketComponent;
 }());

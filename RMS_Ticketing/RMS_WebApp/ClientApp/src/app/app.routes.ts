@@ -3,9 +3,9 @@ import { MainLayoutComponent } from './mainLayout/mainLayout.component';
 import { ExternalLayoutComponent } from './externalLayout/externalLayout.component';
 import { AuthGuard } from './shared/Security/auth.guard';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
-import { AddEmployeeComponent } from './addEmployee/addEmployee.component';
-import { ShowemployeeComponent } from './showemployee/showemployee.component';
-import { EditempComponent } from './editemp/editemp.component';
+import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
+import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
+import { EditempComponent } from './Employee/editemp/editemp.component';
 
 
 // Route config let's you map routes to components
@@ -70,13 +70,13 @@ const routes: Routes = [
       },  
   
       {
-        path: 'create_element', component: AddEmployeeComponent
+        path: 'Employee/CreateEmployee', component: AddEmployeeComponent
       },
       {
-        path: 'show_data', component: ShowemployeeComponent
+        path: 'Employee', component: ShowemployeeComponent
       },
       {
-        path: 'edit_element/:id', component: EditempComponent
+        path: 'Employee/edit_element/:id', component: EditempComponent
       },
 ]
 

@@ -27,6 +27,7 @@ namespace CMSDAL
         public DbSet<UserLoginHistory> UserLoginHistories { get; set; }
         public DbSet<Atmmaster> atm_master { get; set; }
         public DbSet<Employee_Hierarchy> employee_Hierarchies { get; set; }
+        public DbSet<Ticket> tickets { get; set; }
 
 
     }

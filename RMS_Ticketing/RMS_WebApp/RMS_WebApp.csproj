@@ -231,8 +231,8 @@
     <Content Include="assets\styles\custom.css" />
     <Content Include="assets\styles\styles.css" />
     <Content Include="ClientApp\e2e\protractor.conf.js" />
-    <Content Include="ClientApp\src\app\addEmployee\addEmployee.component.css" />
-    <Content Include="ClientApp\src\app\addEmployee\addEmployee.component.html" />
+    <Content Include="ClientApp\src\app\Employee\addEmployee\addEmployee.component.css" />
+    <Content Include="ClientApp\src\app\Employee\addEmployee\addEmployee.component.html" />
     <Content Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.component.css" />
     <Content Include="ClientApp\src\app\admin\employeeMaster\index\employeeMasterIndex.template.html" />
     <Content Include="ClientApp\src\app\admin\employeeMaster\manage\employeeMasterManage.component.css" />
@@ -241,8 +241,8 @@
     <Content Include="ClientApp\src\app\admin\roleMaster\roleMaster.template.html" />
     <Content Include="ClientApp\src\app\app.template.html" />
     <Content Include="ClientApp\src\app\dashboard\dashboard.template.html" />
-    <Content Include="ClientApp\src\app\editemp\editemp.component.css" />
-    <Content Include="ClientApp\src\app\editemp\editemp.component.html" />
+    <Content Include="ClientApp\src\app\Employee\editemp\editemp.component.css" />
+    <Content Include="ClientApp\src\app\Employee\editemp\editemp.component.html" />
     <Content Include="ClientApp\src\app\externalLayout\externalLayout.component.css" />
     <Content Include="ClientApp\src\app\forgotPassword\forgotPassword.component.css" />
     <Content Include="ClientApp\src\app\forgotPassword\forgotPassword.template.html" />
@@ -259,9 +259,9 @@
     <Content Include="ClientApp\src\app\shared\card\card.template.html" />
     <Content Include="ClientApp\src\app\shared\elements\animation.js" />
     <Content Include="ClientApp\src\app\shared\elements\parent-remove.directive.js" />
-    <Content Include="ClientApp\src\app\showemployee\showemployee.component.css" />
-    <Content Include="ClientApp\src\app\showemployee\showemployee.component.html" />
-    <Content Include="ClientApp\src\app\showemployee\showemployee.html" />
+    <Content Include="ClientApp\src\app\Employee\showemployee\showemployee.component.css" />
+    <Content Include="ClientApp\src\app\Employee\showemployee\showemployee.component.html" />
+    <Content Include="ClientApp\src\app\Employee\showemployee\showemployee.html" />
     <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-chasing-dots.css" />
     <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-cube-grid.css" />
     <Content Include="ClientApp\src\app\spinner\spinkit-css\sk-double-bounce.css" />
@@ -387,10 +387,10 @@
     <Content Include="Global.asax" />
     <TypeScriptCompile Include="ClientApp\e2e\src\app.e2e-spec.ts" />
     <TypeScriptCompile Include="ClientApp\e2e\src\app.po.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.component.spec.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\addEmployee\addEmployee.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Employee\addEmployee.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Employee\addEmployee\addEmployee.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Employee\addEmployee\addEmployee.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Employee\addEmployee\addEmployee.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\admin\admin.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\admin\admin.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\admin\admin.routing.ts" />
@@ -423,7 +423,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.routing.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\editemp\editemp.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Employee\editemp\editemp.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\externalLayout\externalLayout.component.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\externalLayout\externalLayout.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.component.spec.ts" />
@@ -486,7 +486,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\smartTableExtention\helpers.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\smartTableExtention\server-source.config.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\title\title.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\showemployee\showemployee.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Employee\showemployee\showemployee.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\spinner\spinkits.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\spinner\spinner.component.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\spinner\spinner.component.ts" />

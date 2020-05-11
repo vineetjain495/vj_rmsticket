@@ -1,5 +1,6 @@
 ﻿using CMS_DTO.Entity.RMS_Ticketing;
 using CMS_DTO.Models.RMS_Ticketing;
+using CMS_DTO.Models.Logins;
 using CMSDAL;
 using CMSDTO;
 using CMSDTO.Entity;
@@ -184,12 +185,32 @@ namespace LoginAPI.Controllers
 
                              }
                     ).ToList();
+                List<Employee_info> employeeViewers = new List<Employee_info>();
+                foreach (var list in query)
+                {
+                    string Empty = "NULL";
+                    Employee_info viewer = new Employee_info();
+                    viewer.ID = list.ID;
+                    viewer.Type_EmpCode = "<a href=''>" + list.Type_EmpCode + "</a>";
+                    viewer.Viewcomment = string.Format(
+                        "{0}{1}Employee Name:{2}{4} {0}{1}Mobile Number:{2}{5}{3}" +
+                        "{0}{1}Email ID:{2}{6} {0}{1}Role:{2}{7} {3}" +
+                        "{0}{1}Rights:{2}{8}",
+                        "&nbsp;", "<b>", "</b>", "<br>",
+                        !string.IsNullOrEmpty(list.EmployeeName) ? list.EmployeeName : list.EmployeeName,
+                        !string.IsNullOrEmpty(list.MobileNumber) ? list.MobileNumber : Empty,
+                        !string.IsNullOrEmpty(list.EmailID) ? list.EmailID : Empty,
+                        !string.IsNullOrEmpty(list.RoleName) ? list.RoleName : Empty,
+                        !string.IsNullOrEmpty(list.RightsName) ? list.RightsName : Empty
+                        );
 
-                /* var query = from RR in objEntity.employee_role
-                             where RR.Type == "Employees"
-                             join p in objEntity.employee_role on RR.RoleCode equals p.TypeCode
-                             select new { RR, RoleName = p.Type_EmpCode };*/
-                return Ok(query);
+                    employeeViewers.Add(viewer);
+                }
+                    /* var query = from RR in objEntity.employee_role
+                                 where RR.Type == "Employees"
+                                 join p in objEntity.employee_role on RR.RoleCode equals p.TypeCode
+                                 select new { RR, RoleName = p.Type_EmpCode };*/
+                    return Ok(employeeViewers);
             }
             catch (Exception ex)
             {
@@ -211,12 +232,92 @@ namespace LoginAPI.Controllers
             catch (Exception ex)
             {
                 return NotFound();
-                /* throw;*/
+                /* throw;*/ 
 
             }
 
             //return null;
         }
+        [HttpGet]
+        [Route("GetLocatioDetail")]
+        public IHttpActionResult GetLocatioDetail()
+        {
+            try
+            {
+                var result = db.atm_master.Select(m => new
+                {
+                    m.RoCode,
+                    m.RoName,
+                    m.LocationCode,
+                    m.LocationName,
+                    m.HubLocationCode,
+                    m.HubLocationName
+                }).Distinct().OrderBy(e => new { e.RoName, e.LocationCode, e.HubLocationCode });
 
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        [HttpPut]
+        [Route("UpdateEmployeeDetails")]
+        public IHttpActionResult PutEmaployeeMaster(Employee_Role employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                //employee_role objEmp = new employee_role();
+                var objEmp = db.UserMaster.Where(e => e.Type_EmpCode == employee.Type_EmpCode).FirstOrDefault<Employee_Role>();
+                if (objEmp != null)
+                {
+                    if (objEmp.IsActive != employee.IsActive || (objEmp.RoleCode != employee.RoleCode && objEmp.RoleCode == 4))
+                    {
+                        var objticket = db.tickets.Where(m => m.AssignedTo == employee.Type_EmpCode).ToList();
+                        if (objticket.Count() != 0)
+                        {
+                            return Ok(0);
+                        }
+                    }
+
+                    objEmp.EmployeeName = employee.EmployeeName;
+                    objEmp.MobileNumber = employee.MobileNumber;
+                    objEmp.EmailID = employee.EmailID;
+                    objEmp.Password = employee.Password;
+                    objEmp.RoleCode = employee.RoleCode;
+                    objEmp.RightsCode = employee.RightsCode;
+                    objEmp.ModifiedDate = now;
+
+                }
+                int i = this.db.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Ok(employee);
+        }
+        [HttpDelete]
+        [Route("DeleteEmployeeDetails")]
+        public IHttpActionResult DeleteEmaployeeDelete(string emp_code)
+        {
+            //int empId = Convert.ToInt32(id);  
+            Employee_Role emaployee = db.UserMaster.Where(e => e.Type_EmpCode == emp_code).FirstOrDefault<Employee_Role>();
+            if (emaployee == null)
+            {
+                return NotFound();
+            }
+
+            db.UserMaster.Remove(emaployee);
+            db.SaveChanges();
+
+            return Ok(emaployee);
+        }
     }
 }
