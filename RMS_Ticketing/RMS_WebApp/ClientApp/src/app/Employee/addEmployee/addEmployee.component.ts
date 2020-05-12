@@ -33,10 +33,11 @@ export class AddEmployeeComponent implements OnInit {
 ShowFilter = false;
 limitSelection = false;
 errorFound = false;
-
+codeAvailable = false;
 selectedItems: Array<any> = [];
 dropdownSettings: any = {};
   dropdownSettings2: any = {};
+  emp_code = "";
   // cities2: Array<any>;
   getLocation() {
 
@@ -50,13 +51,31 @@ dropdownSettings: any = {};
     //console.log("addemp");
     this.isLocationSelected = false;
     this.isMSPSelected = false;
+    this.ds.ShowHideToasty({
+      title: 'Loading...',
+      msg: '',
+      showClose: false,
+      theme: 'bootstrap',
+      type: 'wait',
+      closeOther: true
+    });
     this.employeeService.getLocationDetail().subscribe((res: any) => {
-      console.log(res);
+      //console.log(res);
+      this.ds.ShowHideToasty({
+        title: 'Create Employee Here',
+        msg: '',
+        showClose: true,
+        theme: 'bootstrap',
+        type: 'success',
+        closeOther: true,
+        timeout: 3000
+      });
       this.Countries = res;
       this.Countries.forEach((element) => {
         this.Countries2.push(element.RoName);
       });
       this.Countries2 = this.Countries2.filter((el, i, a) => i === a.indexOf(el));
+      //this.employeeService.getUserDetail();
     });
   }
 
@@ -74,6 +93,7 @@ dropdownSettings: any = {};
       Hub: ['']
     });
     this.loadAllEmployees();
+    console.log("user " + this.employeeService.getUserDetail());
     this.dropdownSettings = {
       singleSelection: false,
       // idField: 'item_id',
@@ -137,7 +157,7 @@ dropdownSettings: any = {};
   removeState(state) {
     this.cities = this.states.filter(cntry => cntry.LocationName == state);
     this.cities.forEach((element) => {
-       console.log("remove" + element.HubLocationName);
+     //  console.log("remove" + element.HubLocationName);
       const index = this.cities2.indexOf(element.HubLocationName);
       if (index > -1) {
         this.cities2.splice(index, 1);
@@ -157,7 +177,7 @@ dropdownSettings: any = {};
 
     });
     this.cities2 = this.cities2.filter((el, i, a) => i === a.indexOf(el))
-     console.log(this.cities2);
+     //console.log(this.cities2);
   }
   CreateEmployee(employee: Employee) {
     this.ds.ShowHideToasty({
@@ -171,13 +191,20 @@ dropdownSettings: any = {};
     console.log("sec");
     if (this.employeeIdUpdate == null) {
       this.employeeService.getEmployeeById(employee.Type_EmpCode).subscribe((response: any) => {
-        this.massage = null;
-        this.dataSaved = false;
-        // console.log(response)
         if (response != null) {
-          this.dataSaved = false;
-            this.errorFound = true;
+          this.codeAvailable = true;
+          this.errorFound = true;
+          
           this.massage = "This code is already available";
+          this.ds.ShowHideToasty({
+            title: 'Failure..',
+            msg: 'This code is already available',
+            showClose: true,
+            theme: 'bootstrap',
+            type: 'error',
+            closeOther: true,
+          });
+          
           this.cities = [];
           this.cities2 = [];
           this.Countries = [];
@@ -186,20 +213,33 @@ dropdownSettings: any = {};
           this.states2 = [];
         }
         else {
-          
+
+          console.log(this.employeeService.getUserDetail());
+          employee.createdBy = this.employeeService.empCode;
           this.employeeService.createEmployee(employee).subscribe(() => {
             // console.log("sec");
             this.dataSaved = true;
-            console.log("sec");
             this.massage = 'Record saved Successfully';
+            console.log("sec");
+            this.ds.ShowHideToasty({
+              title: 'Record saved Successfully',
+              msg: '',
+              showClose: true,
+              theme: 'bootstrap',
+              type: 'success',
+              closeOther: true,
+              timeout: 5000
+            });
+           
             console.log(this.massage);
             // this.loadAllEmployees();  
             this.employeeIdUpdate = null;
             // this.employeeForm.reset();  
           }
           );
-        }
+       
 
+        }
       });
       // console.log(this.data_exist + "dfcds");
 
@@ -212,6 +252,40 @@ dropdownSettings: any = {};
         this.employeeIdUpdate = null;
         // this.employeeForm.reset();  
       });*/
+    }
+  }
+  checkCode(event) {
+    console.log(event.target.value);
+    if (event.target.value != "") {
+      this.employeeService.getEmployeeById(event.target.value).subscribe((response: any) => {
+        this.massage = null;
+
+        // console.log(response)
+        if (response != null) {
+          this.codeAvailable = true;
+
+          this.ds.ShowHideToasty({
+            title: 'Failure..',
+            msg: 'This code is already available',
+            showClose: true,
+            theme: 'bootstrap',
+            type: 'error',
+            closeOther: true,
+          });
+          this.massage = "This code is already available";
+          this.cities = [];
+          this.cities2 = [];
+          this.Countries = [];
+          this.Countries2 = [];
+          this.states = [];
+          this.states2 = [];
+          this.employeeForm.setErrors({ 'incorrect': true });
+        }
+        else {
+          this.codeAvailable = false;
+          this.employeeForm.setErrors(null);
+        }
+      });
     }
   }
   RolesInput(event) {

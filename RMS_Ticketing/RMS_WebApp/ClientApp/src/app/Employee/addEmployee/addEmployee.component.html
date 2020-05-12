@@ -2,13 +2,23 @@
 
   <!------ Include the above in your HEAD tag ---------->
   <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit()">
+    <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold"
+       Class="success">
+      {{massage}}
+    </p>
+    <span *ngIf="errorFound">
+      <span class="alert-danger"> {{massage}} </span>
+    </span>
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group row">
           <label class="col-sm-12 col-form-label">Employee Code<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <input type="text" formControlName="Type_EmpCode" id="Type_EmpCode"
-                   class="form-control input-sm" placeholder="Code *" required>
+                   class="form-control input-sm" (blur)="checkCode($event)" placeholder="Code *" required>
+            <div *ngIf="codeAvailable">
+              <div class="alert-danger"> This Code is Available </div>
+            </div>
           </div>
         </div>
       </div>
@@ -31,7 +41,7 @@
             <input type="number" formControlName="MobileNumber" id="MobileNumber"
                    class="form-control input-sm" placeholder="Mobile *" required>
             <div *ngIf="employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid">
-              <div class="alert-danger"> Enter valid Mobile Number </div>
+              <div class="alert-danger"> Enter 10 digit Mobile Number </div>
             </div>
             <div *ngIf="!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched">
               <div class="alert-danger"> Enter Mobile Number </div>
@@ -92,8 +102,20 @@
     </div>
     <div class="row">
 
-      <div class="col-sm-4">
-        <div class="form-group row" *ngIf="isLocationSelected">
+      <div class="col-sm-4" *ngIf="isMSPSelected">
+        <div class="form-group row">
+          <label class="col-sm-12 col-form-label ">MSP Category<a style="color:red">*</a></label>
+          <div class="col-sm-12">
+            <input type="text" formControlName="MspCategory" id="mspcategory"
+                   *ngIf="isMSPSelected" class="form-control input-sm" placeholder="MSP Category">
+            <div *ngIf="isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched">
+              <div class="alert-danger"> Enter MSP Catogory </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4" *ngIf="isLocationSelected">
+        <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown name="region"
@@ -103,8 +125,8 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
-        <div class="form-group row" *ngIf="isLocationSelected">
+      <div class="col-sm-4" *ngIf="isLocationSelected">
+        <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
@@ -115,13 +137,13 @@
         </div>
       </div>
 
-      <div class="col-sm-4">
-        <div class="form-group row" *ngIf="isLocationSelected">
+      <div class="col-sm-4" *ngIf="isLocationSelected">
+        <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub"
                                      [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub"
-                                     [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
+                                     [settings]="dropdownSettings">
             </ng-multiselect-dropdown>
             <div *ngIf="isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched">
               <div class="alert-danger"> Enter Hub Catogory </div>
@@ -137,7 +159,7 @@
         <div class="form-group row">
           <div class="col-sm-12">
             <input type="submit" [disabled]="!employeeForm.valid" value="Add"
-                   class="btn btn-info btn-block">
+                   class="btn btn-info ">
           </div>
         </div>
 

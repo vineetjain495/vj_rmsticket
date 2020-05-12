@@ -6,6 +6,7 @@ import { EmployeeService } from '../addEmployee.service';
 import { Employee } from '../addEmployee/addEmployee';
 import {ActivatedRoute, Params} from '@angular/router';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/DataService';
 @Component({
   selector: 'app-editemp',
   templateUrl: './editemp.component.html',
@@ -36,11 +37,29 @@ export class EditempComponent implements OnInit {
    //   private httpService: HttpClient,
       private route: ActivatedRoute,
       private router: Router,
+      private ds: DataService,
       private employeeService: EmployeeService) {
       this.isLocationSelected = false;
       this.isMSPSelected = false;
+      this.ds.ShowHideToasty({
+        title: 'Loading...',
+        msg: '',
+        showClose: false,
+        theme: 'bootstrap',
+        type: 'wait',
+        closeOther: true
+      });
       this.employeeService.getLocationDetail().subscribe((res: any) => {
-        console.log(res);
+       // console.log(res);
+        this.ds.ShowHideToasty({
+          title: 'Edit Employee Here',
+          msg: '',
+          showClose: true,
+          theme: 'bootstrap',
+          type: 'success',
+          closeOther: true,
+          timeout: 3000
+        });
         this.Countries = res;
         this.Countries.forEach((element) => {
           this.Countries2.push(element.RoName);
@@ -59,7 +78,11 @@ export class EditempComponent implements OnInit {
         Password : ['', [Validators.required,Validators.minLength(6)]],
         RoleCode : ['', [Validators.required]],
         RightsCode : ['', [Validators.required]],
-        IsActive : [true]
+        IsActive: [true],
+        MspCategory: [''],
+        Region: [''],
+        Location: [''],
+        Hub: ['']
       });  
       this.loadEmployeeToEdit(this.route.snapshot.params.id);
     }  
@@ -67,7 +90,15 @@ export class EditempComponent implements OnInit {
     //  console.log("1");
     //     employee.Type_EmpCode = this.employeeIdUpdate;  
     //     console.log("1");
-
+      this.ds.ShowHideToasty({
+        title: 'Please Wait...',
+        msg: '',
+        showClose: false,
+        theme: 'bootstrap',
+        type: 'wait',
+        closeOther: true
+      });
+      employee.createdBy = this.employeeService.empCode;
         this.employeeService.updateEmployee(employee).subscribe((response : any) => {  
           console.log(response);
           if (response == "0") {
@@ -83,6 +114,15 @@ export class EditempComponent implements OnInit {
 
           }
           else {
+            this.ds.ShowHideToasty({
+              title: 'Record Updated Successfully',
+              msg: '',
+              showClose: true,
+              theme: 'bootstrap',
+              type: 'success',
+              closeOther: true,
+              timeout: 5000
+            });
           this.dataSaved = true;  
           this.massage = 'Record Updated Successfully';  
           // this.loadAllEmployees();  
@@ -199,7 +239,7 @@ export class EditempComponent implements OnInit {
       this.isMSPSelected = false;
     }
     if (selected == "4" || selected == "6") {
-      this.isLocationSelected = true;
+      this.isLocationSelected = false;
     } else {
       this.isLocationSelected = false;
     }

@@ -27,9 +27,16 @@
 
               "../ClientApp/node_modules/bootstrap/dist/css/bootstrap.min.css",
               "../ClientApp/node_modules/ti-icons/css/themify-icons.css",
-              "node_modules/jqwidgets-ng/jqwidgets/styles/jqx.base.css",
+              "../ClientApp/node_modules/jqwidgets-ng/jqwidgets/styles/jqx.base.css",
+              "../ClientApp/node_modules/ng2-toasty/bundles/style-bootstrap.css",
               "../ClientApp/node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "../ClientApp/node_modules/angular2-multiselect-dropdown/themes/default.theme.css"
+              "../ClientApp/node_modules/angular2-multiselect-dropdown/themes/default.theme.css",
+              "../ClientApp/node_modules/ng2-toasty/style-bootstrap.css",
+              "../ClientApp/node_modules/ng2-toasty/style-default.css",
+              "../ClientApp/node_modules/ng2-toasty/style-material.css",
+              "../ClientApp/node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css",
+              "../ClientApp/node_modules/jqwidgets-scripts/jqwidgets/styles/jqx.ui-overcast.css",
+              "src/styles.css"
 
 
             ],

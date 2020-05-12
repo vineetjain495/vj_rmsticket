@@ -9,6 +9,7 @@ export class Employee {
     Type_EmpCode : string; 
     Region: string;
     Location: string;
-    Hub: string;
+  Hub: string;
+  createdBy: string;
     
 }

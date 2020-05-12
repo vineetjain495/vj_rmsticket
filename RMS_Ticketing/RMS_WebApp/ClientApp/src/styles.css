@@ -9,8 +9,7 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
-
+@import '~ng2-toasty/bundles/style-bootstrap.css';
 
 /*@import '~handsontable/dist/handsontable.full.css';
 .handsontable {
@@ -23,7 +22,6 @@
   
 }
   */
-
 .form-control {
   font-size: 12px !important;
   min-height: 20px !important;

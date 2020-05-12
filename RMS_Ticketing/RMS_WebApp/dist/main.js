@@ -149,6 +149,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../GlobalShareCode */ "./src/app/GlobalShareCode.ts");
+/* harmony import */ var _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../app.commonFunctionality */ "./src/app/app.commonFunctionality.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -164,25 +165,42 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 /*After that we write all methods related to consume web in employee.service.ts  */
 var EmployeeService = /** @class */ (function () {
-    function EmployeeService(http) {
+    //url = 'https://localhost:44315/Api/Employee';  
+    function EmployeeService(http, cf) {
         this.http = http;
-        this.url = 'https://localhost:44315/Api/Employee';
+        this.cf = cf;
+        this.empCode = "";
+        this.getUserDetail();
     }
-    EmployeeService.prototype.getAllEmployee = function () {
-        return this.http.get(this.url + '/AllEmployeeDetails');
-    };
-    EmployeeService.prototype.getAllEmployee2 = function () {
-        return this.http.get(this.url + '/AllEmployeelimited');
-    };
+    /* getAllEmployee(): Observable< Employee[]> {
+       return this.http.get<Employee[]>(baseUrl + '/AllEmployeeDetails');
+     }
+     getAllEmployee2() {
+       return this.http.get(baseUrl + '/AllEmployeelimited');
+     }*/
     EmployeeService.prototype.getLocationDetail = function () {
         return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/LocatioDetail');
     };
     EmployeeService.prototype.getEmployeeLimited = function () {
         return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/Employeelimited');
     };
+    EmployeeService.prototype.getEmployeeLimitedByID = function (employee_code) {
+        return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/EmployeelimitedById/?employeeId=' + employee_code);
+    };
     EmployeeService.prototype.getEmployeeById = function (employee_code) {
         // return this.http.get<Employee>(this.url + '/GetEmployeeDetailsById/' + employeeId);
-        return this.http.get('../Employee/EmployeeDetailsById/?employeeId=' + employee_code);
+        return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/EmployeeDetailsById/?employeeId=' + employee_code);
+    };
+    EmployeeService.prototype.getUserDetail = function () {
+        var _this = this;
+        //console.log("user");
+        this.cf.GetUserDetails().subscribe(function (data) {
+            if (data.Success) {
+                // console.log(data + " " + data.Entity + " " + data.Entity.EmpCode);
+                _this.empCode = data.Entity.EmpCode;
+                console.log(_this.empCode);
+            }
+        });
     };
     // getEmployeeById2(employeeId: string){  
     //   console.log(this.url + '/GetEmployeeDetailsById/' + employeeId);
@@ -190,27 +208,28 @@ var EmployeeService = /** @class */ (function () {
     // }  
     EmployeeService.prototype.createEmployee = function (employee) {
         console.log(employee);
-        var httpOptions = { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' }) };
-        console.log(employee.MspCategory);
+        // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+        //console.log(employee.MspCategory)
         // return this.http.post<Employee>(this.url + '/InsertEmployeeDetails',   employee, httpOptions); 
-        return this.http.post('../Employee/NewEmployee', employee);
+        return this.http.post(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/NewEmployee', employee);
     };
     EmployeeService.prototype.updateEmployee = function (employee) {
         // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
         // return this.http.put<Employee>(this.url + '/UpdateEmployeeDetails/',  
         // employee, httpOptions);  
-        console.log(employee);
+        //console.log(employee);
         return this.http.put('../Employee/UpdateEmployeeDetails', employee);
     };
     EmployeeService.prototype.deleteEmployeeById = function (employeeid) {
-        var httpOptions = { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' }) };
-        return this.http.delete(this.url + '/DeleteEmployeeDetails?emp_code=' + employeeid);
+        // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+        return this.http.delete(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + '/DeleteEmployeeDetails?emp_code=' + employeeid);
     };
     EmployeeService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_3__["CommonFunctionality"]])
     ], EmployeeService);
     return EmployeeService;
 }());
@@ -237,7 +256,7 @@ module.exports = ".textboxheight {\r\n  height: 30px;\r\n}\r\n\r\n.topTable {\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-card [title]=\"'Create Employee'\" [blockClass]=\"'tran-data'\" [showBack]=\"true\" [showRightSection]=\"'false'\" (onBack)=\"back()\" [cardToggle]=\"cardToggleGrid\">\r\n\r\n  <!------ Include the above in your HEAD tag ---------->\r\n  <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Code<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                   class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Name<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                   class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Mobile Number<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                   class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n            <div *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n              <div class=\"alert-danger\"> Enter valid Mobile Number </div>\r\n            </div>\r\n            <div *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n              <div class=\"alert-danger\"> Enter Mobile Number </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--#incidentDate #disputeAmount #AtmID-->\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Email Address<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"email\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                   class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n            <div *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n              <div class=\"alert-danger\"> Enter Email ID </div>\r\n            </div>\r\n            <div *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n              <div class=\"alert-danger\"> Enter valid email address </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Rights</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" formControlName=\"RightsCode\">\r\n\r\n              <option value=\"1\">View</option>\r\n              <option value=\"2\">Edit</option>\r\n              <option value=\"3\">Both</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" (change)=\"RolesInput($event)\"\r\n                    formControlName=\"RoleCode\">\r\n\r\n              <option value=\"1\">ADMIN</option>\r\n              <option value=\"2\">HO</option>\r\n              <option value=\"3\">MSP</option>\r\n              <option value=\"4\">Location</option>\r\n              <option value=\"5\">HO_Manager</option>\r\n              <option value=\"6\">Location_Manager</option>\r\n              <option value=\"7\">MIS_User</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\" *ngIf=\"isLocationSelected\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown name=\"region\"\r\n                                     [placeholder]=\"'Select Region'\" [data]=\"Countries2\" formControlName=\"Region\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeCountry($event)\" (onSelect)=\"changeCountry($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\" *ngIf=\"isLocationSelected\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                     [placeholder]=\"'Select Location'\" [data]=\"states2\" formControlName=\"Location\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeState($event)\" (onSelect)=\"changeState($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\" *ngIf=\"isLocationSelected\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"hub\"\r\n                                     [placeholder]=\"'Select Hub'\" [data]=\"cities2\" formControlName=\"Hub\"\r\n                                     [settings]=\"dropdownSettings\" (onSelect)=\"onItemSelect($event)\">\r\n            </ng-multiselect-dropdown>\r\n            <div *ngIf=\"isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched\">\r\n              <div class=\"alert-danger\"> Enter Hub Catogory </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Add\"\r\n                   class=\"btn btn-info btn-block\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </form>\r\n</app-card>\r\n\r\n\r\n\r\n\r\n  <!--<div class=\"container\">\r\n    <div class=\"row centered-form\">\r\n      <div class=\"col-xs-12 col-sm-10 col-md-6 col-lg-offset-2 col-md-offset-3\">\r\n        <button class=\"btn btn-primary\" (click)=\"goToPage('/show_data');\">Show</button>\r\n        <button class=\"btn btn-primary\" (click)=\"goToPage('/create_element');\">Create</button>\r\n        <div class=\"panel panel-default\">\r\n          <div class=\"panel-heading\">\r\n          \r\n            <h2 class=\"text-center\"> Add Employee Detail </h2>\r\n          </div>\r\n          <div class=\"panel-body\">\r\n            <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n              <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:20px;font-weight:bold\"\r\n                 Class=\"success\">\r\n                {{massage}}\r\n              </p>\r\n              <span *ngIf=\"errorFound\">\r\n                <span class=\"alert-danger\"> {{massage}} </span>\r\n              </span>\r\n              <div class=\"form-group\">\r\n                <input type=\"text\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                       class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                           class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n                    <span *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n                      <span class=\"alert-danger\"> Enter valid Mobile Number </span>\r\n                    </span>\r\n                    <span *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n                      <span class=\"alert-danger\"> Enter Mobile Number </span>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"email\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                           class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n                    <span *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n                      <span class=\"alert-danger\"> Enter Email ID </span>\r\n                    </span>\r\n                    <span *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n                      <span class=\"alert-danger\"> Enter valid email address </span>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                           class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <select class=\"form-control\" (change)=\"RolesInput($event)\"\r\n                            formControlName=\"RoleCode\">\r\n                      <option selected=\"\">Roles</option>\r\n                      <option value=\"1\">ADMIN</option>\r\n                      <option value=\"2\">HO</option>\r\n                      <option value=\"3\">MSP</option>\r\n                      <option value=\"4\">Location</option>\r\n                      <option value=\"5\">HO_Manager</option>\r\n                      <option value=\"6\">Location_Manager</option>\r\n                      <option value=\"7\">MIS_User</option>\r\n                    </select>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"text\" formControlName=\"MspCategory\" id=\"mspcategory\"\r\n                           *ngIf=\"isMSPSelected\" class=\"form-control input-sm\" placeholder=\"MSP Category\">\r\n                    <span *ngIf=\"isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched\">\r\n                      <span class=\"alert-danger\"> Enter MSP Catogory </span>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                             [placeholder]=\"'Select Region'\" [data]=\"Countries2\" formControlName=\"Region\"\r\n                                             [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeCountry($event)\" (onSelect)=\"changeCountry($event)\">\r\n                    </ng-multiselect-dropdown>\r\n                   \r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                \r\n                    <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                      <div class=\"form-group\">\r\n                        <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                                 [placeholder]=\"'Select Location'\" [data]=\"states2\" formControlName=\"Location\"\r\n                                                 [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeState($event)\" (onSelect)=\"changeState($event)\">\r\n\r\n                        </ng-multiselect-dropdown>\r\n                       \r\n                      </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n\r\n                      <div class=\"form-group\">\r\n                        <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"hub\"\r\n                                                 [placeholder]=\"'Select Hub'\" [data]=\"cities2\" formControlName=\"Hub\"\r\n                                                 [settings]=\"dropdownSettings\" (onSelect)=\"onItemSelect($event)\">\r\n                        </ng-multiselect-dropdown>\r\n                        <span *ngIf=\"isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched\">\r\n                          <span class=\"alert-danger\">\"> Enter Hub Catogory </span>\r\n                        </span>\r\n                      \r\n                      </div>\r\n                    </div>\r\n\r\n\r\n              </div>\r\n\r\n\r\n\r\n              <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Add\"\r\n                     class=\"btn btn-info btn-block\">\r\n            </form>\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </div>\r\n\r\n\r\n   \r\n  </div>-->\r\n"
+module.exports = "<app-card [title]=\"'Create Employee'\" [blockClass]=\"'tran-data'\" [showBack]=\"true\" [showRightSection]=\"'false'\" (onBack)=\"back()\" [cardToggle]=\"cardToggleGrid\">\r\n\r\n  <!------ Include the above in your HEAD tag ---------->\r\n  <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n    <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:20px;font-weight:bold\"\r\n       Class=\"success\">\r\n      {{massage}}\r\n    </p>\r\n    <span *ngIf=\"errorFound\">\r\n      <span class=\"alert-danger\"> {{massage}} </span>\r\n    </span>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Code<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                   class=\"form-control input-sm\" (blur)=\"checkCode($event)\" placeholder=\"Code *\" required>\r\n            <div *ngIf=\"codeAvailable\">\r\n              <div class=\"alert-danger\"> This Code is Available </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Name<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                   class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Mobile Number<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                   class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n            <div *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n              <div class=\"alert-danger\"> Enter 10 digit Mobile Number </div>\r\n            </div>\r\n            <div *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n              <div class=\"alert-danger\"> Enter Mobile Number </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--#incidentDate #disputeAmount #AtmID-->\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Email Address<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"email\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                   class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n            <div *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n              <div class=\"alert-danger\"> Enter Email ID </div>\r\n            </div>\r\n            <div *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n              <div class=\"alert-danger\"> Enter valid email address </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Rights</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" formControlName=\"RightsCode\">\r\n\r\n              <option value=\"1\">View</option>\r\n              <option value=\"2\">Edit</option>\r\n              <option value=\"3\">Both</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" (change)=\"RolesInput($event)\"\r\n                    formControlName=\"RoleCode\">\r\n\r\n              <option value=\"1\">ADMIN</option>\r\n              <option value=\"2\">HO</option>\r\n              <option value=\"3\">MSP</option>\r\n              <option value=\"4\">Location</option>\r\n              <option value=\"5\">HO_Manager</option>\r\n              <option value=\"6\">Location_Manager</option>\r\n              <option value=\"7\">MIS_User</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\" *ngIf=\"isMSPSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">MSP Category<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" formControlName=\"MspCategory\" id=\"mspcategory\"\r\n                   *ngIf=\"isMSPSelected\" class=\"form-control input-sm\" placeholder=\"MSP Category\">\r\n            <div *ngIf=\"isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched\">\r\n              <div class=\"alert-danger\"> Enter MSP Catogory </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\" *ngIf=\"isLocationSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown name=\"region\"\r\n                                     [placeholder]=\"'Select Region'\" [data]=\"Countries2\" formControlName=\"Region\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeCountry($event)\" (onSelect)=\"changeCountry($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\" *ngIf=\"isLocationSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                     [placeholder]=\"'Select Location'\" [data]=\"states2\" formControlName=\"Location\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeState($event)\" (onSelect)=\"changeState($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\" *ngIf=\"isLocationSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"hub\"\r\n                                     [placeholder]=\"'Select Hub'\" [data]=\"cities2\" formControlName=\"Hub\"\r\n                                     [settings]=\"dropdownSettings\">\r\n            </ng-multiselect-dropdown>\r\n            <div *ngIf=\"isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched\">\r\n              <div class=\"alert-danger\"> Enter Hub Catogory </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Add\"\r\n                   class=\"btn btn-info \">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </form>\r\n</app-card>\r\n\r\n\r\n\r\n\r\n  <!--<div class=\"container\">\r\n    <div class=\"row centered-form\">\r\n      <div class=\"col-xs-12 col-sm-10 col-md-6 col-lg-offset-2 col-md-offset-3\">\r\n        <button class=\"btn btn-primary\" (click)=\"goToPage('/show_data');\">Show</button>\r\n        <button class=\"btn btn-primary\" (click)=\"goToPage('/create_element');\">Create</button>\r\n        <div class=\"panel panel-default\">\r\n          <div class=\"panel-heading\">\r\n          \r\n            <h2 class=\"text-center\"> Add Employee Detail </h2>\r\n          </div>\r\n          <div class=\"panel-body\">\r\n            <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n              <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:20px;font-weight:bold\"\r\n                 Class=\"success\">\r\n                {{massage}}\r\n              </p>\r\n              <span *ngIf=\"errorFound\">\r\n                <span class=\"alert-danger\"> {{massage}} </span>\r\n              </span>\r\n              <div class=\"form-group\">\r\n                <input type=\"text\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                       class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                           class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n                    <span *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n                      <span class=\"alert-danger\"> Enter valid Mobile Number </span>\r\n                    </span>\r\n                    <span *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n                      <span class=\"alert-danger\"> Enter Mobile Number </span>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"email\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                           class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n                    <span *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n                      <span class=\"alert-danger\"> Enter Email ID </span>\r\n                    </span>\r\n                    <span *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n                      <span class=\"alert-danger\"> Enter valid email address </span>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                           class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n\r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <select class=\"form-control\" (change)=\"RolesInput($event)\"\r\n                            formControlName=\"RoleCode\">\r\n                      <option selected=\"\">Roles</option>\r\n                      <option value=\"1\">ADMIN</option>\r\n                      <option value=\"2\">HO</option>\r\n                      <option value=\"3\">MSP</option>\r\n                      <option value=\"4\">Location</option>\r\n                      <option value=\"5\">HO_Manager</option>\r\n                      <option value=\"6\">Location_Manager</option>\r\n                      <option value=\"7\">MIS_User</option>\r\n                    </select>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <input type=\"text\" formControlName=\"MspCategory\" id=\"mspcategory\"\r\n                           *ngIf=\"isMSPSelected\" class=\"form-control input-sm\" placeholder=\"MSP Category\">\r\n                    <span *ngIf=\"isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched\">\r\n                      <span class=\"alert-danger\"> Enter MSP Catogory </span>\r\n                    </span>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                  <div class=\"form-group\">\r\n                    <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                             [placeholder]=\"'Select Region'\" [data]=\"Countries2\" formControlName=\"Region\"\r\n                                             [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeCountry($event)\" (onSelect)=\"changeCountry($event)\">\r\n                    </ng-multiselect-dropdown>\r\n                   \r\n                  </div>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\">\r\n                \r\n                    <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                      <div class=\"form-group\">\r\n                        <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                                 [placeholder]=\"'Select Location'\" [data]=\"states2\" formControlName=\"Location\"\r\n                                                 [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeState($event)\" (onSelect)=\"changeState($event)\">\r\n\r\n                        </ng-multiselect-dropdown>\r\n                       \r\n                      </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n\r\n                      <div class=\"form-group\">\r\n                        <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"hub\"\r\n                                                 [placeholder]=\"'Select Hub'\" [data]=\"cities2\" formControlName=\"Hub\"\r\n                                                 [settings]=\"dropdownSettings\" (onSelect)=\"onItemSelect($event)\">\r\n                        </ng-multiselect-dropdown>\r\n                        <span *ngIf=\"isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched\">\r\n                          <span class=\"alert-danger\">\"> Enter Hub Catogory </span>\r\n                        </span>\r\n                      \r\n                      </div>\r\n                    </div>\r\n\r\n\r\n              </div>\r\n\r\n\r\n\r\n              <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Add\"\r\n                     class=\"btn btn-info btn-block\">\r\n            </form>\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n\r\n      </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n    </div>\r\n\r\n\r\n   \r\n  </div>-->\r\n"
 
 /***/ }),
 
@@ -292,9 +311,11 @@ var AddEmployeeComponent = /** @class */ (function () {
         this.ShowFilter = false;
         this.limitSelection = false;
         this.errorFound = false;
+        this.codeAvailable = false;
         this.selectedItems = [];
         this.dropdownSettings = {};
         this.dropdownSettings2 = {};
+        this.emp_code = "";
         // maps the local data column to fields property
         this.localFields = { text: 'Name', value: 'Code' };
         // set the placeholder to MultiSelect Dropdown input element
@@ -302,13 +323,31 @@ var AddEmployeeComponent = /** @class */ (function () {
         //console.log("addemp");
         this.isLocationSelected = false;
         this.isMSPSelected = false;
+        this.ds.ShowHideToasty({
+            title: 'Loading...',
+            msg: '',
+            showClose: false,
+            theme: 'bootstrap',
+            type: 'wait',
+            closeOther: true
+        });
         this.employeeService.getLocationDetail().subscribe(function (res) {
-            console.log(res);
+            //console.log(res);
+            _this.ds.ShowHideToasty({
+                title: 'Create Employee Here',
+                msg: '',
+                showClose: true,
+                theme: 'bootstrap',
+                type: 'success',
+                closeOther: true,
+                timeout: 3000
+            });
             _this.Countries = res;
             _this.Countries.forEach(function (element) {
                 _this.Countries2.push(element.RoName);
             });
             _this.Countries2 = _this.Countries2.filter(function (el, i, a) { return i === a.indexOf(el); });
+            //this.employeeService.getUserDetail();
         });
     }
     // cities2: Array<any>;
@@ -328,6 +367,7 @@ var AddEmployeeComponent = /** @class */ (function () {
             Hub: ['']
         });
         this.loadAllEmployees();
+        console.log("user " + this.employeeService.getUserDetail());
         this.dropdownSettings = {
             singleSelection: false,
             // idField: 'item_id',
@@ -394,7 +434,7 @@ var AddEmployeeComponent = /** @class */ (function () {
         var _this = this;
         this.cities = this.states.filter(function (cntry) { return cntry.LocationName == state; });
         this.cities.forEach(function (element) {
-            console.log("remove" + element.HubLocationName);
+            //  console.log("remove" + element.HubLocationName);
             var index = _this.cities2.indexOf(element.HubLocationName);
             if (index > -1) {
                 _this.cities2.splice(index, 1);
@@ -413,7 +453,7 @@ var AddEmployeeComponent = /** @class */ (function () {
             // this.empList.push(customObj);
         });
         this.cities2 = this.cities2.filter(function (el, i, a) { return i === a.indexOf(el); });
-        console.log(this.cities2);
+        //console.log(this.cities2);
     };
     AddEmployeeComponent.prototype.CreateEmployee = function (employee) {
         var _this = this;
@@ -428,13 +468,18 @@ var AddEmployeeComponent = /** @class */ (function () {
         console.log("sec");
         if (this.employeeIdUpdate == null) {
             this.employeeService.getEmployeeById(employee.Type_EmpCode).subscribe(function (response) {
-                _this.massage = null;
-                _this.dataSaved = false;
-                // console.log(response)
                 if (response != null) {
-                    _this.dataSaved = false;
+                    _this.codeAvailable = true;
                     _this.errorFound = true;
                     _this.massage = "This code is already available";
+                    _this.ds.ShowHideToasty({
+                        title: 'Failure..',
+                        msg: 'This code is already available',
+                        showClose: true,
+                        theme: 'bootstrap',
+                        type: 'error',
+                        closeOther: true,
+                    });
                     _this.cities = [];
                     _this.cities2 = [];
                     _this.Countries = [];
@@ -443,11 +488,22 @@ var AddEmployeeComponent = /** @class */ (function () {
                     _this.states2 = [];
                 }
                 else {
+                    console.log(_this.employeeService.getUserDetail());
+                    employee.createdBy = _this.employeeService.empCode;
                     _this.employeeService.createEmployee(employee).subscribe(function () {
                         // console.log("sec");
                         _this.dataSaved = true;
-                        console.log("sec");
                         _this.massage = 'Record saved Successfully';
+                        console.log("sec");
+                        _this.ds.ShowHideToasty({
+                            title: 'Record saved Successfully',
+                            msg: '',
+                            showClose: true,
+                            theme: 'bootstrap',
+                            type: 'success',
+                            closeOther: true,
+                            timeout: 5000
+                        });
                         console.log(_this.massage);
                         // this.loadAllEmployees();  
                         _this.employeeIdUpdate = null;
@@ -466,6 +522,39 @@ var AddEmployeeComponent = /** @class */ (function () {
                this.employeeIdUpdate = null;
                // this.employeeForm.reset();
              });*/
+        }
+    };
+    AddEmployeeComponent.prototype.checkCode = function (event) {
+        var _this = this;
+        console.log(event.target.value);
+        if (event.target.value != "") {
+            this.employeeService.getEmployeeById(event.target.value).subscribe(function (response) {
+                _this.massage = null;
+                // console.log(response)
+                if (response != null) {
+                    _this.codeAvailable = true;
+                    _this.ds.ShowHideToasty({
+                        title: 'Failure..',
+                        msg: 'This code is already available',
+                        showClose: true,
+                        theme: 'bootstrap',
+                        type: 'error',
+                        closeOther: true,
+                    });
+                    _this.massage = "This code is already available";
+                    _this.cities = [];
+                    _this.cities2 = [];
+                    _this.Countries = [];
+                    _this.Countries2 = [];
+                    _this.states = [];
+                    _this.states2 = [];
+                    _this.employeeForm.setErrors({ 'incorrect': true });
+                }
+                else {
+                    _this.codeAvailable = false;
+                    _this.employeeForm.setErrors(null);
+                }
+            });
         }
     };
     AddEmployeeComponent.prototype.RolesInput = function (event) {
@@ -534,7 +623,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-card [title]=\"'Edit Employee Detail'\" [blockClass]=\"'tran-data'\" [showBack]=\"true\" [showRightSection]=\"'false'\" (onBack)=\"back()\" [cardToggle]=\"cardToggleGrid\">\r\n\r\n  <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Code<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                   class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Name<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                   class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Mobile Number<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                   class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n            <div *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n              <div class=\"alert-danger\"> Enter valid Mobile Number </div>\r\n            </div>\r\n            <div *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n              <div class=\"alert-danger\"> Enter Mobile Number </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--#incidentDate #disputeAmount #AtmID-->\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Email Address<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"email\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                   class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n            <div *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n              <div class=\"alert-danger\"> Enter Email ID </div>\r\n            </div>\r\n            <div *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n              <div class=\"alert-danger\"> Enter valid email address </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Rights</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" formControlName=\"RightsCode\">\r\n\r\n              <option value=\"1\">View</option>\r\n              <option value=\"2\">Edit</option>\r\n              <option value=\"3\">Both</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" (change)=\"RolesInput($event)\"\r\n                    formControlName=\"RoleCode\">\r\n\r\n              <option value=\"1\">ADMIN</option>\r\n              <option value=\"2\">HO</option>\r\n              <option value=\"3\">MSP</option>\r\n              <option value=\"4\">Location</option>\r\n              <option value=\"5\">HO_Manager</option>\r\n              <option value=\"6\">Location_Manager</option>\r\n              <option value=\"7\">MIS_User</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\" *ngIf=\"isLocationSelected\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown name=\"region\"\r\n                                     [placeholder]=\"'Select Region'\" [data]=\"Countries2\" formControlName=\"Region\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeCountry($event)\" (onSelect)=\"changeCountry($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\" *ngIf=\"isLocationSelected\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                     [placeholder]=\"'Select Location'\" [data]=\"states2\" formControlName=\"Location\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeState($event)\" (onSelect)=\"changeState($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\" *ngIf=\"isLocationSelected\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"hub\"\r\n                                     [placeholder]=\"'Select Hub'\" [data]=\"cities2\" formControlName=\"Hub\"\r\n                                     [settings]=\"dropdownSettings\" (onSelect)=\"onItemSelect($event)\">\r\n            </ng-multiselect-dropdown>\r\n            <div *ngIf=\"isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched\">\r\n              <div class=\"alert-danger\"> Enter Hub Catogory </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Edit\"\r\n                   class=\"btn btn-info btn-block\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </form>\r\n</app-card>\r\n\r\n\r\n\r\n<!--<div class=\"container\">\r\n  <div class=\"row centered-form\">\r\n    <div class=\"col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3\">\r\n      <button class=\"btn btn-primary\" (click)=\"goToPage('/show_data');\">Show</button>\r\n      <button class=\"btn btn-primary\" (click)=\"goToPage('/create_element');\">Create</button>\r\n      <div class=\"panel panel-default\">\r\n        <div class=\"panel-heading\">\r\n          <h2 class=\"text-center\"> Edit Data</h2>\r\n          <a class=\"nav-item nav-link-edit\" [routerLink]=\"['/show_data']\">Back</a>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n          <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:20px;font-weight:bold\" Class=\"success\"\r\n             align=\"left\">\r\n            {{massage}}\r\n          </p>\r\n          <span *ngIf=\"errorFound\">\r\n            <span class=\"alert-danger\"> {{massage}} </span>\r\n          </span>\r\n          <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n\r\n            <div class=\"form-group\">\r\n              <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                     class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                         class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n                  <span *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n                    <span class=\"alert-danger\"> Enter Mobile Number </span>\r\n                  </span>\r\n                  <span *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n                    <span class=\"alert-danger\"> Enter valid Mobile Number </span>\r\n                  </span>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"text\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                         class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n                  <span *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n                    <span class=\"alert-danger\"> Enter Email ID </span>\r\n                  </span>\r\n                  <span *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n                    <span class=\"alert-danger\"> Enter valid email address </span>\r\n                  </span>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"Type_EmpCode\"\r\n                         id=\"Type_EmpCode\" class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"text\" formControlName=\"Password\" id=\"Password\"\r\n                         class=\"form-control input-sm\" placeholder=\"Password\">\r\n                  <span *ngIf=\"employeeForm.get('Password').value && !employeeForm.get('Password').valid\">\r\n                    <span class=\"alert-danger\"> Password must contain minimum 6 letter </span>\r\n                  </span>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <select class=\"form-control\" formControlName=\"RoleCode\">\r\n                    <option selected=\"\">Roles</option>\r\n                    <option value=\"1\">ADMIN</option>\r\n                    <option value=\"2\">HO</option>\r\n                    <option value=\"3\">MSP</option>\r\n                    <option value=\"4\">Location</option>\r\n                    <option value=\"5\">HO_Manager</option>\r\n                    <option value=\"6\">Location_Manager</option>\r\n                    <option value=\"7\">MIS_User</option>\r\n                  </select>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <select class=\"form-control\" formControlName=\"RightsCode\">\r\n                    <option selected=\"\">Rights</option>\r\n                    <option value=\"1\">View</option>\r\n                    <option value=\"2\">Edit</option>\r\n                  </select>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <input type=\"checkbox\" formControlName=\"IsActive\" data-md-icheck (change)=\"toggleVisibility($event)\" />\r\n            <span *ngIf=\"active\"> Active</span><span *ngIf=\"!active\"> InActive</span>\r\n\r\n            <span class=\"checkmark\"></span>\r\n            <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Update\"\r\n                   class=\"btn btn-info btn-block\">\r\n\r\n            <button type=\"button\" class=\"btn btn-danger btn-block\" (click)=\"deleteEmployee(employeeForm.get('Type_EmpCode').value)\">Delete</button>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div-->\r\n"
+module.exports = "<app-card [title]=\"'Edit Employee Detail'\" [blockClass]=\"'tran-data'\" [showBack]=\"true\" [showRightSection]=\"'false'\" (onBack)=\"back()\" [cardToggle]=\"cardToggleGrid\">\r\n\r\n  <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n    <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:20px;font-weight:bold\"\r\n       Class=\"success\">\r\n      {{massage}}\r\n    </p>\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Code<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                   class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Employee Name<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                   class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label\">Mobile Number<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                   class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n            <div *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n              <div class=\"alert-danger\"> Enter  10 digit Mobile Number </div>\r\n            </div>\r\n            <div *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n              <div class=\"alert-danger\"> Enter Mobile Number </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--#incidentDate #disputeAmount #AtmID-->\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Email Address<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"email\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                   class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n            <div *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n              <div class=\"alert-danger\"> Enter Email ID </div>\r\n            </div>\r\n            <div *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n              <div class=\"alert-danger\"> Enter valid email address </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Rights</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" formControlName=\"RightsCode\">\r\n\r\n              <option value=\"1\">View</option>\r\n              <option value=\"2\">Edit</option>\r\n              <option value=\"3\">Both</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n          <div class=\"col-sm-12\">\r\n            <select class=\"form-control\" (change)=\"RolesInput($event)\"\r\n                    formControlName=\"RoleCode\">\r\n\r\n              <option value=\"1\">ADMIN</option>\r\n              <option value=\"2\">HO</option>\r\n              <option value=\"3\">MSP</option>\r\n              <option value=\"4\">Location</option>\r\n              <option value=\"5\">HO_Manager</option>\r\n              <option value=\"6\">Location_Manager</option>\r\n              <option value=\"7\">MIS_User</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n\r\n      <div class=\"col-sm-4\" *ngIf=\"isMSPSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">MSP Category<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <input type=\"text\" formControlName=\"MspCategory\" id=\"mspcategory\"\r\n                   *ngIf=\"isMSPSelected\" class=\"form-control input-sm\" placeholder=\"MSP Category\">\r\n            <div *ngIf=\"isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched\">\r\n              <div class=\"alert-danger\"> Enter MSP Catogory </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\" *ngIf=\"isLocationSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown name=\"region\"\r\n                                     [placeholder]=\"'Select Region'\" [data]=\"Countries2\" formControlName=\"Region\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeCountry($event)\" (onSelect)=\"changeCountry($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-4\" *ngIf=\"isLocationSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"region\"\r\n                                     [placeholder]=\"'Select Location'\" [data]=\"states2\" formControlName=\"Location\"\r\n                                     [settings]=\"dropdownSettings2\" (onDeSelect)=\"removeState($event)\" (onSelect)=\"changeState($event)\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-4\" *ngIf=\"isLocationSelected\">\r\n        <div class=\"form-group row\">\r\n          <label class=\"col-sm-12 col-form-label \">Select Region<a style=\"color:red\">*</a></label>\r\n          <div class=\"col-sm-12\">\r\n            <ng-multiselect-dropdown *ngIf=\"isLocationSelected\" name=\"hub\"\r\n                                     [placeholder]=\"'Select Hub'\" [data]=\"cities2\" formControlName=\"Hub\"\r\n                                     [settings]=\"dropdownSettings\">\r\n            </ng-multiselect-dropdown>\r\n            <div *ngIf=\"isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched\">\r\n              <div class=\"alert-danger\"> Enter Hub Catogory </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-4\">\r\n        <input type=\"checkbox\" formControlName=\"IsActive\" data-md-icheck (change)=\"toggleVisibility($event)\" />\r\n        <span *ngIf=\"active\"> Active</span><span *ngIf=\"!active\"> InActive</span>\r\n\r\n        <span class=\"checkmark\"></span>\r\n      </div>\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"form-group row\">\r\n          <div class=\"col-sm-12 text_center\">\r\n            <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Update\"\r\n                   class=\"btn btn-info float-center\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </form>\r\n</app-card>\r\n\r\n\r\n\r\n<!--<div class=\"container\">\r\n  <div class=\"row centered-form\">\r\n    <div class=\"col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3\">\r\n      <button class=\"btn btn-primary\" (click)=\"goToPage('/show_data');\">Show</button>\r\n      <button class=\"btn btn-primary\" (click)=\"goToPage('/create_element');\">Create</button>\r\n      <div class=\"panel panel-default\">\r\n        <div class=\"panel-heading\">\r\n          <h2 class=\"text-center\"> Edit Data</h2>\r\n          <a class=\"nav-item nav-link-edit\" [routerLink]=\"['/show_data']\">Back</a>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n          <p *ngIf=\"dataSaved\" style=\"color:rgb(0, 128, 0);font-size:20px;font-weight:bold\" Class=\"success\"\r\n             align=\"left\">\r\n            {{massage}}\r\n          </p>\r\n          <span *ngIf=\"errorFound\">\r\n            <span class=\"alert-danger\"> {{massage}} </span>\r\n          </span>\r\n          <form [formGroup]=\"employeeForm\" (ngSubmit)=\"onFormSubmit()\">\r\n\r\n            <div class=\"form-group\">\r\n              <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"EmployeeName\" id=\"EmployeeName\"\r\n                     class=\"form-control input-sm\" placeholder=\"Name *\" required>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"number\" formControlName=\"MobileNumber\" id=\"MobileNumber\"\r\n                         class=\"form-control input-sm\" placeholder=\"Mobile *\" required>\r\n                  <span *ngIf=\"!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched\">\r\n                    <span class=\"alert-danger\"> Enter Mobile Number </span>\r\n                  </span>\r\n                  <span *ngIf=\"employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid\">\r\n                    <span class=\"alert-danger\"> Enter valid Mobile Number </span>\r\n                  </span>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"text\" formControlName=\"EmailId\" id=\"EmailId\"\r\n                         class=\"form-control input-sm\" placeholder=\"Email *\" required email>\r\n                  <span *ngIf=\"!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched\">\r\n                    <span class=\"alert-danger\"> Enter Email ID </span>\r\n                  </span>\r\n                  <span *ngIf=\"employeeForm.get('EmailId').value && !employeeForm.get('EmailId').valid\">\r\n                    <span class=\"alert-danger\"> Enter valid email address </span>\r\n                  </span>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"text\" [attr.disabled]=\"true\" formControlName=\"Type_EmpCode\"\r\n                         id=\"Type_EmpCode\" class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <input type=\"text\" formControlName=\"Password\" id=\"Password\"\r\n                         class=\"form-control input-sm\" placeholder=\"Password\">\r\n                  <span *ngIf=\"employeeForm.get('Password').value && !employeeForm.get('Password').valid\">\r\n                    <span class=\"alert-danger\"> Password must contain minimum 6 letter </span>\r\n                  </span>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <div class=\"row\">\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <select class=\"form-control\" formControlName=\"RoleCode\">\r\n                    <option selected=\"\">Roles</option>\r\n                    <option value=\"1\">ADMIN</option>\r\n                    <option value=\"2\">HO</option>\r\n                    <option value=\"3\">MSP</option>\r\n                    <option value=\"4\">Location</option>\r\n                    <option value=\"5\">HO_Manager</option>\r\n                    <option value=\"6\">Location_Manager</option>\r\n                    <option value=\"7\">MIS_User</option>\r\n                  </select>\r\n                </div>\r\n              </div>\r\n              <div class=\"col-xs-6 col-sm-6 col-md-6\">\r\n                <div class=\"form-group\">\r\n                  <select class=\"form-control\" formControlName=\"RightsCode\">\r\n                    <option selected=\"\">Rights</option>\r\n                    <option value=\"1\">View</option>\r\n                    <option value=\"2\">Edit</option>\r\n                  </select>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            <input type=\"checkbox\" formControlName=\"IsActive\" data-md-icheck (change)=\"toggleVisibility($event)\" />\r\n            <span *ngIf=\"active\"> Active</span><span *ngIf=\"!active\"> InActive</span>\r\n\r\n            <span class=\"checkmark\"></span>\r\n            <input type=\"submit\" [disabled]=\"!employeeForm.valid\" value=\"Update\"\r\n                   class=\"btn btn-info btn-block\">\r\n\r\n            <button type=\"button\" class=\"btn btn-danger btn-block\" (click)=\"deleteEmployee(employeeForm.get('Type_EmpCode').value)\">Delete</button>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div-->\r\n"
 
 /***/ }),
 
@@ -552,6 +641,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _addEmployee_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../addEmployee.service */ "./src/app/Employee/addEmployee.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/DataService */ "./src/app/services/DataService.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -567,14 +657,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var EditempComponent = /** @class */ (function () {
     function EditempComponent(formbulider, 
     //   private httpService: HttpClient,
-    route, router, employeeService) {
+    route, router, ds, employeeService) {
         var _this = this;
         this.formbulider = formbulider;
         this.route = route;
         this.router = router;
+        this.ds = ds;
         this.employeeService = employeeService;
         this.dataSaved = false;
         this.employeeIdUpdate = null;
@@ -590,8 +682,25 @@ var EditempComponent = /** @class */ (function () {
         this.errorFound = false;
         this.isLocationSelected = false;
         this.isMSPSelected = false;
+        this.ds.ShowHideToasty({
+            title: 'Loading...',
+            msg: '',
+            showClose: false,
+            theme: 'bootstrap',
+            type: 'wait',
+            closeOther: true
+        });
         this.employeeService.getLocationDetail().subscribe(function (res) {
-            console.log(res);
+            // console.log(res);
+            _this.ds.ShowHideToasty({
+                title: 'Edit Employee Here',
+                msg: '',
+                showClose: true,
+                theme: 'bootstrap',
+                type: 'success',
+                closeOther: true,
+                timeout: 3000
+            });
             _this.Countries = res;
             _this.Countries.forEach(function (element) {
                 _this.Countries2.push(element.RoName);
@@ -609,15 +718,28 @@ var EditempComponent = /** @class */ (function () {
             Password: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(6)]],
             RoleCode: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
             RightsCode: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
-            IsActive: [true]
+            IsActive: [true],
+            MspCategory: [''],
+            Region: [''],
+            Location: [''],
+            Hub: ['']
         });
         this.loadEmployeeToEdit(this.route.snapshot.params.id);
     };
     EditempComponent.prototype.UpdateEmployee = function (employee) {
+        var _this = this;
         //  console.log("1");
         //     employee.Type_EmpCode = this.employeeIdUpdate;  
         //     console.log("1");
-        var _this = this;
+        this.ds.ShowHideToasty({
+            title: 'Please Wait...',
+            msg: '',
+            showClose: false,
+            theme: 'bootstrap',
+            type: 'wait',
+            closeOther: true
+        });
+        employee.createdBy = this.employeeService.empCode;
         this.employeeService.updateEmployee(employee).subscribe(function (response) {
             console.log(response);
             if (response == "0") {
@@ -632,6 +754,15 @@ var EditempComponent = /** @class */ (function () {
                 _this.massage = "Error in update";
             }
             else {
+                _this.ds.ShowHideToasty({
+                    title: 'Record Updated Successfully',
+                    msg: '',
+                    showClose: true,
+                    theme: 'bootstrap',
+                    type: 'success',
+                    closeOther: true,
+                    timeout: 5000
+                });
                 _this.dataSaved = true;
                 _this.massage = 'Record Updated Successfully';
                 // this.loadAllEmployees();  
@@ -745,7 +876,7 @@ var EditempComponent = /** @class */ (function () {
             this.isMSPSelected = false;
         }
         if (selected == "4" || selected == "6") {
-            this.isLocationSelected = true;
+            this.isLocationSelected = false;
         }
         else {
             this.isLocationSelected = false;
@@ -764,6 +895,7 @@ var EditempComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__["DataService"],
             _addEmployee_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeService"]])
     ], EditempComponent);
     return EditempComponent;
@@ -791,7 +923,7 @@ module.exports = ".topleft {\r\n  position: absolute;\r\n  top: 8px;\r\n  left: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-card [title]=\"'Employee Viewer'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\"\r\n          [showBack]=\"mainGridShow\" [showDownload]=\"showDownload\" (onDownload)=\"downloadFile();\"\r\n          [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"container py-5\" style=\"font-size: 13px; font-family: Verdana; \">\r\n    <button class=\"btn btn-primary\" (click)=\"goToPage('/show_data');\">Show</button>\r\n    <button class=\"btn btn-primary\" (click)=\"goToPage('/Employee/CreateEmployee');\">Create</button>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <jqxGrid jqx-grid-energyblue #myGrid [width]=getWidth()\r\n                     [source]=\"dataAdapter\" [autoheight]=\"true\"\r\n                     [altrows]=\"true\" [columns]=\"columns\"\r\n                     (onCellselect)=\"myGridOnCellSelect($event)\"\r\n                     [filterable]=\"false\" [columnsresize]=\"true\"\r\n                     [sortable]=\"true\" [autoshowloadelement]=\"true\"\r\n                     [height]='620'\r\n                     [theme]=\"'energyblue'\" [rowsheight]=\"75\"\r\n                     [pageable]=\"true\" [pagesizeoptions]=\"['10', '20', '30']\"\r\n                     [selectionmode]=\"'multiplecellsadvanced'\">\r\n            </jqxGrid>\r\n          </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n</app-card>\r\n"
+module.exports = "<app-card [title]=\"'Employee Viewer'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\"\r\n          [showBack]=\"mainGridShow\" [showDownload]=\"showDownload\" (onDownload)=\"downloadFile();\"\r\n          [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"searchForm\" (ngSubmit)=\"onFormSubmit()\">\r\n       \r\n          <div class=\"row\">\r\n            <div class=\"col-lg-2\">\r\n              <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n              <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\"\r\n                     class=\"form-control input-sm\" placeholder=\"Code *\" required>\r\n\r\n            </div>\r\n          </div>\r\n          <div class=\"row space\">\r\n            <div class=\"col-sm-12\">\r\n              <div class=\"row\">\r\n                <div class=\"col-sm-6\">\r\n                  <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\r\n                </div>\r\n              </div>\r\n\r\n            </div>\r\n\r\n          </div>\r\n\r\n        </form>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"col-sm-12 \">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-6\">\r\n            <div class=\"col-sm-12\">\r\n              <div class=\"icofont-2x\" style=\"color:dodgerblue\">Employee Details</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"col-sm-6\" [hidden]=\"hidefromLocation\">\r\n            <div class=\"col-sm-12\">\r\n              <a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/CreateEmployee');\">\r\n                <i class=\"icofont icofont-contact-add float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Create Employee</span>\r\n                </i>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <!--  <button class=\"btn btn-primary\" (click)=\"goToPage('/Employee/CreateEmployee');\">Create</button>-->\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <jqxGrid jqx-grid-energyblue #myGrid [width]=getWidth()\r\n                     [source]=\"dataAdapter\" [autoheight]=\"true\"\r\n                     [altrows]=\"true\" [columns]=\"columns\"\r\n                     (onCellselect)=\"myGridOnCellSelect($event)\"\r\n                     [filterable]=\"false\" [columnsresize]=\"true\"\r\n                     [sortable]=\"false\" [autoshowloadelement]=\"true\"\r\n                     [height]='620'\r\n                     [theme]=\"'energyblue'\" [rowsheight]=\"55\"\r\n                     [pageable]=\"true\" [pagesizeoptions]=\"['10', '20', '30']\"\r\n                     [selectionmode]=\"'multiplecellsadvanced'\">\r\n            </jqxGrid>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</app-card>\r\n"
 
 /***/ }),
 
@@ -809,6 +941,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jqwidgets_scripts_jqwidgets_ts_angular_jqxgrid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid */ "./node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid.ts");
 /* harmony import */ var _addEmployee_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../addEmployee.service */ "./src/app/Employee/addEmployee.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -823,9 +956,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 //import { HttpClient } from '@angular/common/http';
 
+
 var ShowemployeeComponent = /** @class */ (function () {
-    function ShowemployeeComponent(employeeService, router) {
+    function ShowemployeeComponent(employeeService, formbulider, router) {
         this.employeeService = employeeService;
+        this.formbulider = formbulider;
         this.router = router;
         this.source = {
             localdata: null,
@@ -844,19 +979,54 @@ var ShowemployeeComponent = /** @class */ (function () {
         this.codeCellrenderer = function (row, column, value, defaulthtml, columnproperties, rowselect) {
             return '<a style="color:dodgerblue;margin: 10px; font-size: small;margin-left: 8px; float: left; position: relative;cursor:pointer;"> ' + value + '<br></a>';
         };
+        this.detailCellrenderer = function (row, column, value, defaulthtml, columnproperties, rowselect) {
+            if (value != "") {
+                switch (rowselect.IsActive) {
+                    case true:
+                    case 1:
+                        return value + '<br><i class="icofont icofont-square" style="font-size: 15px;color:limegreen">&nbsp;Active</i></a>';
+                        break;
+                    default:
+                        return value + '<br><i class="icofont icofont-square" style="font-size: 15px;color:red;visibility: hidden;">&nbsp;InActive</i></a>';
+                        break;
+                }
+            }
+        };
         this.columns = [
-            { text: 'ID', datafield: 'ID', align: 'centre', cellsalign: 'centre', width: 50 },
-            { text: 'Type_EmpCode', datafield: 'Type_EmpCode', align: 'centre', cellsalign: 'centre', cellsrenderer: this.codeCellrenderer, width: 200 },
-            { text: 'Details', datafield: 'Viewcomment', align: 'centre', cellsalign: 'centre' },
+            //{ text: 'ID', datafield: 'ID', align: 'centre', cellsalign: 'centre', width: 50 },
+            { text: 'Employee Code', datafield: 'Type_EmpCode', align: 'centre', cellsalign: 'centre', cellsrenderer: this.codeCellrenderer, width: 200 },
+            { text: 'Details', datafield: 'Viewcomment', align: 'centre', cellsalign: 'centre', cellsrenderer: this.detailCellrenderer },
         ];
+        this.searchForm = this.formbulider.group({
+            Type_EmpCode: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]],
+        });
     }
+    ShowemployeeComponent.prototype.onFormSubmit = function () {
+        var _this = this;
+        var employeeID = this.searchForm.value;
+        console.log(employeeID.Type_EmpCode);
+        if (employeeID.Type_EmpCode == "") {
+            this.employeeService.getEmployeeLimited().subscribe(function (res) {
+                // console.log(res)
+                _this.source.localdata = res;
+                _this.myGrid.updatebounddata();
+            });
+        }
+        else {
+            this.employeeService.getEmployeeLimitedByID(employeeID.Type_EmpCode).subscribe(function (res) {
+                // console.log(res)
+                _this.source.localdata = res;
+                _this.myGrid.updatebounddata();
+            });
+        }
+    };
     ShowemployeeComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         this.myGrid.showloadelement();
         // this.getData();
         // console.log(this.employeeService.getAllEmployee2());
         this.employeeService.getEmployeeLimited().subscribe(function (res) {
-            console.log(res);
+            // console.log(res)
             _this.source.localdata = res;
             _this.myGrid.updatebounddata();
         });
@@ -893,6 +1063,7 @@ var ShowemployeeComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./showemployee.component.css */ "./src/app/Employee/showemployee/showemployee.component.css")]
         }),
         __metadata("design:paramtypes", [_addEmployee_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeService"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], ShowemployeeComponent);
     return ShowemployeeComponent;

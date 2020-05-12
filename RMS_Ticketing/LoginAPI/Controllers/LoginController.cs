@@ -84,7 +84,7 @@ namespace LoginAPI.Controllers
 
         }
 
-        [HttpPost]
+       /* [HttpPost]
         [Route("PostNewEmployee")]
         //Get action methods of the previous section
         public IHttpActionResult PostNewEmployee(Employee_Role emp)
@@ -109,15 +109,15 @@ namespace LoginAPI.Controllers
                     CreatedDate = now,
                     FromDate = now,
                     IsActive = true,
-                    MspCategory = emp.MspCategory
-
+                    MspCategory = emp.MspCategory,
+                    CreatedBy = emp.CreatedBy
                 });
 
                 ctx.SaveChanges();
 
                 if (emp.RoleCode == 4 || emp.RoleCode == 6)
                 {
-                    /*atmmaster amm = objEntity.atmmasters.Where(e => e.HubLocationCode);*/
+                   
                     var result = db.atm_master.Select(m => new
                     {
                         m.RoCode,
@@ -168,7 +168,7 @@ namespace LoginAPI.Controllers
                              where RR.RoleCode == N.TypeCode
                                    && N.Type == "Rights"
 
-                             where RR.Type == "Employees"
+                             where RR.Type == "Employees" && RR.IsActive == true
                              select new
                              {
                                  ID = RR.ID,
@@ -191,7 +191,7 @@ namespace LoginAPI.Controllers
                     string Empty = "NULL";
                     Employee_info viewer = new Employee_info();
                     viewer.ID = list.ID;
-                    viewer.Type_EmpCode = "<a href=''>" + list.Type_EmpCode + "</a>";
+                    viewer.Type_EmpCode = list.Type_EmpCode;
                     viewer.Viewcomment = string.Format(
                         "{0}{1}Employee Name:{2}{4} {0}{1}Mobile Number:{2}{5}{3}" +
                         "{0}{1}Email ID:{2}{6} {0}{1}Role:{2}{7} {3}" +
@@ -206,10 +206,7 @@ namespace LoginAPI.Controllers
 
                     employeeViewers.Add(viewer);
                 }
-                    /* var query = from RR in objEntity.employee_role
-                                 where RR.Type == "Employees"
-                                 join p in objEntity.employee_role on RR.RoleCode equals p.TypeCode
-                                 select new { RR, RoleName = p.Type_EmpCode };*/
+                   
                     return Ok(employeeViewers);
             }
             catch (Exception ex)
@@ -222,7 +219,7 @@ namespace LoginAPI.Controllers
         public IHttpActionResult GetEmaployeeById(string employeeId)
         {
             //Employee_Role objEmp = new Employee_Role();
-            /*int ID = Convert.ToInt32(employeeId);*/
+          
 
             try
             {
@@ -232,7 +229,7 @@ namespace LoginAPI.Controllers
             catch (Exception ex)
             {
                 return NotFound();
-                /* throw;*/ 
+                 
 
             }
 
@@ -292,7 +289,7 @@ namespace LoginAPI.Controllers
                     objEmp.RoleCode = employee.RoleCode;
                     objEmp.RightsCode = employee.RightsCode;
                     objEmp.ModifiedDate = now;
-
+                    objEmp.ModifiedBy = employee.CreatedBy;
                 }
                 int i = this.db.SaveChanges();
 
@@ -318,6 +315,6 @@ namespace LoginAPI.Controllers
             db.SaveChanges();
 
             return Ok(emaployee);
-        }
+        }*/
     }
 }

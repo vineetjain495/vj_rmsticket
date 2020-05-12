@@ -22,5 +22,6 @@ namespace WebApp
             HttpConfiguration config = new HttpConfiguration(); 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
         }
+       
     }
 }
