@@ -29,6 +29,10 @@ export class AddEmployeeComponent implements OnInit {
   states2: Array<any> = [];
   cities: Array<any>;
   cities2: Array<any> = [];
+  roles: Array<any>[] = [];
+  rights: Array<any> = [];
+  //roles2: Array<any> = [];
+  //rights2: Array<any> = [];
   disabled = false;
 ShowFilter = false;
 limitSelection = false;
@@ -59,8 +63,27 @@ dropdownSettings: any = {};
       type: 'wait',
       closeOther: true
     });
+    this.employeeService.getRolesDetail().subscribe((res: any) => {
+      //res;
+      res.forEach((element) => {
+        
+        if (element.Type == "Roles") {
+          //console.log(element);
+          
+          this.roles.push([element.TypeCode, element.Type_EmpCode]);
+        
+        }
+        if (element.Type == "Rights") {
+          //console.log(element);
+
+          this.rights.push([element.TypeCode, element.Type_EmpCode]);
+
+        }
+      });
+    });
+   // console.log(this.roles)
     this.employeeService.getLocationDetail().subscribe((res: any) => {
-      //console.log(res);
+     // console.log(res);
       this.ds.ShowHideToasty({
         title: 'Create Employee Here',
         msg: '',
@@ -234,7 +257,8 @@ dropdownSettings: any = {};
             console.log(this.massage);
             // this.loadAllEmployees();  
             this.employeeIdUpdate = null;
-            // this.employeeForm.reset();  
+            // this.employeeForm.reset();
+            this.router.navigateByUrl('/Employee');
           }
           );
        
@@ -265,12 +289,13 @@ dropdownSettings: any = {};
           this.codeAvailable = true;
 
           this.ds.ShowHideToasty({
-            title: 'Failure..',
+            title: 'Note..',
             msg: 'This code is already available',
             showClose: true,
             theme: 'bootstrap',
             type: 'error',
             closeOther: true,
+            timeout: 10000
           });
           this.massage = "This code is already available";
           this.cities = [];
@@ -290,7 +315,7 @@ dropdownSettings: any = {};
   }
   RolesInput(event) {
     let selected = event.target.value;
-    if (selected == "3") {
+    if (selected == "2") {
       this.isMSPSelected = true;
     } else {
       this.isMSPSelected = false;

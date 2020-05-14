@@ -93,7 +93,8 @@ export class LoginComponent implements OnInit {
               closeOther: true,
               timeout: 5000
             });
-            this.router.navigateByUrl('/TicketViewer');
+           // this.router.navigateByUrl('/TicketViewer');
+            this.router.navigateByUrl('/Employee');
           }
           //if (this.modelEmployeeMaster.ResetPassword) {
           //            this.router.navigateByUrl('/ResetPassword');

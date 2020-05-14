@@ -1,5 +1,5 @@
 <app-card [title]="'Employee Viewer'" [blockClass]="'tran-data'" [showRightSection]="'false'"
-          [showBack]="mainGridShow" [showDownload]="showDownload" (onDownload)="downloadFile();"
+          [showBack]="mainGridShow" 
           [cardToggle]="cardToggleGrid">
   <div class="row">
     <div class="col-sm-12">
@@ -16,7 +16,7 @@
           <div class="row space">
             <div class="col-sm-12">
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12 text-center">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </div>
@@ -64,8 +64,8 @@
                      (onCellselect)="myGridOnCellSelect($event)"
                      [filterable]="false" [columnsresize]="true"
                      [sortable]="false" [autoshowloadelement]="true"
-                     [height]='620'
-                     [theme]="'energyblue'" [rowsheight]="55"
+                     [height]='620' [showheader]="false"
+                     [theme]="'energyblue'" [rowsheight]="75"
                      [pageable]="true" [pagesizeoptions]="['10', '20', '30']"
                      [selectionmode]="'multiplecellsadvanced'">
             </jqxGrid>

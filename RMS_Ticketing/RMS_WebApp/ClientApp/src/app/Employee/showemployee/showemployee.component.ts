@@ -4,6 +4,7 @@ import { EmployeeService } from '../addEmployee.service';
 //import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DataService } from 'src/app/services/DataService';
 @Component({
   selector: 'app-showemployee',
   templateUrl: './showemployee.component.html',
@@ -16,6 +17,7 @@ export class ShowemployeeComponent implements  AfterViewInit {
   searchForm: any;
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
+    private ds: DataService,
       private router: Router,
   ) {
 
@@ -25,7 +27,14 @@ export class ShowemployeeComponent implements  AfterViewInit {
     });
   }
   onFormSubmit() {
-   
+    this.ds.ShowHideToasty({
+      title: 'Searching..',
+      msg: '',
+      showClose: false,
+      theme: 'bootstrap',
+      type: 'wait',
+      closeOther: true,
+    });
     const employeeID = this.searchForm.value;
     console.log(employeeID.Type_EmpCode);
     if (employeeID.Type_EmpCode == "") {
@@ -33,7 +42,15 @@ export class ShowemployeeComponent implements  AfterViewInit {
         // console.log(res)
         this.source.localdata = res;
         this.myGrid.updatebounddata();
-
+        this.ds.ShowHideToasty({
+          title: 'Search Completed',
+          msg: '',
+          showClose: true,
+          theme: 'bootstrap',
+          type: 'success',
+          closeOther: true,
+          timeout: 5000
+        });
 
       });
 
@@ -43,7 +60,15 @@ export class ShowemployeeComponent implements  AfterViewInit {
         // console.log(res)
         this.source.localdata = res;
         this.myGrid.updatebounddata();
-
+         this.ds.ShowHideToasty({
+          title: 'Search Completed',
+          msg: '',
+          showClose: true,
+          theme: 'bootstrap',
+          type: 'success',
+          closeOther: true,
+          timeout: 5000
+        });
 
       });
 
@@ -70,7 +95,9 @@ export class ShowemployeeComponent implements  AfterViewInit {
       datafields: [
         { name: 'ID', type: 'number' },
         { name: 'Type_EmpCode', type: 'string' },
-        { name: 'Viewcomment', type: 'string' }
+        { name: 'IsActive', type: 'boolean' },
+        { name: 'Viewcomment', type: 'string' },
+        
     /*    { name: 'MobileNumber', type: 'int' },
         { name: 'EmailID', type: 'string' },
         { name: 'RoleName', type: 'string' },
@@ -81,12 +108,8 @@ export class ShowemployeeComponent implements  AfterViewInit {
     };
   
     dataAdapter: any = new jqx.dataAdapter(this.source);
-    getWidth() : any {
-      if (document.body.offsetWidth < 1350) {
-        return '90%';
-      }
-      
-      return 1050;
+  getWidth(): any {
+    return '98%';
   }
   
     myGridOnCellSelect(event: any): any {
@@ -107,11 +130,11 @@ export class ShowemployeeComponent implements  AfterViewInit {
     // localStorage.setItem('TicketId', requestTicketId);    
   }
   detailCellrenderer = (row, column, value, defaulthtml, columnproperties, rowselect): any => {
-
+    console.log(rowselect + " " + rowselect.IsActive);
   if (value != "") {
     switch (rowselect.IsActive) {
-      case true : case 1: return  value + '<br><i class="icofont icofont-square" style="font-size: 15px;color:limegreen">&nbsp;Active</i></a>'; break;
-      default: return  value + '<br><i class="icofont icofont-square" style="font-size: 15px;color:red;visibility: hidden;">&nbsp;InActive</i></a>'; break;
+      case true: return value + '<br>&nbsp;<i class="icofont icofont-square" style="font-size: 15px;color:limegreen">&nbsp;Active</i></a>'; break;
+      default: return value + '<br>&nbsp;<i class="icofont icofont-square" style="font-size: 15px;color:red">&nbsp;InActive</i></a>'; break;
     }
 
   }

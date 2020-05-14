@@ -25,6 +25,9 @@ import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
   getAllEmployee2() {  
     return this.http.get(baseUrl + '/AllEmployeelimited');  
   }*/
+   getRolesDetail() {
+     return this.http.get(baseUrl + 'Employee/RolesDetail');
+   }
   getLocationDetail() {
      return this.http.get(baseUrl + 'Employee/LocatioDetail');
   }

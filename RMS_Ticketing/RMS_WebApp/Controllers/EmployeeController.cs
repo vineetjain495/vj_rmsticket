@@ -36,7 +36,8 @@ namespace WebApp.Controllers
 {
     public class EmployeeController : Controller
     {
-
+        RestClient restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+        HttpClient client = new HttpClient();
         [HttpPost]
         public ActionResult NewEmployee(Employee_Role employee_Role)
         {
@@ -44,11 +45,11 @@ namespace WebApp.Controllers
             try
             {
                
-                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+                //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
 
                 var serviceUrl = "Api/Employee/PostNewEmployee";
                
-                HttpClient client = new HttpClient();
+                //HttpClient client = new HttpClient();
                 //client.BaseAddress = new Uri("http://localhost:59390/");
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                 // Add an Accept header for JSON format.    
@@ -83,14 +84,14 @@ namespace WebApp.Controllers
             try
             {
 
-                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+                //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
 
                 var serviceUrl = "Api/Employee/UpdateEmployeeDetails";
                 /* var request = new RestRequest(Method.POST) { Resource = serviceUrl, RequestFormat = DataFormat.Json };
                  //request.AddJsonBody(requestInput);  
                  UserMaster customers = JsonConvert.DeserializeObject<UserMaster>(restClient.Post(request).Content);
                  return View(customers);*/
-                HttpClient client = new HttpClient();
+                //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                 // Add an Accept header for JSON format.    
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -137,11 +138,11 @@ namespace WebApp.Controllers
             try
             {
 
-                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+                //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
 
                 var serviceUrl = "Api/Employee/GetEmployeelimitedById";
 
-                HttpClient client = new HttpClient();
+                //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                 // Add an Accept header for JSON format.    
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -172,11 +173,11 @@ namespace WebApp.Controllers
             try
             {
 
-                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+                //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
 
                 var serviceUrl = "Api/Employee/AllEmployeelimited";
                 
-                HttpClient client = new HttpClient();
+                //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                 // Add an Accept header for JSON format.    
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -207,15 +208,50 @@ namespace WebApp.Controllers
             try
             {
 
-                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+               // var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
 
                 var serviceUrl = "Api/Employee/GetLocatioDetail";
               
-                HttpClient client = new HttpClient();
+                //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 
+                HttpResponseMessage response = client.GetAsync(serviceUrl).Result;  // Blocking call!    
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    object a = j.Deserialize(jsonString, typeof(object));
+                    return Json(a, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
+        [HttpGet]
+        public JsonResult RolesDetail()
+        {
+            try
+            {
+
+               // var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+
+                var serviceUrl = "Api/Employee/GetRolesDetail";
+
+                
+                client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
                 HttpResponseMessage response = client.GetAsync(serviceUrl).Result;  // Blocking call!    
                 if (response.IsSuccessStatusCode)
                 {
@@ -242,11 +278,11 @@ namespace WebApp.Controllers
             try
             {
 
-                var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+               
 
                 var serviceUrl = "Api/Employee/GetEmployeeDetailsById";
               
-                HttpClient client = new HttpClient();
+                //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                 // Add an Accept header for JSON format.    
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -81,6 +81,7 @@ namespace LoginAPI.Controllers
                             Region_code = value.RoCode,
                             Loc_Code = value.LocationCode,
                             Hub_Location_Code = value.HubLocationCode,
+                            CreatedBy = emp.CreatedBy,
                             CreatedDate = now,
                             FromDate = now,
                             IsActive = true
@@ -113,6 +114,7 @@ namespace LoginAPI.Controllers
                                    && N.Type == "Rights"
 
                              where RR.Type == "Employees" && (RR.IsActive == true || RR.IsActive == false)
+                             orderby RR.IsActive descending
                              select new
                              {
                                  ID = RR.ID,
@@ -138,9 +140,9 @@ namespace LoginAPI.Controllers
                     viewer.Type_EmpCode = list.Type_EmpCode;
                     viewer.IsActive = list.IsActive;
                     viewer.Viewcomment = string.Format(
-                        "{1}Employee Name:{2}{4} {0}{1}Mobile Number:{2}{5}{3}" +
-                        "{0}{1}Email ID:{2}{6} {0}{1}Role:{2}{7} {3}" +
-                        "{0}{1}Rights:{2}{8}",
+                        "{0}{1}Employee Name:{2}{0}{4} {0}{1}Mobile Number:{2}{0}{5}{3}" +
+                        "{0}{1}Email ID:{2}{0}{6} {0}{1}Role:{2}{0}{7} {3}" +
+                        "{0}{1}Rights:{2}{0}{8}",
                         "&nbsp;", "<b>", "</b>", "<br>",
                         !string.IsNullOrEmpty(list.EmployeeName) ? list.EmployeeName : list.EmployeeName,
                         !string.IsNullOrEmpty(list.MobileNumber) ? list.MobileNumber : Empty,
@@ -205,7 +207,7 @@ namespace LoginAPI.Controllers
                     viewer.Type_EmpCode = list.Type_EmpCode;
                     viewer.IsActive = list.IsActive;
                     viewer.Viewcomment = string.Format(
-                        "{1}Employee Name:{2}{4} {0}{1}Mobile Number:{2}{5}{3}" +
+                        "{0}{1}Employee Name:{2}{4} {0}{1}Mobile Number:{2}{5}{3}" +
                         "{0}{1}Email ID:{2}{6} {0}{1}Role:{2}{7} {3}" +
                         "{0}{1}Rights:{2}{8}",
                         "&nbsp;", "<b>", "</b>", "<br>",
@@ -274,6 +276,28 @@ namespace LoginAPI.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        [Route("GetRolesDetail")]
+        public IHttpActionResult GetRolesDetail()
+        {
+            try
+            {
+                var result = db.UserMaster.Select(m => new
+                {
+                    m.ID,
+                    m.Type,
+                    m.TypeCode,
+                    m.Type_EmpCode,
+                  
+                }).Where(e => e.Type == "Roles" || e.Type == "Rights").OrderBy(e => new { e.ID, e.Type });
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         [HttpPut]
         [Route("UpdateEmployeeDetails")]
         public IHttpActionResult PutEmaployeeMaster(Employee_Role employee)
@@ -296,6 +320,18 @@ namespace LoginAPI.Controllers
                         {
                             return Ok(0);
                         }
+                        else
+                        {
+                            if (employee.IsActive)
+                            {
+                                objEmp.FromDate = now;
+                            }
+                            else
+                            {
+                                objEmp.ToDate = now;
+                            }
+
+                        }
                     }
 
                     objEmp.EmployeeName = employee.EmployeeName;
@@ -306,6 +342,7 @@ namespace LoginAPI.Controllers
                     objEmp.RightsCode = employee.RightsCode;
                     objEmp.ModifiedDate = now;
                     objEmp.ModifiedBy = employee.CreatedBy;
+                    objEmp.IsActive = employee.IsActive;
                 }
                 int i = this.db.SaveChanges();
 

@@ -27,6 +27,8 @@ export class EditempComponent implements OnInit {
   states2: Array<any> = [];
   cities: Array<any>;
   cities2: Array<any> = [];
+  roles: Array<any>[] = [];
+  rights: Array<any> = [];
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -48,6 +50,24 @@ export class EditempComponent implements OnInit {
         theme: 'bootstrap',
         type: 'wait',
         closeOther: true
+      });
+      this.employeeService.getRolesDetail().subscribe((res: any) => {
+        //res;
+        res.forEach((element) => {
+
+          if (element.Type == "Roles") {
+            //console.log(element);
+
+            this.roles.push([element.TypeCode, element.Type_EmpCode]);
+
+          }
+          if (element.Type == "Rights") {
+            //console.log(element);
+
+            this.rights.push([element.TypeCode, element.Type_EmpCode]);
+
+          }
+        });
       });
       this.employeeService.getLocationDetail().subscribe((res: any) => {
        // console.log(res);
@@ -127,7 +147,8 @@ export class EditempComponent implements OnInit {
           this.massage = 'Record Updated Successfully';  
           // this.loadAllEmployees();  
           this.employeeIdUpdate = null;  
-          // this.employeeForm.reset();  
+          // this.employeeForm.reset();
+            this.router.navigateByUrl('/Employee');
         }
 
         });  
@@ -146,7 +167,12 @@ export class EditempComponent implements OnInit {
         this.employeeForm.controls['RoleCode'].setValue(response.RoleCode);  
         this.employeeForm.controls['RightsCode'].setValue(response.RightsCode); 
         this.employeeForm.controls['Type_EmpCode'].setValue(response.Type_EmpCode); 
-        this.employeeForm.controls['IsActive'].setValue(response.IsActive); 
+        this.employeeForm.controls['IsActive'].setValue(response.IsActive);
+        if (response.RoleCode == "2")
+        {
+          this.employeeForm.controls['MspCategory'].setValue(response.MspCategory);
+          this.isMSPSelected = true;
+        }
         // console.log(response.IsActive);
         // this.employeeForm.controls['EmpCode'].setValue(employee.EmpCode);  
       });  
@@ -233,7 +259,7 @@ export class EditempComponent implements OnInit {
   }
   RolesInput(event) {
     let selected = event.target.value;
-    if (selected == "3") {
+    if (selected == "2") {
       this.isMSPSelected = true;
     } else {
       this.isMSPSelected = false;
