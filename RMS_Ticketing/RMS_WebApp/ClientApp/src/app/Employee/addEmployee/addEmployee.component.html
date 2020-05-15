@@ -111,7 +111,7 @@
           <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown name="region"
-                                     [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region"
+                                     [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region" [(ngModel)]="selected_region"
                                      [settings]="dropdownSettings2" (onDeSelect)="removeCountry($event)" (onSelect)="changeCountry($event)">
             </ng-multiselect-dropdown>
           </div>
@@ -119,9 +119,9 @@
       </div>
       <div class="col-sm-4" *ngIf="isLocationSelected">
         <div class="form-group row">
-          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <label class="col-sm-12 col-form-label ">Select Location<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
+            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region" [(ngModel)]="selected_loc"
                                      [placeholder]="'Select Location'" [data]="states2" formControlName="Location"
                                      [settings]="dropdownSettings2" (onDeSelect)="removeState($event)" (onSelect)="changeState($event)">
             </ng-multiselect-dropdown>
@@ -131,9 +131,9 @@
 
       <div class="col-sm-4" *ngIf="isLocationSelected">
         <div class="form-group row">
-          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <label class="col-sm-12 col-form-label ">Select Hub<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub"
+            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub" [(ngModel)]="selected_hub"
                                      [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub"
                                      [settings]="dropdownSettings">
             </ng-multiselect-dropdown>

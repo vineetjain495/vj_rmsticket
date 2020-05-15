@@ -202,6 +202,43 @@ namespace WebApp.Controllers
             }
             return null;
         }
+
+        [HttpGet]
+        public JsonResult EmployeeDetails()
+        {
+            try
+            {
+
+                //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+
+                var serviceUrl = "Api/Employee/GetEmployeeDetails";
+
+                //HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
+                // Add an Accept header for JSON format.    
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // List all Names.    
+                HttpResponseMessage response = client.GetAsync(serviceUrl).Result;  // Blocking call!    
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    object a = j.Deserialize(jsonString, typeof(object));
+                    return Json(a, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
+
         [HttpGet]
         public JsonResult LocatioDetail()
         {
@@ -304,6 +341,38 @@ namespace WebApp.Controllers
             catch (Exception ex)
             {
 
+            }
+            return null;
+        }
+        [HttpGet]
+        public ActionResult EmployeeLocationById(string employeeId)
+        {
+            try
+            {
+                var serviceUrl = "Api/Employee/GetEmployeeLocationById";
+
+                //HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
+                // Add an Accept header for JSON format.    
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // List all Names.    
+                HttpResponseMessage response = client.GetAsync(serviceUrl + "/" + employeeId).Result;  // Blocking call!    
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    object a = j.Deserialize(jsonString, typeof(object));
+                    return Json(a, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
             return null;
         }

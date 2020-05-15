@@ -6,7 +6,7 @@ import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
 import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
 import { EditempComponent } from './Employee/editemp/editemp.component';
-
+import { UpdateTicketComponent } from './Employee/updateTicket/updateTicket.component';
 
 // Route config let's you map routes to components
 const routes: Routes = [
@@ -77,6 +77,9 @@ const routes: Routes = [
       },
       {
         path: 'Employee/edit_element/:id', component: EditempComponent
+      },
+      {
+        path: 'UpdateTicket/:id', component: UpdateTicketComponent
       },
 ]
 

@@ -36,7 +36,7 @@ export class ShowemployeeComponent implements  AfterViewInit {
       closeOther: true,
     });
     const employeeID = this.searchForm.value;
-    console.log(employeeID.Type_EmpCode);
+    //console.log(employeeID.Type_EmpCode);
     if (employeeID.Type_EmpCode == "") {
       this.employeeService.getEmployeeLimited().subscribe((res: any) => {
         // console.log(res)
@@ -130,7 +130,7 @@ export class ShowemployeeComponent implements  AfterViewInit {
     // localStorage.setItem('TicketId', requestTicketId);    
   }
   detailCellrenderer = (row, column, value, defaulthtml, columnproperties, rowselect): any => {
-    console.log(rowselect + " " + rowselect.IsActive);
+    //console.log(rowselect + " " + rowselect.IsActive);
   if (value != "") {
     switch (rowselect.IsActive) {
       case true: return value + '<br>&nbsp;<i class="icofont icofont-square" style="font-size: 15px;color:limegreen">&nbsp;Active</i></a>'; break;
@@ -153,7 +153,7 @@ export class ShowemployeeComponent implements  AfterViewInit {
   
   
   goToPage(pageName:string){
-    console.log(pageName);
+    //console.log(pageName);
     this.router.navigate([`${pageName}`]);
   }
   }

@@ -114,6 +114,12 @@ export class MainLayoutComponent implements OnInit {
               type: 'link',
               icon: 'ti-view-grid'
             },
+            {
+              state: 'UpdateTicket',
+              name: 'Ticket Assignment',
+              type: 'link',
+              icon: 'ti-view-grid'
+            }
           ],
         };
 

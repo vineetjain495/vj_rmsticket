@@ -24,6 +24,9 @@ export class AddEmployeeComponent implements OnInit {
   data_exist: any;
   Countries: Array<any>;
   Countries2: Array<any> = [];
+  selected_region: Array<any> = [];
+  selected_loc: Array<any> = [];
+  selected_hub: Array<any> = [];
   selectedCountry: String = "--Choose Country--";
   states: Array<any>;
   states2: Array<any> = [];
@@ -166,29 +169,48 @@ dropdownSettings: any = {};
   removeCountry(country) {
     this.states = this.Countries.filter(cntry => cntry.RoName == country);
     this.states.forEach((element) => {
-      console.log("remove" + element.LocationName);
+      //console.log("remove" + element.LocationName);
       const index = this.states2.indexOf(element.LocationName);
       if (index > -1) {
         this.states2.splice(index, 1);
-      }
-     // this.states2.pop(element.LocationName);
-      // this.empList.push(customObj);
+        const index_selection = this.selected_loc.indexOf(element.LocationName);
+        console.log("index" + index_selection);
+        if (index_selection > -1) {
+          this.selected_loc.splice(index_selection, 1);
+        }
+        // console.log(this.selected_loc);
+        this.removeState(element.LocationName);
 
-    });
-    this.states2 = this.states2.filter((el, i, a) => i === a.indexOf(el))
-  }
-  removeState(state) {
-    this.cities = this.states.filter(cntry => cntry.LocationName == state);
-    this.cities.forEach((element) => {
-     //  console.log("remove" + element.HubLocationName);
-      const index = this.cities2.indexOf(element.HubLocationName);
-      if (index > -1) {
-        this.cities2.splice(index, 1);
       }
       // this.states2.pop(element.LocationName);
       // this.empList.push(customObj);
 
     });
+
+    this.states2 = this.states2.filter((el, i, a) => i === a.indexOf(el));
+    this.selected_loc = this.selected_loc.filter((el, i, a) => i === a.indexOf(el));
+  }
+  removeState(state) {
+    this.cities = this.states.filter(cntry => cntry.LocationName == state);
+    this.cities.forEach((element) => {
+      console.log("remove" + element.HubLocationName);
+      const index = this.cities2.indexOf(element.HubLocationName);
+      if (index > -1) {
+        this.cities2.splice(index, 1);
+
+        const index_selection = this.selected_hub.indexOf(element.HubLocationName);
+        if (index_selection > -1) {
+          this.selected_hub.splice(index_selection, 1);
+        }
+        console.log(this.selected_hub);
+        //this.removeState(element.LocationName);
+
+      }
+      // this.states2.pop(element.LocationName);
+      // this.empList.push(customObj);
+
+    });
+    this.selected_hub = this.selected_hub.filter((el, i, a) => i === a.indexOf(el));
     this.cities2 = this.cities2.filter((el, i, a) => i === a.indexOf(el))
   }
   changeState(state) {

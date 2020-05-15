@@ -1,4 +1,4 @@
-<app-card [title]="'Edit Employee Detail'" [blockClass]="'tran-data'" [showRightSection]="'false'"  [cardToggle]="cardToggleGrid">
+<app-card [title]="'Edit Employee Detail'" [blockClass]="'tran-data'" [showRightSection]="'false'" [cardToggle]="cardToggleGrid">
 
   <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit()">
     <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold"
@@ -81,7 +81,7 @@
                     formControlName="RoleCode">
               <option *ngFor="let rl of roles" [value]="rl[0]">{{ rl[1] }}</option>
 
-             
+
             </select>
           </div>
         </div>
@@ -106,7 +106,7 @@
           <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown name="region"
-                                     [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region"
+                                     [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region" [(ngModel)]="selected_region"
                                      [settings]="dropdownSettings2" (onDeSelect)="removeCountry($event)" (onSelect)="changeCountry($event)">
             </ng-multiselect-dropdown>
           </div>
@@ -114,10 +114,10 @@
       </div>
       <div class="col-sm-4" *ngIf="isLocationSelected">
         <div class="form-group row">
-          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <label class="col-sm-12 col-form-label ">Select Location<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
-                                     [placeholder]="'Select Location'" [data]="states2" formControlName="Location"
+                                     [placeholder]="'Select Location'" [data]="states2" formControlName="Location" [(ngModel)]="selected_loc"
                                      [settings]="dropdownSettings2" (onDeSelect)="removeState($event)" (onSelect)="changeState($event)">
             </ng-multiselect-dropdown>
           </div>
@@ -126,9 +126,9 @@
 
       <div class="col-sm-4" *ngIf="isLocationSelected">
         <div class="form-group row">
-          <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
+          <label class="col-sm-12 col-form-label ">Select Hub<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub"
+            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub" [(ngModel)]="selected_hub"
                                      [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub"
                                      [settings]="dropdownSettings">
             </ng-multiselect-dropdown>
@@ -149,14 +149,25 @@
       <div class="col-sm-4">
         <div class="form-group row">
           <div class="col-sm-12 text-center">
-            <input type="submit" [disabled]="!employeeForm.valid" value="Update"
+            <input type="submit" [disabled]="!employeeForm.valid" value="Updates"
                    class="btn btn-info">
           </div>
         </div>
 
       </div>
+      <div class="col-sm-4" *ngIf="isTicketAvailable">
+        <div class="form-group row">
+          
+          <div class="col-sm-12">
+            <button type="button" class="btn btn-danger " (click)="goto_update()">Allocate ticket</button>
+          </div>
+        </div>
+      </div>
     </div>
+   
+
   </form>
+  
 </app-card>
 
 

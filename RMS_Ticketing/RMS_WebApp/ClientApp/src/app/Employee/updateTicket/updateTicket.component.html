@@ -1,0 +1,40 @@
+<app-card [title]="'Update Ticket Assignment'" [blockClass]="'tran-data'" [showRightSection]="'false'"
+          [showBack]="mainGridShow"
+          [cardToggle]="cardToggleGrid">
+  <div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="searchForm" (ngSubmit)="onFormSubmit()">
+
+        <div class="row">
+          <div class="col-lg-4">
+            <label class="col-lg-12 col-form-label">Employee ID</label>
+            <ng-multiselect-dropdown name="ticketEmployee"
+                                     [placeholder]="'Select Employee'" [data]="Emp_details" formControlName="Emp_ID"
+                                     [settings]="dropdownSettings2">
+            </ng-multiselect-dropdown>
+
+          </div>
+          <div class="col-lg-4">
+            <label class="col-lg-12 col-form-label">Replacing Employee Code</label>
+            <input type="text" formControlName="Last_Type_EmpCode" id="Last_Type_EmpCode"
+                   class="form-control input-sm" placeholder="Code *" required>
+          </div>
+        </div>
+        <div class="row space">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary">Update Ticket</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+ 
+</app-card>

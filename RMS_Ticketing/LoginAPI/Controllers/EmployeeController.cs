@@ -74,7 +74,7 @@ namespace LoginAPI.Controllers
 
                     foreach (var value in result)
                     {
-                        Console.WriteLine(value);
+                        //Console.WriteLine(value);
                         ctx.employee_Hierarchies.Add(new Employee_Hierarchy()
                         {
                             EmployeeCode = emp.Type_EmpCode,
@@ -101,38 +101,31 @@ namespace LoginAPI.Controllers
 
         [HttpGet]
         [Route("AllEmployeelimited")]
-        public IHttpActionResult GetEmaployeelimited()
+        public IHttpActionResult GetEmployeelimited()
         {
             try
             {
-                var query = (from RR in db.UserMaster
-                             from M in db.UserMaster
-                             where RR.RoleCode == M.TypeCode
-                                   && M.Type == "Roles"
-                             from N in db.UserMaster
-                             where RR.RoleCode == N.TypeCode
-                                   && N.Type == "Rights"
+                var objEmp = db.UserMaster.Select(RR => new
+                {
+                    ID = RR.ID,
+                    Type = RR.Type,
+                    Type_EmpCode = RR.Type_EmpCode,
+                    EmployeeName = RR.EmployeeName,
+                    MobileNumber = RR.MobileNumber,
+                    Password = RR.Password,
+                    EmailID = RR.EmailID,
+                    RoleCode = RR.RoleCode,
+                    RightsCode = RR.RightsCode,
+                    IsActive = RR.IsActive,
+                    RoleName = db.UserMaster.Where(e => e.TypeCode == RR.RoleCode
+                                   && e.Type == "Roles").Select(M => M.Type_EmpCode).FirstOrDefault(),
+                    RightsName = db.UserMaster.Where(e => e.TypeCode == RR.RightsCode
+                                   && e.Type == "Rights").Select(M => M.Type_EmpCode).FirstOrDefault(),
 
-                             where RR.Type == "Employees" && (RR.IsActive == true || RR.IsActive == false)
-                             orderby RR.IsActive descending
-                             select new
-                             {
-                                 ID = RR.ID,
-                                 Type_EmpCode = RR.Type_EmpCode,
-                                 EmployeeName = RR.EmployeeName,
-                                 MobileNumber = RR.MobileNumber,
-                                 Password = RR.Password,
-                                 EmailID = RR.EmailID,
-                                 RoleCode = RR.RoleCode,
-                                 RightsCode = RR.RightsCode,
-                                 IsActive = RR.IsActive,
-                                 RoleName = M.Type_EmpCode,
-                                 RightsName = N.Type_EmpCode,
-
-                             }
-                    ).ToList();
+                }).Where(i => i.Type == "Employees" && (i.IsActive == true || i.IsActive == false)).ToList();
+               
                 List<Employee_info> employeeViewers = new List<Employee_info>();
-                foreach (var list in query)
+                foreach (var list in objEmp)
                 {
                     string Empty = "NULL";
                     Employee_info viewer = new Employee_info();
@@ -173,33 +166,28 @@ namespace LoginAPI.Controllers
 
             try
             {
-                var query = (from RR in db.UserMaster
-                             from M in db.UserMaster
-                             where RR.RoleCode == M.TypeCode
-                                   && M.Type == "Roles"
-                             from N in db.UserMaster
-                             where RR.RoleCode == N.TypeCode
-                                   && N.Type == "Rights"
+                var objEmp = db.UserMaster.Select(RR => new
+                {
+                    ID = RR.ID,
+                    Type_EmpCode = RR.Type_EmpCode,
+                    EmployeeName = RR.EmployeeName,
+                    MobileNumber = RR.MobileNumber,
+                    Password = RR.Password,
+                    EmailID = RR.EmailID,
+                    RoleCode = RR.RoleCode,
+                    RightsCode = RR.RightsCode,
+                    IsActive = RR.IsActive,
+                    RoleName = db.UserMaster.Where(e => e.TypeCode == RR.RoleCode
+                                   && e.Type == "Roles").Select(M => M.Type_EmpCode).FirstOrDefault(),
+                    RightsName = db.UserMaster.Where(e => e.TypeCode == RR.RightsCode
+                                   && e.Type == "Rights").Select(M => M.Type_EmpCode).FirstOrDefault(),
 
-                             where RR.Type == "Employees" && RR.Type_EmpCode == employeeId && (RR.IsActive == true || RR.IsActive == false)
-                             select new
-                             {
-                                 ID = RR.ID,
-                                 Type_EmpCode = RR.Type_EmpCode,
-                                 EmployeeName = RR.EmployeeName,
-                                 MobileNumber = RR.MobileNumber,
-                                 Password = RR.Password,
-                                 EmailID = RR.EmailID,
-                                 RoleCode = RR.RoleCode,
-                                 RightsCode = RR.RightsCode,
-                                 IsActive = RR.IsActive,
-                                 RoleName = M.Type_EmpCode,
-                                 RightsName = N.Type_EmpCode,
-                                 
-                             }
-                    ).ToList();
+                }).Where(i => i.Type_EmpCode == employeeId).ToList();
+                //return Ok(objEmp);
+               
+                
                 List<Employee_info> employeeViewers = new List<Employee_info>();
-                foreach (var list in query)
+                foreach (var list in objEmp)
                 {
                     string Empty = "NULL";
                     Employee_info viewer = new Employee_info();
@@ -234,7 +222,7 @@ namespace LoginAPI.Controllers
 
         [HttpGet]
         [Route("GetEmployeeDetailsById/{employeeId}")]
-        public IHttpActionResult GetEmaployeeById(string employeeId)
+        public IHttpActionResult GetEmployeeById(string employeeId)
         {
             //Employee_Role objEmp = new Employee_Role();
             /*int ID = Convert.ToInt32(employeeId);*/
@@ -242,6 +230,59 @@ namespace LoginAPI.Controllers
             try
             {
                 var objEmp = db.UserMaster.Where(e => e.Type_EmpCode == employeeId).FirstOrDefault();
+                return Ok(objEmp);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+                /* throw;*/
+
+            }
+
+            //return null;
+        }
+        [HttpGet]
+        [Route("GetEmployeeDetails")]
+        public IHttpActionResult GetEmployeeDetails()
+        {
+            try
+            {
+                var objEmp = db.UserMaster.Where(e => e.Type == "Employees" && (e.IsActive == true || e.IsActive == false)).ToList();
+                return Ok(objEmp);
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+
+            }
+        }
+        [HttpGet]
+        [Route("GetEmployeeLocationById/{employeeId}")]
+        public IHttpActionResult GetEmployeeLocationById(string employeeId)
+        {
+            //Employee_Role objEmp = new Employee_Role();
+            /*int ID = Convert.ToInt32(employeeId);*/
+
+            try
+            {
+               
+
+                var objEmp = db.employee_Hierarchies.Where(i => i.EmployeeCode == employeeId).Select(m => new
+                {
+                   
+                  Loc_detail =  db.atm_master.Select(n => new {
+                       m.EmployeeCode,
+                       n.RoCode,
+                    n.RoName,
+                    n.LocationCode,
+                    n.LocationName,
+                    n.HubLocationCode,
+                    n.HubLocationName,
+                        }).Where(e => m.Hub_Location_Code == e.HubLocationCode).Distinct(),
+                    
+                    
+                   
+                }).ToList();
                 return Ok(objEmp);
             }
             catch (Exception ex)
@@ -300,7 +341,7 @@ namespace LoginAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateEmployeeDetails")]
-        public IHttpActionResult PutEmaployeeMaster(Employee_Role employee)
+        public IHttpActionResult PutEmployeeMaster(Employee_Role employee)
         {
             if (!ModelState.IsValid)
             {
@@ -313,7 +354,8 @@ namespace LoginAPI.Controllers
                 var objEmp = db.UserMaster.Where(e => e.Type_EmpCode == employee.Type_EmpCode).FirstOrDefault<Employee_Role>();
                 if (objEmp != null)
                 {
-                    if (objEmp.IsActive != employee.IsActive || (objEmp.RoleCode != employee.RoleCode && objEmp.RoleCode == 4))
+                    if (objEmp.IsActive != employee.IsActive || 
+                        (objEmp.RoleCode != employee.RoleCode && (objEmp.RoleCode == 4 || objEmp.RoleCode == 6)))
                     {
                         var objticket = db.tickets.Where(m => m.AssignedTo == employee.Type_EmpCode).ToList();
                         if (objticket.Count() != 0)
@@ -355,7 +397,7 @@ namespace LoginAPI.Controllers
         }
         [HttpDelete]
         [Route("DeleteEmployeeDetails")]
-        public IHttpActionResult DeleteEmaployeeDelete(string emp_code)
+        public IHttpActionResult DeleteEmployeeDelete(string emp_code)
         {
             //int empId = Convert.ToInt32(id);  
             Employee_Role emaployee = db.UserMaster.Where(e => e.Type_EmpCode == emp_code).FirstOrDefault<Employee_Role>();

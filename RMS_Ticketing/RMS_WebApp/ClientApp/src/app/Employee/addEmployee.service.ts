@@ -21,10 +21,10 @@ import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
    }  
  /* getAllEmployee(): Observable< Employee[]> {  
     return this.http.get<Employee[]>(baseUrl + '/AllEmployeeDetails');  
-  }  
-  getAllEmployee2() {  
-    return this.http.get(baseUrl + '/AllEmployeelimited');  
-  }*/
+  }  */
+   getEmployeeDetails() {  
+     return this.http.get(baseUrl + '/Employee/EmployeeDetails');  
+  }
    getRolesDetail() {
      return this.http.get(baseUrl + 'Employee/RolesDetail');
    }
@@ -36,6 +36,9 @@ import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
    }
    getEmployeeLimitedByID(employee_code: string) {
      return this.http.get(baseUrl + 'Employee/EmployeelimitedById/?employeeId=' + employee_code);
+   }
+   getEmployeeLocationByID(employee_code: string) {
+     return this.http.get(baseUrl + 'Employee/EmployeeLocationById/?employeeId=' + employee_code);
    }
 
   getEmployeeById(employee_code: string) {  
