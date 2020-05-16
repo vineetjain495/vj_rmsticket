@@ -14,12 +14,12 @@ import { DataService } from 'src/app/services/DataService';
 })
 export class EditempComponent implements OnInit {
   //Decalaration
-    dataSaved = false;  
-    employeeForm: any;  
-    allEmployees: Observable<Employee[]>;  
-    employeeIdUpdate = null;  
-    massage = null;  
-    active = true;
+  dataSaved = false;  
+  employeeForm: any;  
+  allEmployees: Observable<Employee[]>;  
+  employeeIdUpdate = null;  
+  massage = null;  
+  active = true;
   Countries: Array<any>;
   Countries2: Array<any> = [];
   selected_region: Array<any> = [];
@@ -130,7 +130,8 @@ export class EditempComponent implements OnInit {
               type: 'error',
               closeOther: true,
             });
-            this.loadEmployeeToEdit(this.route.snapshot.params.id);
+            this.employeeService.edit_empCode = this.route.snapshot.params.id;
+            this.loadEmployeeToEdit(this.employeeService.edit_empCode);
             this.isTicketAvailable = true;
           }
           else if (response == null) {
@@ -346,6 +347,6 @@ export class EditempComponent implements OnInit {
     this.router.navigate([`${pageName}`]);
   }
   goto_update() {
-    this.router.navigateByUrl('/Employee/updateTicket/' + this.route.snapshot.params.id); 
+    this.router.navigateByUrl('/UpdateTicket'); 
   }
   }

@@ -131,6 +131,57 @@ namespace WebApp.Controllers
 
             //return null;
         }
+        [HttpPut]
+        public ActionResult UpdateTicketAssign(Array employeeID)
+        {
+
+            try
+            {
+
+                //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
+
+                var serviceUrl = "Api/Employee/UpdateTicketAssign";
+                
+                client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
+                // Add an Accept header for JSON format.    
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // List all Names.    
+                HttpResponseMessage response = client.PutAsJsonAsync(serviceUrl, employeeID).Result;  // Blocking call!    
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    if (jsonString == "0")
+                    {
+                        //object a = j.Deserialize(jsonString, typeof(object));
+                        return Json(jsonString, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json("success");
+                    }
+
+
+
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+
+
+            //return null;
+        }
+
         //EmployeelimitedById
         [HttpGet]
         public ActionResult EmployeelimitedById(string employeeId)
@@ -350,6 +401,38 @@ namespace WebApp.Controllers
             try
             {
                 var serviceUrl = "Api/Employee/GetEmployeeLocationById";
+
+                //HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
+                // Add an Accept header for JSON format.    
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // List all Names.    
+                HttpResponseMessage response = client.GetAsync(serviceUrl + "/" + employeeId).Result;  // Blocking call!    
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonString = response.Content.ReadAsStringAsync().Result;
+                    //var jsonOb = JsonConvert.DeserializeObject(jsonString);
+                    JavaScriptSerializer j = new JavaScriptSerializer();
+                    object a = j.Deserialize(jsonString, typeof(object));
+                    return Json(a, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
+        }
+        [HttpGet]
+        public ActionResult EmployeeTicketsById(string employeeId)
+        {
+            try
+            {
+                var serviceUrl = "Api/Employee/GetEmployeeTicketsById";
 
                 //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());

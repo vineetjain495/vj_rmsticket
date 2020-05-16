@@ -395,6 +395,48 @@ namespace LoginAPI.Controllers
             }
             return Ok(employee);
         }
+        [HttpPut]
+        [Route("UpdateTicketAssign")]
+        public IHttpActionResult PutUpdateTicketAssign(Array employeeID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+
+                //employee_role objEmp = new employee_role();
+               // var tkt = db.tickets.Where(e => e.AssignedTo == "12345").ToList();
+                //tkt.ForEach(a => a.AssignedTo = "1234");
+                //db.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Ok(employeeID);
+        }
+        [HttpGet]
+        [Route("GetEmployeeTicketsById/{employeeId}")]
+        public IHttpActionResult GetEmployeeTicketsById(string employeeId)
+        {
+            try
+            {
+                var objticket = db.tickets.Where(m => m.AssignedTo == employeeId).ToList();
+                
+                return Ok(objticket.Count());
+               
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
+        }
+        [HttpGet]
         [HttpDelete]
         [Route("DeleteEmployeeDetails")]
         public IHttpActionResult DeleteEmployeeDelete(string emp_code)

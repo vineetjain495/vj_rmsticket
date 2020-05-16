@@ -42,7 +42,7 @@ import { ShowemployeeComponent } from './Employee/showemployee/showemployee.comp
 import { EditempComponent } from './Employee/editemp/editemp.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ToastyModule } from 'ng2-toasty';
-import { UpdateTicketComponent } from './Employee/updateTicket/updateTicket.component';
+import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
 //import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
   @NgModule({

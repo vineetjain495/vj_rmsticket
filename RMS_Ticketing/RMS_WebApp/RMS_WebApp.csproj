@@ -243,8 +243,8 @@
     <Content Include="ClientApp\src\app\dashboard\dashboard.template.html" />
     <Content Include="ClientApp\src\app\Employee\editemp\editemp.component.css" />
     <Content Include="ClientApp\src\app\Employee\editemp\editemp.component.html" />
-    <Content Include="ClientApp\src\app\Employee\updateTicket\updateTicket.component.css" />
-    <Content Include="ClientApp\src\app\Employee\updateTicket\updateTicket.component.html" />
+    <Content Include="ClientApp\src\app\updateTicket\updateTicket.component.css" />
+    <Content Include="ClientApp\src\app\updateTicket\updateTicket.component.html" />
     <Content Include="ClientApp\src\app\externalLayout\externalLayout.component.css" />
     <Content Include="ClientApp\src\app\forgotPassword\forgotPassword.component.css" />
     <Content Include="ClientApp\src\app\forgotPassword\forgotPassword.template.html" />
@@ -426,7 +426,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\dashboard.routing.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Employee\editemp\editemp.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\Employee\updateTicket\updateTicket.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\updateTicket\updateTicket.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\externalLayout\externalLayout.component.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\externalLayout\externalLayout.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\forgotPassword\forgotPassword.component.spec.ts" />
