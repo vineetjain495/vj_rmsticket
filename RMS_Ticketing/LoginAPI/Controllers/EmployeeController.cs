@@ -278,7 +278,7 @@ namespace LoginAPI.Controllers
                     n.LocationName,
                     n.HubLocationCode,
                     n.HubLocationName,
-                        }).Where(e => m.Hub_Location_Code == e.HubLocationCode).Distinct(),
+                        }).Where(e => m.Hub_Location_Code == e.HubLocationCode && m.IsActive == true).Distinct()
                     
                     
                    
@@ -351,10 +351,10 @@ namespace LoginAPI.Controllers
             try
             {
                 //employee_role objEmp = new employee_role();
-                var objEmp = db.UserMaster.Where(e => e.Type_EmpCode == employee.Type_EmpCode).FirstOrDefault<Employee_Role>();
+                Employee_Role objEmp = db.UserMaster.Where(e => e.Type_EmpCode == employee.Type_EmpCode).FirstOrDefault<Employee_Role>();
                 if (objEmp != null)
                 {
-                    if (objEmp.IsActive != employee.IsActive || 
+                    if (objEmp.IsActive != employee.IsActive ||
                         (objEmp.RoleCode != employee.RoleCode && (objEmp.RoleCode == 4 || objEmp.RoleCode == 6)))
                     {
                         var objticket = db.tickets.Where(m => m.AssignedTo == employee.Type_EmpCode).ToList();
@@ -385,11 +385,61 @@ namespace LoginAPI.Controllers
                     objEmp.ModifiedDate = now;
                     objEmp.ModifiedBy = employee.CreatedBy;
                     objEmp.IsActive = employee.IsActive;
+
+                    if (employee.RoleCode == 4 || employee.RoleCode == 6)
+                    {
+                        /*atmmaster amm = objEntity.atmmasters.Where(e => e.HubLocationCode);*/
+                        var result = db.atm_master.Select(m => new
+                        {
+                            m.RoCode,
+                            m.RoName,
+                            m.LocationCode,
+                            m.LocationName,
+                            m.HubLocationCode,
+                            m.HubLocationName
+                        }).Distinct().Where(k => employee.Hub.Contains(k.HubLocationCode)).ToList();
+
+                        var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode && !employee.Hub.Contains(f.Hub_Location_Code)).ToList();
+                        
+                        last_location.ForEach(a => a.IsActive = false);
+                        //db.SaveChanges();
+
+                        foreach (var value in result)
+                        {
+                            Employee_Hierarchy obj_hier = db.employee_Hierarchies.Where(e => e.Hub_Location_Code == value.HubLocationCode && e.EmployeeCode == employee.Type_EmpCode).FirstOrDefault<Employee_Hierarchy>();
+                            //Console.WriteLine(value);
+                            if (obj_hier == null)
+                            {
+                                db.employee_Hierarchies.Add(new Employee_Hierarchy()
+                                {
+                                    EmployeeCode = employee.Type_EmpCode,
+                                    Region_code = value.RoCode,
+                                    Loc_Code = value.LocationCode,
+                                    Hub_Location_Code = value.HubLocationCode,
+                                    CreatedBy = employee.CreatedBy,
+                                    CreatedDate = now,
+                                    FromDate = now,
+                                    IsActive = true
+
+
+                                });
+                            }
+                            else
+                            {
+                                obj_hier.IsActive = true;
+                            }
+
+                        }
+
+
+                    }
+
+                    int i = this.db.SaveChanges();
+
                 }
-                int i = this.db.SaveChanges();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

@@ -795,8 +795,8 @@ var EditempComponent = /** @class */ (function () {
             console.log(response);
             if (response == "0") {
                 _this.dataSaved = false;
-                _this.errorFound = true;
-                _this.massage = "Ticket is assigned to Employee " + employee.Type_EmpCode + "  You can not change location and Active";
+                //this.errorFound = true;
+                //this.massage = "Ticket is assigned to Employee " + employee.Type_EmpCode + "  You can not change location and Active";
                 _this.ds.ShowHideToasty({
                     title: 'Failure..',
                     msg: 'Ticket is assigned to this ID. Please assigned ' + employee.Type_EmpCode + ' ID Tickets to other users .',
@@ -873,12 +873,18 @@ var EditempComponent = /** @class */ (function () {
                 _this.employeeService.getEmployeeLocationByID(_this.employeeIdUpdate).subscribe(function (res_loc) {
                     console.log(res_loc);
                     res_loc.forEach(function (element) {
-                        if (element.Loc_detail[0].EmployeeCode == _this.employeeIdUpdate) {
+                        console.log(element.length);
+                        if (element.Loc_detail[0].EmployeeCode) {
                             _this.selected_region.push(element.Loc_detail[0].RoName);
+                            console.log(element.Loc_detail[0].RoName);
                             _this.selected_loc.push(element.Loc_detail[0].LocationName);
+                            console.log(element.Loc_detail[0].LocationName);
                             _this.selected_hub.push(element.Loc_detail[0].HubLocationName);
+                            console.log(element.Loc_detail[0].HubLocationName);
                             _this.changeCountry(element.Loc_detail[0].RoName);
+                            console.log(element.Loc_detail[0].HubLocationName);
                             _this.changeState(element.Loc_detail[0].LocationName);
+                            console.log(element.Loc_detail[0].HubLocationName);
                             console.log(_this.selected_hub);
                             console.log(_this.selected_loc);
                             console.log(_this.selected_region);
@@ -922,16 +928,18 @@ var EditempComponent = /** @class */ (function () {
     };
     EditempComponent.prototype.changeCountry = function (country) {
         var _this = this;
+        console.log(country);
         this.states = this.Countries.filter(function (cntry) { return cntry.RoName == country; });
+        console.log("Inside country filter");
         this.states.forEach(function (element) {
-            // console.log(element.LocationName);
+            //console.log(element.LocationName);
             _this.states2.push(element.LocationName);
             // this.empList.push(customObj);
         });
         this.states2 = this.states2.filter(function (el, i, a) { return i === a.indexOf(el); });
         /*if (confirm("Are you sure to delete " + name)) {
         }*/
-        // console.log(this.states);
+        console.log(this.states2);
     };
     EditempComponent.prototype.removeCountry = function (country) {
         var _this = this;

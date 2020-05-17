@@ -120,8 +120,8 @@ export class EditempComponent implements OnInit {
           console.log(response);
           if (response == "0") {
             this.dataSaved = false;
-            this.errorFound = true;
-            this.massage = "Ticket is assigned to Employee " + employee.Type_EmpCode + "  You can not change location and Active";
+            //this.errorFound = true;
+            //this.massage = "Ticket is assigned to Employee " + employee.Type_EmpCode + "  You can not change location and Active";
             this.ds.ShowHideToasty({
               title: 'Failure..',
               msg: 'Ticket is assigned to this ID. Please assigned ' + employee.Type_EmpCode + ' ID Tickets to other users .'  ,
@@ -203,16 +203,22 @@ export class EditempComponent implements OnInit {
           this.employeeService.getEmployeeLocationByID(this.employeeIdUpdate).subscribe((res_loc: any) => {
             console.log(res_loc);
             res_loc.forEach((element) => {
-              if (element.Loc_detail[0].EmployeeCode == this.employeeIdUpdate) {
-                this.selected_region.push(element.Loc_detail[0].RoName);
-                this.selected_loc.push(element.Loc_detail[0].LocationName);
-                this.selected_hub.push(element.Loc_detail[0].HubLocationName);
-                this.changeCountry(element.Loc_detail[0].RoName);
-                this.changeState(element.Loc_detail[0].LocationName);
+              console.log(element.length);
+             if (element.Loc_detail[0].EmployeeCode) {
+              this.selected_region.push(element.Loc_detail[0].RoName);
+              console.log(element.Loc_detail[0].RoName);
+              this.selected_loc.push(element.Loc_detail[0].LocationName);
+              console.log(element.Loc_detail[0].LocationName);
+              this.selected_hub.push(element.Loc_detail[0].HubLocationName);
+              console.log(element.Loc_detail[0].HubLocationName);
+              this.changeCountry(element.Loc_detail[0].RoName);
+              console.log(element.Loc_detail[0].HubLocationName);
+              this.changeState(element.Loc_detail[0].LocationName);
+              console.log(element.Loc_detail[0].HubLocationName);
                 console.log(this.selected_hub);
                 console.log(this.selected_loc);
                 console.log(this.selected_region);
-              }
+             }
              
             });
 
@@ -259,9 +265,11 @@ export class EditempComponent implements OnInit {
       
     }
   changeCountry(country) {
+    console.log(country);
     this.states = this.Countries.filter(cntry => cntry.RoName == country);
+    console.log("Inside country filter");
     this.states.forEach((element) => {
-      // console.log(element.LocationName);
+      //console.log(element.LocationName);
       this.states2.push(element.LocationName);
       // this.empList.push(customObj);
 
@@ -269,7 +277,7 @@ export class EditempComponent implements OnInit {
     this.states2 = this.states2.filter((el, i, a) => i === a.indexOf(el))
     /*if (confirm("Are you sure to delete " + name)) {
     }*/
-    // console.log(this.states);
+     console.log(this.states2);
   }
   removeCountry(country) {
     this.states = this.Countries.filter(cntry => cntry.RoName == country);
