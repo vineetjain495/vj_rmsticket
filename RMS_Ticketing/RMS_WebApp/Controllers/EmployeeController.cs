@@ -28,8 +28,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;*/
 using CMS_DTO.Entity.RMS_Ticketing;
+using CMS_DTO.Models.Logins;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
+using CMS_DTO.Models.RMS_Ticketing;
 //using CMS
 
 namespace WebApp.Controllers
@@ -132,7 +134,7 @@ namespace WebApp.Controllers
             //return null;
         }
         [HttpPut]
-        public ActionResult UpdateTicketAssign(Array employeeID)
+        public ActionResult UpdateTicketAssign(AssignTicket employeeID)
         {
 
             try

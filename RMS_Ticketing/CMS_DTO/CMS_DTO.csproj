@@ -132,6 +132,7 @@
     <Compile Include="Models\Request\BaseRequest.cs" />
     <Compile Include="Models\Response\BaseResponse.cs" />
     <Compile Include="Models\Response\ServiceBaseResponse.cs" />
+    <Compile Include="Models\RMS_Ticketing\AssignTicket.cs" />
     <Compile Include="Models\RMS_Ticketing\CBREntryDTO.cs" />
     <Compile Include="Models\RMS_Ticketing\Employee_Role_Model.cs" />
     <Compile Include="Models\RMS_Ticketing\FileUploading.cs" />

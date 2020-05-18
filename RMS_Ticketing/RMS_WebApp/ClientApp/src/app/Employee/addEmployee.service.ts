@@ -6,6 +6,8 @@ import { Employee } from './addEmployee/addEmployee';
 import { baseUrl } from '../GlobalShareCode';
 import { CommonFunctionality } from '../app.commonFunctionality';
 import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
+import { UpdateCallback } from '@angular/core/src/testability/testability';
+import { UpdateTicket } from '../updateTicket/UpdateTicket';
 /*After that we write all methods related to consume web in employee.service.ts  */
  @Injectable({  
   providedIn: 'root'  
@@ -70,8 +72,8 @@ import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
   updateEmployee(employee: Employee) {  
     return this.http.put('../Employee/UpdateEmployeeDetails',   employee);  
    }
-   UpdateTicketAssign(employee) {
-     console.log(employee);
+   UpdateTicketAssign(employee: UpdateTicket) {
+    // console.log(employee);
     return this.http.put('../Employee/UpdateTicketAssign', employee);
    }  
   deleteEmployeeById(employeeid: string){  

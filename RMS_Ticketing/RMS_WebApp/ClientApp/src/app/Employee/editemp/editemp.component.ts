@@ -169,7 +169,7 @@ export class EditempComponent implements OnInit {
         });  
       
     }
-    loadEmployeeToEdit(employeeId: string) {  
+  loadEmployeeToEdit(employeeId: string) {
       this.employeeService.getEmployeeById(employeeId).subscribe((response: any) => {
         console.log(response);
         this.massage = null;  
@@ -191,49 +191,72 @@ export class EditempComponent implements OnInit {
         if (response.RoleCode == "4" || response.RoleCode == "6") {
           this.isLocationSelected = true;
 
-          this.employeeService.getLocationDetail().subscribe((res: any) => {
-           
-            this.Countries = res;
-            this.Countries.forEach((element) => {
-              this.Countries2.push(element.RoName);
-            });
-            this.Countries2 = this.Countries2.filter((el, i, a) => i === a.indexOf(el));
-          });
-
-          this.employeeService.getEmployeeLocationByID(this.employeeIdUpdate).subscribe((res_loc: any) => {
-            console.log(res_loc);
-            res_loc.forEach((element) => {
-              console.log(element.length);
-             if (element.Loc_detail[0].EmployeeCode) {
-              this.selected_region.push(element.Loc_detail[0].RoName);
-              console.log(element.Loc_detail[0].RoName);
-              this.selected_loc.push(element.Loc_detail[0].LocationName);
-              console.log(element.Loc_detail[0].LocationName);
-              this.selected_hub.push(element.Loc_detail[0].HubLocationName);
-              console.log(element.Loc_detail[0].HubLocationName);
-              this.changeCountry(element.Loc_detail[0].RoName);
-              console.log(element.Loc_detail[0].HubLocationName);
-              this.changeState(element.Loc_detail[0].LocationName);
-              console.log(element.Loc_detail[0].HubLocationName);
-                console.log(this.selected_hub);
-                console.log(this.selected_loc);
-                console.log(this.selected_region);
-             }
-             
-            });
-
-            
-            this.selected_region = this.selected_region.filter((el, i, a) => i === a.indexOf(el));
-            this.selected_loc = this.selected_loc.filter((el, i, a) => i === a.indexOf(el));
-            this.selected_hub = this.selected_hub.filter((el, i, a) => i === a.indexOf(el));
-            
-          });
+          this.getLocations();
         }
 
         // console.log(response.IsActive);
         // this.employeeForm.controls['EmpCode'].setValue(employee.EmpCode);  
       });  
-    }
+  }
+  getLocations() {
+    this.ds.ShowHideToasty({
+      title: 'Getting Locations...',
+      msg: '',
+      showClose: false,
+      theme: 'bootstrap',
+      type: 'wait',
+      closeOther: true
+    });
+
+    this.employeeService.getLocationDetail().subscribe((res: any) => {
+
+      this.Countries = res;
+      this.Countries.forEach((element) => {
+        this.Countries2.push(element.RoName);
+      });
+      this.Countries2 = this.Countries2.filter((el, i, a) => i === a.indexOf(el));
+    });
+
+    this.employeeService.getEmployeeLocationByID(this.employeeIdUpdate).subscribe((res_loc: any) => {
+      console.log(res_loc);
+      this.ds.ShowHideToasty({
+        title: 'Locations are ready to select',
+        msg: '',
+        showClose: true,
+        theme: 'bootstrap',
+        type: 'success',
+        closeOther: true,
+        timeout: 3000
+      });
+      res_loc.forEach((element) => {
+        console.log(element.length);
+        
+
+        if (element.Loc_detail[0].EmployeeCode) {
+          this.selected_region.push(element.Loc_detail[0].RoName);
+          console.log(element.Loc_detail[0].RoName);
+          this.selected_loc.push(element.Loc_detail[0].LocationName);
+          console.log(element.Loc_detail[0].LocationName);
+          this.selected_hub.push(element.Loc_detail[0].HubLocationName);
+          console.log(element.Loc_detail[0].HubLocationName);
+          this.changeCountry(element.Loc_detail[0].RoName);
+          console.log(element.Loc_detail[0].HubLocationName);
+          this.changeState(element.Loc_detail[0].LocationName);
+          console.log(element.Loc_detail[0].HubLocationName);
+          console.log(this.selected_hub);
+          console.log(this.selected_loc);
+          console.log(this.selected_region);
+        }
+
+      });
+
+
+      this.selected_region = this.selected_region.filter((el, i, a) => i === a.indexOf(el));
+      this.selected_loc = this.selected_loc.filter((el, i, a) => i === a.indexOf(el));
+      this.selected_hub = this.selected_hub.filter((el, i, a) => i === a.indexOf(el));
+
+    });
+  }
     onFormSubmit() {  
       this.dataSaved = false;  
       const employee = this.employeeForm.value;  
@@ -266,6 +289,7 @@ export class EditempComponent implements OnInit {
     }
   changeCountry(country) {
     console.log(country);
+    console.log(this.Countries);
     this.states = this.Countries.filter(cntry => cntry.RoName == country);
     console.log("Inside country filter");
     this.states.forEach((element) => {
@@ -345,7 +369,9 @@ export class EditempComponent implements OnInit {
       this.isMSPSelected = false;
     }
     if (selected == "4" || selected == "6") {
-      this.isLocationSelected = false;
+      this.getLocations();
+      this.isLocationSelected = true;
+      
     } else {
       this.isLocationSelected = false;
     }

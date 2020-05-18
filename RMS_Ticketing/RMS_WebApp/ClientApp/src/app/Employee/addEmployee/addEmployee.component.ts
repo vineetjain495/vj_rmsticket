@@ -86,7 +86,7 @@ dropdownSettings: any = {};
     });
    // console.log(this.roles)
     this.employeeService.getLocationDetail().subscribe((res: any) => {
-     // console.log(res);
+      console.log(res);
       this.ds.ShowHideToasty({
         title: 'Create Employee Here',
         msg: '',
@@ -109,7 +109,7 @@ dropdownSettings: any = {};
     this.employeeForm = this.formbulider.group({
       Type_EmpCode: ['', [Validators.required]],
       EmployeeName: ['', [Validators.required]],
-      MobileNumber: ['', [Validators.required, Validators.min(6000000000), Validators.max(9999999999)]],
+      MobileNumber: ['', [Validators.required, , Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       EmailId: ['', [Validators.required, Validators.email]],
       MspCategory: [''],
       RoleCode: [''],
@@ -250,12 +250,12 @@ dropdownSettings: any = {};
             closeOther: true,
           });
           
-          this.cities = [];
+       /*   this.cities = [];
           this.cities2 = [];
           this.Countries = [];
           this.Countries2 = [];
           this.states = [];
-          this.states2 = [];
+          this.states2 = [];*/
         }
         else {
 
@@ -320,12 +320,12 @@ dropdownSettings: any = {};
             timeout: 10000
           });
           this.massage = "This code is already available";
-          this.cities = [];
+          /*this.cities = [];
           this.cities2 = [];
           this.Countries = [];
           this.Countries2 = [];
           this.states = [];
-          this.states2 = [];
+          this.states2 = [];*/
           this.employeeForm.setErrors({ 'incorrect': true });
         }
         else {

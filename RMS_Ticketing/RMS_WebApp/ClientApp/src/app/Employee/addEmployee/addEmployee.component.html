@@ -38,9 +38,9 @@
         <div class="form-group row">
           <label class="col-sm-12 col-form-label">Mobile Number<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <input type="number" formControlName="MobileNumber" id="MobileNumber"
+            <input type="text" formControlName="MobileNumber" id="MobileNumber"
                    class="form-control input-sm" placeholder="Mobile *" required>
-            <div *ngIf="employeeForm.get('MobileNumber').value && !employeeForm.get('MobileNumber').valid">
+            <div *ngIf="employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').errors?.pattern">
               <div class="alert-danger"> Enter 10 digit Mobile Number </div>
             </div>
             <div *ngIf="!employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').touched">

@@ -510,6 +510,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.routing.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ticketViewer\ticketViewer.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\updateTicket\UpdateTicket.ts" />
     <TypeScriptCompile Include="ClientApp\src\environments\environment.prod.ts" />
     <TypeScriptCompile Include="ClientApp\src\environments\environment.ts" />
     <TypeScriptCompile Include="ClientApp\src\main.ts" />
@@ -607,6 +608,7 @@
     <Compile Include="App_Start\Security.cs" />
     <Compile Include="App_Start\TokenManagement.cs" />
     <Compile Include="App_Start\UserData.cs" />
+    <Compile Include="ClientApp\src\app\updateTicket\Class1.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />

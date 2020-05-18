@@ -40,8 +40,10 @@ namespace LoginAPI.Controllers
            // DateTime now = DateTime.Now;
             using (var ctx = new CMSUserMasterContext())
             {
+                var iTypeCode = ctx.UserMaster.Where(e => e.Type == "Employees" && e.TypeCode != null).OrderByDescending(u => u.ID).Select(i => i.TypeCode).FirstOrDefault() + 1;
                 ctx.UserMaster.Add(new Employee_Role()
                 {
+                    TypeCode = iTypeCode,
                     Type_EmpCode = emp.Type_EmpCode,
                     EmployeeName = emp.EmployeeName,
                     MobileNumber = emp.MobileNumber,
@@ -55,7 +57,7 @@ namespace LoginAPI.Controllers
                     IsActive = true,
                     MspCategory = emp.MspCategory,
                     CreatedBy = emp.CreatedBy
-                });
+                });;
 
                 ctx.SaveChanges();
 
@@ -267,7 +269,7 @@ namespace LoginAPI.Controllers
             {
                
 
-                var objEmp = db.employee_Hierarchies.Where(i => i.EmployeeCode == employeeId).Select(m => new
+                var objEmp = db.employee_Hierarchies.Where(i => i.EmployeeCode == employeeId && i.IsActive == true).Select(m => new
                 {
                    
                   Loc_detail =  db.atm_master.Select(n => new {
@@ -278,7 +280,7 @@ namespace LoginAPI.Controllers
                     n.LocationName,
                     n.HubLocationCode,
                     n.HubLocationName,
-                        }).Where(e => m.Hub_Location_Code == e.HubLocationCode && m.IsActive == true).Distinct()
+                        }).Where(e => m.Hub_Location_Code == e.HubLocationCode ).Distinct()
                     
                     
                    
@@ -364,15 +366,23 @@ namespace LoginAPI.Controllers
                         }
                         else
                         {
-                            if (employee.IsActive)
+                            if (objEmp.IsActive != objEmp.IsActive)
                             {
-                                objEmp.FromDate = now;
-                            }
-                            else
-                            {
-                                objEmp.ToDate = now;
+                                if (employee.IsActive)
+                                {
+                                    objEmp.FromDate = now;
+                                }
+                                else
+                                {
+                                    objEmp.ToDate = now;
+                                }
                             }
 
+                        }
+                        if ((objEmp.RoleCode == 4 || objEmp.RoleCode == 6) && (employee.RoleCode != 4 || employee.RoleCode != 6))
+                        {
+                            var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode).ToList();           
+                            last_location.ForEach(a => a.IsActive = false);
                         }
                     }
 
@@ -433,8 +443,11 @@ namespace LoginAPI.Controllers
 
 
                     }
-
-                    int i = this.db.SaveChanges();
+                    else if (employee.RoleCode == 2)
+                    {
+                        objEmp.MspCategory = employee.MspCategory;
+                    }
+                            int i = this.db.SaveChanges();
 
                 }
 
@@ -447,7 +460,7 @@ namespace LoginAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateTicketAssign")]
-        public IHttpActionResult PutUpdateTicketAssign(Array employeeID)
+        public IHttpActionResult PutUpdateTicketAssign(AssignTicket employeeID)
         {
             if (!ModelState.IsValid)
             {
@@ -456,11 +469,25 @@ namespace LoginAPI.Controllers
 
             try
             {
+                var total_ticket = Int32.Parse(employeeID.ticket_count);
+                var total_emp = employeeID.Emp_ID.Count();
+                int ind = (int)Math.Ceiling((decimal)total_ticket  / total_emp   );
+                var total_ticket_left = total_ticket;
+                foreach (var value in employeeID.Emp_ID)
+                {
+                    var emp_code = value.Split(' ');
+                    var partial_ticket = db.tickets.Where(f => f.AssignedTo == employeeID.Last_Type_EmpCode).OrderByDescending(u => u.Id).Take(ind).ToList();
+                    if (emp_code.Length > 0)
+                    { 
+                    partial_ticket.ForEach(a => a.AssignedTo = emp_code[0]);
+                        //total_ticket_left = total_ticket_left - ind;
+                        db.SaveChanges();
+                    }
+                   
+             }
 
-                //employee_role objEmp = new employee_role();
-               // var tkt = db.tickets.Where(e => e.AssignedTo == "12345").ToList();
-                //tkt.ForEach(a => a.AssignedTo = "1234");
-                //db.SaveChanges();
+                
+
 
             }
             catch (Exception)

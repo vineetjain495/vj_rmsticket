@@ -40,9 +40,11 @@ export class UpdateTicketComponent implements OnInit {
     else {
       this.last_emp_id_val = '';
     }
+    console.log(this.ticket_count);
     this.updateTicketForm = this.formbulider.group({
       Emp_ID: ['', [Validators.required]],
-      Last_Type_EmpCode: [this.last_emp_id_val, [Validators.required]]
+      Last_Type_EmpCode: [this.last_emp_id_val, [Validators.required]],
+      ticket_count:[this.ticket_count]
     });
     
     this.employeeService.getEmployeeDetails().subscribe((res: any) => {
@@ -51,7 +53,7 @@ export class UpdateTicketComponent implements OnInit {
         if (element) {
 
           this.Emp_details.push(element.Type_EmpCode + " - ( " + element.EmployeeName + " )");
-          console.log(this.Emp_details);
+          //console.log(this.Emp_details);
         }
 
       });
@@ -72,7 +74,7 @@ export class UpdateTicketComponent implements OnInit {
   ngOnInit() {
   }
   onFormSubmit() {
-    console.log("hello");
+    //console.log("hello");
 
     const employeeID = this.updateTicketForm.value;
     console.log(employeeID);
@@ -85,7 +87,7 @@ export class UpdateTicketComponent implements OnInit {
     this.ds.ShowHideToasty({
       title: 'Please Wait...',
       msg: '',
-      showClose: false,
+      showClose: false,   
       theme: 'bootstrap',
       type: 'wait',
       closeOther: true
@@ -107,12 +109,23 @@ export class UpdateTicketComponent implements OnInit {
     });
 
   }
-  getTicketCount(employeeID) {
-    
+  getTicketCount2(event) {
+    var employeeID = event.target.value;
+    console.log(employeeID);
     this.employeeService.getEmployeeTicketsByID(employeeID).subscribe((res: any) => {
       this.ticket_count = res;
-      console.log(res);
+      console.log(this.ticket_count);
       this.isTicketAvailable = true;
+      this.updateTicketForm.controls['ticket_count'].setValue(this.ticket_count);
+    });
+  }
+  getTicketCount(employeeID) {
+    console.log(employeeID);
+    this.employeeService.getEmployeeTicketsByID(employeeID).subscribe((res: any) => {
+      this.ticket_count = res;
+      console.log(this.ticket_count);
+      this.isTicketAvailable = true;
+      this.updateTicketForm.controls['ticket_count'].setValue(this.ticket_count); 
     });
   }
 }

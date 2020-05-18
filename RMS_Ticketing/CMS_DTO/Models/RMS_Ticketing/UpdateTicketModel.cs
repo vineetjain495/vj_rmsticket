@@ -79,10 +79,7 @@ namespace CMS_DTO.Models.RMS_Ticketing
 
         public string Justification { get; set; }
 
-        
-
         public string Action { get; set; }
-
 
         public string SubAction { get; set; }
 

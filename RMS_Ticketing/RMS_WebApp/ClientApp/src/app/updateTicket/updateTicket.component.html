@@ -15,7 +15,7 @@
           <div class="col-lg-4">
             <label class="col-lg-12 col-form-label">Replacing Employee Code</label>
             <input type="text" formControlName="Last_Type_EmpCode" id="Last_Type_EmpCode"
-                   class="form-control input-sm" placeholder="Code *">
+                   class="form-control input-sm" (blur)="getTicketCount2($event)" placeholder="Code *">
           </div>
         </div>
         <div class="row" *ngIf="isTicketAvailable">
@@ -23,6 +23,8 @@
             <div class="alert alert-success">
               Total {{ ticket_count }} available for this ID.
             </div>
+            <input type="hidden" formControlName="ticket_count" id="Last_Type_EmpCode"
+                   class="form-control input-sm" placeholder="Code *" value="{{ ticket_count }}">
           </div>
           </div>
           <div class="row">
