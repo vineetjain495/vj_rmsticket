@@ -32,6 +32,8 @@ export class EditempComponent implements OnInit {
   cities2: Array<any> = [];
   roles: Array<any>[] = [];
   rights: Array<any> = [];
+  dropdownSettings: any = {};
+  dropdownSettings2: any = {};
   disabled = false;
   ShowFilter = false;
   limitSelection = false;
@@ -48,6 +50,7 @@ export class EditempComponent implements OnInit {
       this.isLocationSelected = false;
       this.isMSPSelected = false;
       this.isTicketAvailable = false;
+
       this.ds.ShowHideToasty({
         title: 'Loading...',
         msg: '',
@@ -82,7 +85,7 @@ export class EditempComponent implements OnInit {
       this.employeeForm = this.formbulider.group({  
         Type_EmpCode : ['', [Validators.required]],
         EmployeeName : ['', [Validators.required]],
-        MobileNumber : ['', [Validators.required, Validators.min(6000000000), Validators.max(9999999999)]],
+        MobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
         EmailId : ['', [Validators.required,Validators.email]],
         Password : ['', [Validators.required,Validators.minLength(6)]],
         RoleCode : ['', [Validators.required]],
@@ -92,7 +95,27 @@ export class EditempComponent implements OnInit {
         Region: [''],
         Location: [''],
         Hub: ['']
-      });  
+      });
+      this.dropdownSettings = {
+        singleSelection: false,
+        // idField: 'item_id',
+        // textField: 'item_text',
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 3,
+        allowSearchFilter: this.ShowFilter
+      };
+
+      this.dropdownSettings2 = {
+        singleSelection: false,
+        // idField: 'item_id',
+        // textField: 'item_text',
+        enableCheckAll: false,
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 3,
+        allowSearchFilter: this.ShowFilter
+      };
       this.loadEmployeeToEdit(this.route.snapshot.params.id);
       // console.log(res);
       this.ds.ShowHideToasty({
@@ -104,6 +127,7 @@ export class EditempComponent implements OnInit {
         closeOther: true,
         timeout: 3000
       });
+
     }  
     UpdateEmployee(employee: Employee) {  
    
@@ -211,11 +235,12 @@ export class EditempComponent implements OnInit {
     this.employeeService.getLocationDetail().subscribe((res: any) => {
 
       this.Countries = res;
+      console.log(this.Countries);
       this.Countries.forEach((element) => {
         this.Countries2.push(element.RoName);
       });
       this.Countries2 = this.Countries2.filter((el, i, a) => i === a.indexOf(el));
-    });
+
 
     this.employeeService.getEmployeeLocationByID(this.employeeIdUpdate).subscribe((res_loc: any) => {
       console.log(res_loc);
@@ -256,6 +281,7 @@ export class EditempComponent implements OnInit {
       this.selected_hub = this.selected_hub.filter((el, i, a) => i === a.indexOf(el));
 
     });
+    });
   }
     onFormSubmit() {  
       this.dataSaved = false;  
@@ -290,7 +316,7 @@ export class EditempComponent implements OnInit {
   changeCountry(country) {
     console.log(country);
     console.log(this.Countries);
-    this.states = this.Countries.filter(cntry => cntry.RoName == country);
+    this.states =  this.Countries.filter(cntry => cntry.RoName == country);
     console.log("Inside country filter");
     this.states.forEach((element) => {
       //console.log(element.LocationName);
@@ -351,7 +377,8 @@ export class EditempComponent implements OnInit {
     this.cities2 = this.cities2.filter((el, i, a) => i === a.indexOf(el))
   }
   changeState(state) {
-    this.cities = this.states.filter(cntry => cntry.LocationName == state);
+    //console.log(this.states);
+    this.cities = this.Countries.filter(cntry => cntry.LocationName == state);
     this.cities.forEach((element) => {
       console.log(element.HubLocationName);
       this.cities2.push(element.HubLocationName);

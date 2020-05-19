@@ -12,16 +12,19 @@ import { DataService } from 'src/app/services/DataService';
 export class UpdateTicketComponent implements OnInit {
   updateTicketForm: any;
   Emp_details: Array<any> = [];
+  dropdownSettings: any = {};
+  dropdownSettings2: any = {};
   last_emp_id_val: string;
   ticket_count: string;
   isTicketAvailable: boolean;
+  isTicketEmpty: boolean;
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
     private ds: DataService,
    // private route: ActivatedRoute,
     private router: Router,
   ) {
-
+   // this.ticket_count = 0;
     this.ds.ShowHideToasty({
       title: 'Please Wait...',
       msg: '',
@@ -72,6 +75,19 @@ export class UpdateTicketComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.dropdownSettings2 = {
+      singleSelection: false,
+      // idField: 'item_id',
+      // textField: 'item_text',
+      enableCheckAll: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      limitSelection: 0,
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+   
   }
   onFormSubmit() {
     //console.log("hello");
@@ -111,13 +127,29 @@ export class UpdateTicketComponent implements OnInit {
   }
   getTicketCount2(event) {
     var employeeID = event.target.value;
-    console.log(employeeID);
-    this.employeeService.getEmployeeTicketsByID(employeeID).subscribe((res: any) => {
-      this.ticket_count = res;
-      console.log(this.ticket_count);
-      this.isTicketAvailable = true;
-      this.updateTicketForm.controls['ticket_count'].setValue(this.ticket_count);
-    });
+    if (employeeID != "") {
+      console.log(employeeID);
+      this.employeeService.getEmployeeTicketsByID(employeeID).subscribe((res: any) => {
+        this.ticket_count = res;
+        console.log(this.ticket_count);
+        this.isTicketAvailable = true;
+        this.isTicketEmpty = false;
+        this.updateTicketForm.controls['ticket_count'].setValue(this.ticket_count);
+        this.dropdownSettings2 = {
+          singleSelection: false,
+          // idField: 'item_id',
+          // textField: 'item_text',
+          enableCheckAll: false,
+          selectAllText: 'Select All',
+          unSelectAllText: 'UnSelect All',
+          limitSelection: this.ticket_count,
+          itemsShowLimit: 3,
+          allowSearchFilter: true
+        };
+      });
+    } else {
+      this.isTicketEmpty = true;
+    }
   }
   getTicketCount(employeeID) {
     console.log(employeeID);
@@ -125,7 +157,20 @@ export class UpdateTicketComponent implements OnInit {
       this.ticket_count = res;
       console.log(this.ticket_count);
       this.isTicketAvailable = true;
-      this.updateTicketForm.controls['ticket_count'].setValue(this.ticket_count); 
+      this.isTicketEmpty = false;
+
+      this.updateTicketForm.controls['ticket_count'].setValue(this.ticket_count);
+      this.dropdownSettings2 = {
+        singleSelection: false,
+        // idField: 'item_id',
+        // textField: 'item_text',
+        enableCheckAll: false,
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        limitSelection: this.ticket_count,
+        itemsShowLimit: 3,
+        allowSearchFilter : true
+      };
     });
   }
 }

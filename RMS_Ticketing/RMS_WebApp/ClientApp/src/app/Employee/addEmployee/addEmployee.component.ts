@@ -109,7 +109,7 @@ dropdownSettings: any = {};
     this.employeeForm = this.formbulider.group({
       Type_EmpCode: ['', [Validators.required]],
       EmployeeName: ['', [Validators.required]],
-      MobileNumber: ['', [Validators.required, , Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      MobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       EmailId: ['', [Validators.required, Validators.email]],
       MspCategory: [''],
       RoleCode: [''],
@@ -214,7 +214,7 @@ dropdownSettings: any = {};
     this.cities2 = this.cities2.filter((el, i, a) => i === a.indexOf(el))
   }
   changeState(state) {
-    this.cities = this.states.filter(cntry => cntry.LocationName == state);
+    this.cities = this.Countries.filter(cntry => cntry.LocationName == state);
     this.cities.forEach((element) => {
       //console.log(element.HubLocationName);
       this.cities2.push(element.HubLocationName);

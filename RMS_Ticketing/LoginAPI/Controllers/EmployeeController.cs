@@ -366,7 +366,7 @@ namespace LoginAPI.Controllers
                         }
                         else
                         {
-                            if (objEmp.IsActive != objEmp.IsActive)
+                            if (objEmp.IsActive != employee.IsActive)
                             {
                                 if (employee.IsActive)
                                 {
@@ -375,14 +375,29 @@ namespace LoginAPI.Controllers
                                 else
                                 {
                                     objEmp.ToDate = now;
+                                    var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode && f.IsActive == true).ToList();
+                                    last_location.ForEach(a => {
+                                        a.IsActive = false;
+                                        a.ModifiedBy = employee.CreatedBy;
+                                        a.ModifiedDate = now;
+                                        a.ToDate = now;
+                                    });
                                 }
                             }
 
                         }
                         if ((objEmp.RoleCode == 4 || objEmp.RoleCode == 6) && (employee.RoleCode != 4 || employee.RoleCode != 6))
                         {
-                            var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode).ToList();           
-                            last_location.ForEach(a => a.IsActive = false);
+                            if ((objEmp.RoleCode == 4 && employee.RoleCode != 6) || (objEmp.RoleCode == 6 && employee.RoleCode != 4  ))
+                            {
+                                var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode && f.IsActive == true).ToList();
+                                last_location.ForEach(a => {
+                                    a.IsActive = false;
+                                    a.ModifiedBy = employee.CreatedBy;
+                                    a.ModifiedDate = now;
+                                    a.ToDate = now;
+                                });
+                            }
                         }
                     }
 
@@ -395,7 +410,7 @@ namespace LoginAPI.Controllers
                     objEmp.ModifiedDate = now;
                     objEmp.ModifiedBy = employee.CreatedBy;
                     objEmp.IsActive = employee.IsActive;
-
+                    objEmp.MspCategory = employee.MspCategory;
                     if (employee.RoleCode == 4 || employee.RoleCode == 6)
                     {
                         /*atmmaster amm = objEntity.atmmasters.Where(e => e.HubLocationCode);*/
@@ -409,9 +424,13 @@ namespace LoginAPI.Controllers
                             m.HubLocationName
                         }).Distinct().Where(k => employee.Hub.Contains(k.HubLocationCode)).ToList();
 
-                        var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode && !employee.Hub.Contains(f.Hub_Location_Code)).ToList();
+                        var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode && !employee.Hub.Contains(f.Hub_Location_Code) && f.IsActive == true).ToList();
                         
-                        last_location.ForEach(a => a.IsActive = false);
+                        last_location.ForEach(a => { a.IsActive = false;
+                            a.ModifiedBy = employee.CreatedBy;
+                            a.ModifiedDate = now;
+                            a.ToDate = now;
+                        });
                         //db.SaveChanges();
 
                         foreach (var value in result)
@@ -436,17 +455,23 @@ namespace LoginAPI.Controllers
                             }
                             else
                             {
-                                obj_hier.IsActive = true;
+                                if (obj_hier.IsActive == false)
+                                {
+                                    obj_hier.ModifiedBy = employee.CreatedBy;
+                                    obj_hier.ModifiedDate = now;
+                                    obj_hier.FromDate = now;
+                                    obj_hier.IsActive = true;
+                                }
                             }
 
                         }
 
 
                     }
-                    else if (employee.RoleCode == 2)
+                    /*else if (employee.RoleCode == 2)
                     {
                         objEmp.MspCategory = employee.MspCategory;
-                    }
+                    }*/
                             int i = this.db.SaveChanges();
 
                 }
@@ -490,9 +515,9 @@ namespace LoginAPI.Controllers
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+              return Ok(ex);
             }
             return Ok(employeeID);
         }
