@@ -12,7 +12,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
 
     public class RMSAUTOMATIONDBContext : DbContext
     {
-        public RMSAUTOMATIONDBContext() : base("name=RMSAutomationConnectionString")
+        public RMSAUTOMATIONDBContext() : base("name=RMSTSUserConnectionString")
         {
             Database.SetInitializer<RMSAUTOMATIONDBContext>(null);
             // this.Database.CommandTimeout = 900;

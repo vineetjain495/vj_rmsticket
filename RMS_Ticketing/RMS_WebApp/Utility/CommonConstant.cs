@@ -16,9 +16,7 @@ namespace CMSWebApp.Utility
         public const string GetCompanyUrl = "/api/Company/GetAllCompanyMaster";
         public const string GetTransactionUrl = "/api/DSTransaction/GetTransaction";
 
-
-
-
+       
         public const string ResetPasswordUrl = "/api/Area/ResetPassword";
         public const string ForgotPasswordUrl = "/api/Login/ForgotPassword";
         //public const string DeleteEmployeeUrl = "/api/Area/DeleteEmployee";
@@ -51,5 +49,10 @@ namespace CMSWebApp.Utility
         #region
         public const string GetRuleEngineUrl = "/v1/callRuleEngine";
         #endregion
+
+        public const string GetEmployeeLimitedUrl = "api/EmployeeMaster/AllEmployeelimited";
+        public const string CreateEmployeeUrl = "api/EmployeeMaster/CreateEmployee";
+        public const string CheckEmployeeUrl = "api/EmployeeMaster/CheckEmployee";
+        public const string UpdateEmployeeUrl = "api/EmployeeMaster/UpdateEmployeeDetails";
     }
 }

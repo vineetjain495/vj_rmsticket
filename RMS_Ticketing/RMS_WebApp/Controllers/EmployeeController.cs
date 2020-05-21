@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Net.Http;
-using CMS_DTO.Models.Logins;
 using System.Web.Mvc;
-//using Newtonsoft.Json;
+using Newtonsoft.Json;
 using RestSharp;
 using System.Configuration;
+using CMS_DTO.Entity.RMS_Ticketing;
+using CMS_DTO.Models.RMS_Ticketing;
+using CMSDTO.Models.Request;
+using CMSDTO.Models.Response;
+using CMSRepository.Models;
+using CMSWebApp.Utility;
 /*using System.Data;
  * using System;
 using System.Collections.Generic;
@@ -28,7 +33,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;*/
 using CMS_DTO.Entity.RMS_Ticketing;
-using CMS_DTO.Models.Logins;
+//using CMS_DTO.Models.Logins;
 using System.Web.Script.Serialization;
 using System.Net.Http.Headers;
 using CMS_DTO.Models.RMS_Ticketing;
@@ -79,7 +84,79 @@ namespace WebApp.Controllers
 
             //return null;
         }
-        [HttpPut]
+        [HttpPost]
+        public ContentResult CreateEmployee(Employee_Role employee_Role)
+        {
+            {
+
+                BaseResponse baseResponse = new BaseResponse();
+                BaseRequest<Employee_Role> baseReq = new BaseRequest<Employee_Role>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = employee_Role
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse, BaseRequest<Employee_Role>>
+                (CommonConstant.CreateEmployeeUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        [HttpPost]
+        public ContentResult UpdateEmployeeDetails(Employee_Role employee_Role)
+        {
+            {
+
+                BaseResponse baseResponse = new BaseResponse();
+                BaseRequest<Employee_Role> baseReq = new BaseRequest<Employee_Role>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = employee_Role
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse, BaseRequest<Employee_Role>>
+                (CommonConstant.UpdateEmployeeUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        [HttpGet]
+        public ContentResult CheckEmployee(string employeeID)
+        {
+            {
+
+                BaseResponse<Employee_Role> baseResponse = new BaseResponse<Employee_Role>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = employeeID
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<Employee_Role>, BaseRequest<string>>
+                (CommonConstant.CheckEmployeeUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        /*[HttpPut]
         public ActionResult UpdateEmployeeDetails(Employee_Role employee_Role)
         {
 
@@ -89,11 +166,6 @@ namespace WebApp.Controllers
                 //var restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
 
                 var serviceUrl = "Api/Employee/UpdateEmployeeDetails";
-                /* var request = new RestRequest(Method.POST) { Resource = serviceUrl, RequestFormat = DataFormat.Json };
-                 //request.AddJsonBody(requestInput);  
-                 UserMaster customers = JsonConvert.DeserializeObject<UserMaster>(restClient.Post(request).Content);
-                 return View(customers);*/
-                //HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(restClient.BaseUrl.ToString());
                 // Add an Accept header for JSON format.    
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -132,7 +204,7 @@ namespace WebApp.Controllers
 
 
             //return null;
-        }
+        }*/
         [HttpPut]
         public ActionResult UpdateTicketAssign(AssignTicket employeeID)
         {
@@ -185,7 +257,7 @@ namespace WebApp.Controllers
         }
 
         //EmployeelimitedById
-        [HttpGet]
+       /* [HttpGet]
         public ActionResult EmployeelimitedById(string employeeId)
         {
             try
@@ -254,7 +326,38 @@ namespace WebApp.Controllers
 
             }
             return null;
+        }*/
+        [HttpPost]
+        public ContentResult GetEmployeelimited(JqxGridPaginationModel pagingRequestModel)
+        {
+            {
+                BaseResponse<TableListWithPagingInfo<Employee_info>> baseResponse = new BaseResponse<TableListWithPagingInfo<Employee_info>>();
+
+                BaseRequest<JqxGridPaginationModel> baseReq = new BaseRequest<JqxGridPaginationModel>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = pagingRequestModel
+                };
+
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<TableListWithPagingInfo<Employee_info>>, BaseRequest<JqxGridPaginationModel>>
+                (CommonConstant.GetEmployeeLimitedUrl, baseReq);
+
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+
+
+                return Content(result, "application/json");
+
+
+            }
+
         }
+
 
         [HttpGet]
         public JsonResult EmployeeDetails()

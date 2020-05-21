@@ -4,9 +4,9 @@ import { ExternalLayoutComponent } from './externalLayout/externalLayout.compone
 import { AuthGuard } from './shared/Security/auth.guard';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
-import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
+//import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
 import { EditempComponent } from './Employee/editemp/editemp.component';
-import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
+//import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
 
 // Route config let's you map routes to components
 const routes: Routes = [
@@ -68,18 +68,26 @@ const routes: Routes = [
         loadChildren: 'src/app/ticketViewer/crudOpsTicket/crudOpsTicket.module#CrudOpsTicketModule',
         canActivate: [AuthGuard],
       },  
-  
       {
-        path: 'Employee/CreateEmployee', component: AddEmployeeComponent
+        path: 'Employee',
+        loadChildren: 'src/app/Employee/Employee.module#EmployeeModule',
+        canActivate: [AuthGuard],
       },
       {
-        path: 'Employee', component: ShowemployeeComponent
+        path: 'Employee/CreateEmployee',
+        loadChildren: 'src/app/Employee/addEmployee/addEmployee.module#AddEmployeeModule',
+        canActivate: [AuthGuard],
+      },
+      
+      {
+        path: 'Employee/edit_element/:id',
+        loadChildren: 'src/app/Employee/editemp/editemp.module#EditempModule',
+        canActivate: [AuthGuard],
       },
       {
-        path: 'Employee/edit_element/:id', component: EditempComponent
-      },
-      {
-        path: 'UpdateTicket', component: UpdateTicketComponent
+        path: 'Employee/UpdateTicket',
+        loadChildren: 'src/app/Employee/updateTicket/updateTicket.module#UpdateTicketModule',
+        canActivate: [AuthGuard],
       },
 ]
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using CMS_DTO.Entity.RMS_Ticketing;
 using CMS_DTO.Models.RMS_Ticketing;
-using CMS_DTO.Models.Logins;
+//using CMS_DTO.Models.Logins;
 using LoginWebAPI.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -501,10 +501,31 @@ namespace LoginAPI.Controllers
                 foreach (var value in employeeID.Emp_ID)
                 {
                     var emp_code = value.Split(' ');
+                    var emp_role = db.UserMaster.Where(e => e.Type_EmpCode == employeeID.Last_Type_EmpCode).Select(i => i.RoleCode).FirstOrDefault();
+                    
+                    
                     var partial_ticket = db.tickets.Where(f => f.AssignedTo == employeeID.Last_Type_EmpCode).OrderByDescending(u => u.Id).Take(ind).ToList();
                     if (emp_code.Length > 0)
-                    { 
-                    partial_ticket.ForEach(a => a.AssignedTo = emp_code[0]);
+                    {
+                        if (emp_role == 3)
+                        {
+                            partial_ticket.ForEach(a => { a.AssignedTo = emp_code[0];
+                                a.HoOwner = emp_code[0];
+                                });
+                        }
+                        else if(emp_role == 4)
+                        {
+                            partial_ticket.ForEach(a => {
+                                a.AssignedTo = emp_code[0];
+                                a.LocOwner = emp_code[0];
+                            });
+                        }
+                        else
+                        {
+                            partial_ticket.ForEach(a => 
+                                a.AssignedTo = emp_code[0]
+                            );
+                        }
                         //total_ticket_left = total_ticket_left - ind;
                         db.SaveChanges();
                     }

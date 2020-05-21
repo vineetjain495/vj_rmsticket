@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { EmployeeService } from '../addEmployee.service';
+import { EmployeeService } from '../Employee.service';
 import { Employee } from './addEmployee';
 ////import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -236,28 +236,7 @@ dropdownSettings: any = {};
     console.log("sec");
     if (this.employeeIdUpdate == null) {
       this.employeeService.getEmployeeById(employee.Type_EmpCode).subscribe((response: any) => {
-        if (response != null) {
-          this.codeAvailable = true;
-          this.errorFound = true;
-          
-          this.massage = "This code is already available";
-          this.ds.ShowHideToasty({
-            title: 'Failure..',
-            msg: 'This code is already available',
-            showClose: true,
-            theme: 'bootstrap',
-            type: 'error',
-            closeOther: true,
-          });
-          
-       /*   this.cities = [];
-          this.cities2 = [];
-          this.Countries = [];
-          this.Countries2 = [];
-          this.states = [];
-          this.states2 = [];*/
-        }
-        else {
+        if (response.Success) {
 
           console.log(this.employeeService.getUserDetail());
           employee.createdBy = this.employeeService.empCode;
@@ -267,7 +246,7 @@ dropdownSettings: any = {};
             this.massage = 'Record saved Successfully';
             console.log("sec");
             this.ds.ShowHideToasty({
-              title: 'Record saved Successfully',
+              title: response.Messaege,
               msg: '',
               showClose: true,
               theme: 'bootstrap',
@@ -286,6 +265,22 @@ dropdownSettings: any = {};
        
 
         }
+        else {
+          this.codeAvailable = true;
+          this.errorFound = true;
+
+          this.massage = response.Message;
+          this.ds.ShowHideToasty({
+            title: 'Failure..',
+            msg: response.Message,
+            showClose: true,
+            theme: 'bootstrap',
+            type: 'error',
+            closeOther: true,
+          });
+
+        }
+        
       });
       // console.log(this.data_exist + "dfcds");
 
@@ -307,25 +302,20 @@ dropdownSettings: any = {};
         this.massage = null;
 
         // console.log(response)
-        if (response != null) {
+        if (response.Success) {
           this.codeAvailable = true;
 
           this.ds.ShowHideToasty({
             title: 'Note..',
-            msg: 'This code is already available',
+            msg: response.Message,
             showClose: true,
             theme: 'bootstrap',
             type: 'error',
             closeOther: true,
-            timeout: 10000
+            timeout: 5000
           });
           this.massage = "This code is already available";
-          /*this.cities = [];
-          this.cities2 = [];
-          this.Countries = [];
-          this.Countries2 = [];
-          this.states = [];
-          this.states2 = [];*/
+          
           this.employeeForm.setErrors({ 'incorrect': true });
         }
         else {

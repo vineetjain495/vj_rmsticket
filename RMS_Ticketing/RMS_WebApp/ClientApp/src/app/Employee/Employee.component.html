@@ -16,8 +16,11 @@
           <div class="row space">
             <div class="col-sm-12">
               <div class="row">
-                <div class="col-sm-12 text-center">
-                  <button type="submit" class="btn btn-primary">Search</button>
+                <div class="col-sm-6 text-center">
+                  <button type="submit" class="btn btn-primary btntype">Search</button>
+                </div>
+                <div class="col-sm-6 text-center">
+                  <button class="btn btn-inverse float-left resetbtn btntype" (click)="resetForm()">Reset</button>
                 </div>
               </div>
 
@@ -41,6 +44,12 @@
           </div>
           <div class="col-sm-6" [hidden]="hidefromLocation">
             <div class="col-sm-12">
+              <a href="javascript:void(0);" (click)="goToPage('/Employee/UpdateTicket');">
+                <i class="icofont icofont-ticket float-right icofont-3x icon_color add_hover">
+                  <span class="add_text">Assign Ticket</span>
+                </i>
+              </a>
+            
               <a href="javascript:void(0);" (click)="goToPage('/Employee/CreateEmployee');">
                 <i class="icofont icofont-contact-add float-right icofont-3x icon_color add_hover">
                   <span class="add_text">Create Employee</span>
@@ -58,16 +67,24 @@
       <div class="col-sm-12">
         <div class="row">
           <div class="col-sm-12">
-            <jqxGrid jqx-grid-energyblue #myGrid [width]=getWidth()
+            <jqxGrid #myGrid jqx-grid-energyblue #myGrid [width]=getWidth()
                      [source]="dataAdapter" [autoheight]="true"
+                     (onPagechanged)="onPageChanged($event)"
+                     [rendergridrows]="rendergridrows"
+                     [initrowdetails]="initRowDetails"
+                     [rowdetailstemplate]="rowdetailstemplate"
+                     [virtualmode]='true'
                      [altrows]="true" [columns]="columns"
                      (onCellselect)="myGridOnCellSelect($event)"
-                     [filterable]="false" [columnsresize]="true"
-                     [sortable]="false" [autoshowloadelement]="true"
+                     [filterable]="false" [columnsresize]="true" 
+                     [sortable]="false" 
                      [height]='620' [showheader]="false"
                      [theme]="'energyblue'" [rowsheight]="75"
-                     [pageable]="true" [pagesizeoptions]="['10', '20', '30']"
-                     [selectionmode]="'multiplecellsadvanced'">
+                     [pagermode]="'simple'"
+                    
+                     [updatefilterconditions]="updatefilterconditions"
+                     [pageable]="true" 
+                     [selectionmode]="'singlecell'">
             </jqxGrid>
           </div>
         </div>

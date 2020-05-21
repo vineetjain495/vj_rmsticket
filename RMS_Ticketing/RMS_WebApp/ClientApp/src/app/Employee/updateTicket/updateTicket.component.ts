@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from '../Employee/addEmployee.service';
+import { EmployeeService } from '../Employee.service';
 import { Router } from '@angular/router';
-///import {  Params } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/DataService';
 @Component({
@@ -52,7 +51,7 @@ export class UpdateTicketComponent implements OnInit {
     
     this.employeeService.getEmployeeDetails().subscribe((res: any) => {
       res.forEach((element) => {
-        //console.log(res);
+        console.log(res);
         if (element) {
 
           this.Emp_details.push(element.Type_EmpCode + " - ( " + element.EmployeeName + " )");

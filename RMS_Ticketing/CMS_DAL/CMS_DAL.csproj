@@ -109,6 +109,7 @@
     <Compile Include="RMS_Ticketing_DAL\CBRDBContext.cs" />
     <Compile Include="RMS_Ticketing_DAL\CommonEnum.cs" />
     <Compile Include="RMS_Ticketing_DAL\MyConfiguration.cs" />
+    <Compile Include="RMS_Ticketing_DAL\RMSEmployeeMaster.cs" />
     <Compile Include="RMS_Ticketing_DAL\RMSTicketViewerRepository.cs" />
     <Compile Include="RMS_Ticketing_DAL\RMSAutomationRepository.cs" />
     <Compile Include="RMS_Ticketing_DAL\RMSTSConnectorRepository.cs" />

@@ -1,20 +1,25 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid'
-import { EmployeeService } from '../addEmployee.service';
+import { EmployeeService } from './Employee.service';
+import * as _ from 'lodash'; import { DatePipe } from '@angular/common';
+import { baseUrl } from '../GlobalShareCode';
 //import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/DataService';
 @Component({
   selector: 'app-showemployee',
-  templateUrl: './showemployee.component.html',
-  styleUrls: ['./showemployee.component.css']
+  templateUrl: './Employee.component.html',
+  styleUrls: ['./Employee.component.css']
 })
 
-export class ShowemployeeComponent implements  AfterViewInit {
+export class EmployeeComponent implements  OnInit {
   
   @ViewChild('myGrid') myGrid: jqxGridComponent;
   searchForm: any;
+  public filterDataExport: any = [];
+  
+  private getEmployeeLimitedUrl: string = baseUrl + 'Employee/GetEmployeelimited';
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
     private ds: DataService,
@@ -22,11 +27,22 @@ export class ShowemployeeComponent implements  AfterViewInit {
   ) {
 
     this.searchForm = this.formbulider.group({
-      Type_EmpCode: ['', [Validators.required]],
+      Type_EmpCode: [null, [Validators.required]],
 
     });
   }
+
   onFormSubmit() {
+    const employeeID = this.searchForm.value;
+    if (!(employeeID.Type_EmpCode == null )) {
+
+      employeeID.Type_EmpCode = (employeeID.Type_EmpCode != null && employeeID.Type_EmpCode != "") ? employeeID.Type_EmpCode  : null;
+      
+      this.myGrid.updatebounddata('cell');
+    }
+
+  }
+ /* onFormSubmit() {
     this.ds.ShowHideToasty({
       title: 'Searching..',
       msg: '',
@@ -73,10 +89,11 @@ export class ShowemployeeComponent implements  AfterViewInit {
       });
 
     }
-  }  
-
+  }  */
+  ngOnInit() {
+  }
   
-  ngAfterViewInit() {
+  /*ngAfterViewInit() {
     
       this.myGrid.showloadelement();
       // this.getData();
@@ -88,10 +105,15 @@ export class ShowemployeeComponent implements  AfterViewInit {
   
   
       });
-    }
+    }*/
   
     source: any = {
-      localdata: null,
+      //localdata: null,
+      cache: false,
+      totalrecords: 0,
+      PageNum: null,
+      PageSize: null,
+      root: 'TableList',
       datafields: [
         { name: 'ID', type: 'number' },
         { name: 'Type_EmpCode', type: 'string' },
@@ -104,10 +126,79 @@ export class ShowemployeeComponent implements  AfterViewInit {
         { name: 'RightsName', type: 'string' } */
       ],
   
-      datatype: 'json'
+      beforeprocessing: (data) => {
+        console.log(data.Entity.PageResponseModelObj.TotalCount);
+        this.source.totalrecords = data.Entity.PageResponseModelObj.TotalCount; //data.Entity.PageResponseModelObj.TotalCount;
+        this.source.PageNum = data.Entity.PageResponseModelObj.PageNumber;
+        this.source.PageSize = data.Entity.PageResponseModelObj.PageSize;
+      },
+        
+      dataType: 'json',
+      type: 'POST',
+      id: 'Id',
+      url: this.getEmployeeLimitedUrl
     };
   
-    dataAdapter: any = new jqx.dataAdapter(this.source);
+  dataAdapter: any = new jqx.dataAdapter(this.source,
+    {
+ 
+      
+    formatData: (Parameter) => {
+    Parameter.pagenum = Parameter.pagenum + 1;
+
+        if (!(this.searchForm.value.Type_EmpCode == null)) {
+        let incrementCount: number = 0;
+        let filtercount: number = 0;
+          if (!(this.searchForm.value.Type_EmpCode == null)) {
+          incrementCount = incrementCount + 1;
+          filtercount = filtercount + 1;
+
+        }
+
+          let filterGroups = null;
+
+          switch (incrementCount) {
+            case 1:
+              filterGroups = [{ filters: [] },];
+              if (!(this.searchForm.value.Type_EmpCode == null)) {
+                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'Type_EmpCode', 'value': this.searchForm.value.Type_EmpCode, 'condition': 'CONTAINS', 'operator': 'and' });
+              }
+          }
+
+          Object.assign(Parameter, { "filterGroups": filterGroups });
+          this.filterDataExport.push(_.cloneDeep(Parameter.filterGroups));
+        } else {
+          this.filterDataExport = [];
+        }
+        },
+
+        loadError: function (one, two, third) { }
+      });
+  localdataAdapter = this.dataAdapter;
+
+rendergridrows = (params: any): any[] => {
+  return params.data;
+}
+
+rendergridrowsSubGrid = (params: any): any[] => {
+  return params.data;
+}
+rendered = (params: any) => {
+
+  }
+  onPageSizeChanged(): void {
+
+  }
+
+  onPageChanged(): void {
+  }
+
+  onPageChangedSub() {
+
+  //  this.subGridrequest = true;
+  }
+
+
   getWidth(): any {
     return '98%';
   }
@@ -151,7 +242,18 @@ export class ShowemployeeComponent implements  AfterViewInit {
   
     ];
   
-  
+  resetForm() {
+
+    this.searchForm.reset();
+    this.searchForm.value.Type_EmpCode = null;
+    
+
+    
+      this.myGrid.updatebounddata('cell');
+    
+
+
+  }
   goToPage(pageName:string){
     //console.log(pageName);
     this.router.navigate([`${pageName}`]);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';  
 import { Observable, fromEventPattern } from 'rxjs';  
 //import { HttpClient } from '@angular/common/http';  
-import { EmployeeService } from '../addEmployee.service';  
+import { EmployeeService } from '../Employee.service';  
 import { Employee } from '../addEmployee/addEmployee';
 import {ActivatedRoute, Params} from '@angular/router';
 import { Router } from '@angular/router';
@@ -118,15 +118,7 @@ export class EditempComponent implements OnInit {
       };
       this.loadEmployeeToEdit(this.route.snapshot.params.id);
       // console.log(res);
-      this.ds.ShowHideToasty({
-        title: 'Edit Employee Here',
-        msg: '',
-        showClose: true,
-        theme: 'bootstrap',
-        type: 'success',
-        closeOther: true,
-        timeout: 3000
-      });
+      
 
     }  
     UpdateEmployee(employee: Employee) {  
@@ -142,13 +134,13 @@ export class EditempComponent implements OnInit {
       employee.createdBy = this.employeeService.empCode;
         this.employeeService.updateEmployee(employee).subscribe((response : any) => {  
           console.log(response);
-          if (response == "0") {
+          if (!response.Success) {
             this.dataSaved = false;
             //this.errorFound = true;
             //this.massage = "Ticket is assigned to Employee " + employee.Type_EmpCode + "  You can not change location and Active";
             this.ds.ShowHideToasty({
               title: 'Failure..',
-              msg: 'Ticket is assigned to this ID. Please assigned ' + employee.Type_EmpCode + ' ID Tickets to other users .'  ,
+              msg: response.Message  ,
               showClose: true,
               theme: 'bootstrap',
               type: 'error',
@@ -157,20 +149,6 @@ export class EditempComponent implements OnInit {
             this.employeeService.edit_empCode = this.route.snapshot.params.id;
             this.loadEmployeeToEdit(this.employeeService.edit_empCode);
             this.isTicketAvailable = true;
-          }
-          else if (response == null) {
-            this.dataSaved = false;
-            this.errorFound = true;
-            this.massage = "Error in update";
-            this.ds.ShowHideToasty({
-              title: 'Failure..',
-              msg: 'There is some problem in update. Please Try again.',
-              showClose: true,
-              theme: 'bootstrap',
-              type: 'error',
-              closeOther: true,
-            });
-            this.loadEmployeeToEdit(this.route.snapshot.params.id);
           }
           else {
             this.ds.ShowHideToasty({
@@ -196,28 +174,50 @@ export class EditempComponent implements OnInit {
   loadEmployeeToEdit(employeeId: string) {
       this.employeeService.getEmployeeById(employeeId).subscribe((response: any) => {
         console.log(response);
-        this.massage = null;  
-        this.dataSaved = false;  
-        this.employeeIdUpdate = response.Type_EmpCode;  
-        this.employeeForm.controls['EmployeeName'].setValue(response.EmployeeName);  
-       this.employeeForm.controls['MobileNumber'].setValue(response.MobileNumber);  
-        this.employeeForm.controls['EmailId'].setValue(response.EmailID);  
-        this.employeeForm.controls['Password'].setValue(response.Password);  
-        this.employeeForm.controls['RoleCode'].setValue(response.RoleCode);  
-        this.employeeForm.controls['RightsCode'].setValue(response.RightsCode); 
-        this.employeeForm.controls['Type_EmpCode'].setValue(response.Type_EmpCode); 
-        this.employeeForm.controls['IsActive'].setValue(response.IsActive);
-        if (response.RoleCode == "2")
-        {
-          this.employeeForm.controls['MspCategory'].setValue(response.MspCategory);
-          this.isMSPSelected = true;
-        }
-        if (response.RoleCode == "4" || response.RoleCode == "6") {
-          this.isLocationSelected = true;
+        if (response.Success) {
 
-          this.getLocations();
-        }
+          this.massage = null;
+          this.dataSaved = false;
+          this.employeeIdUpdate = response.Entity.Type_EmpCode;
+          this.employeeForm.controls['EmployeeName'].setValue(response.Entity.EmployeeName);
+          this.employeeForm.controls['MobileNumber'].setValue(response.Entity.MobileNumber);
+          this.employeeForm.controls['EmailId'].setValue(response.Entity.EmailID);
+          this.employeeForm.controls['Password'].setValue(response.Entity.Password);
+          this.employeeForm.controls['RoleCode'].setValue(response.Entity.RoleCode);
+          this.employeeForm.controls['RightsCode'].setValue(response.Entity.RightsCode);
+          this.employeeForm.controls['Type_EmpCode'].setValue(response.Entity.Type_EmpCode);
+          this.employeeForm.controls['IsActive'].setValue(response.Entity.IsActive);
+          if (response.Entity.RoleCode == "2") {
+            this.employeeForm.controls['MspCategory'].setValue(response.Entity.MspCategory);
+            this.isMSPSelected = true;
+          }
+          if (response.Entity.RoleCode == "4" || response.Entity.RoleCode == "6") {
+            this.isLocationSelected = true;
 
+            this.getLocations();
+          }
+          this.ds.ShowHideToasty({
+            title: 'Edit Employee Here',
+            msg: '',
+            showClose: true,
+            theme: 'bootstrap',
+            type: 'success',
+            closeOther: true,
+            timeout: 3000
+          });
+        }
+        else {
+          this.ds.ShowHideToasty({
+            title: 'No Employee found',
+            msg: '',
+            showClose: true,
+            theme: 'bootstrap',
+            type: 'success',
+            closeOther: true,
+            timeout: 5000
+          });
+
+        }
         // console.log(response.IsActive);
         // this.employeeForm.controls['EmpCode'].setValue(employee.EmpCode);  
       });  
@@ -408,6 +408,6 @@ export class EditempComponent implements OnInit {
     this.router.navigate([`${pageName}`]);
   }
   goto_update() {
-    this.router.navigateByUrl('/UpdateTicket'); 
+    this.router.navigateByUrl('Employee/UpdateTicket'); 
   }
   }

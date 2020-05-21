@@ -7,10 +7,10 @@ import { baseUrl } from '../GlobalShareCode';
 import { CommonFunctionality } from '../app.commonFunctionality';
 import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
 import { UpdateCallback } from '@angular/core/src/testability/testability';
-import { UpdateTicket } from '../updateTicket/UpdateTicket';
+import { UpdateTicket } from './updateTicket/UpdateTicket';
 /*After that we write all methods related to consume web in employee.service.ts  */
  @Injectable({  
-  providedIn: 'root'  
+  providedIn: 'root'    
 })  
   
  export class EmployeeService {
@@ -48,9 +48,13 @@ import { UpdateTicket } from '../updateTicket/UpdateTicket';
      return this.http.get(baseUrl + 'Employee/EmployeeTicketsById/?employeeId=' + employee_code);
    }
 
-  getEmployeeById(employee_code: string) {  
+   public getEmployeeById(employee_code: string){  
    // return this.http.get<Employee>(this.url + '/GetEmployeeDetailsById/' + employeeId);
-    return this.http.get(baseUrl + 'Employee/EmployeeDetailsById/?employeeId=' + employee_code);
+    // return this.http.get(baseUrl + 'Employee/CheckEmployee/?employeeId=' + employee_code);
+     console.log("ser " + employee_code);
+     return this.http.get(baseUrl + 'Employee/CheckEmployee/?employeeId=' + employee_code);
+   //return this.http.post(baseUrl + 'Employee/CheckEmployee', employee_code);
+  // return this.CallHttpGet<T>(baseUrl + 'Employee/CheckEmployee', employee_code, null);
    }
   getUserDetail() {
      //console.log("user");
@@ -66,11 +70,11 @@ import { UpdateTicket } from '../updateTicket/UpdateTicket';
  
   createEmployee(employee: Employee) {  
     console.log(employee);
-    return this.http.post(baseUrl + 'Employee/NewEmployee',   employee);  
+    return this.http.post(baseUrl + 'Employee/CreateEmployee',   employee);  
   }  
   
   updateEmployee(employee: Employee) {  
-    return this.http.put('../Employee/UpdateEmployeeDetails',   employee);  
+    return this.http.post(baseUrl + 'Employee/UpdateEmployeeDetails',   employee);  
    }
    UpdateTicketAssign(employee: UpdateTicket) {
     // console.log(employee);
@@ -79,5 +83,26 @@ import { UpdateTicket } from '../updateTicket/UpdateTicket';
   deleteEmployeeById(employeeid: string){  
    // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
     return this.http.delete(baseUrl + '/DeleteEmployeeDetails?emp_code=' + employeeid);  
-  }  
+   }
+   private CallHttpPost<T>(url: string, itemData: any, headers?: HttpHeaders): Observable<T> {
+     return this.http.post<T>(url, itemData, {
+       headers: headers
+     });
+   }
+   private CallHttpGet<T>(url: string, itemData: any, headers?: HttpHeaders): Observable<T> {
+
+     if (itemData != null) {
+       return this.http.get<T>(url, {
+         headers: headers,
+         params: { 'Value': itemData }
+       });
+     }
+     else {
+       return this.http.get<T>(url, {
+         headers: headers
+       });
+     }
+
+
+   }
 }  

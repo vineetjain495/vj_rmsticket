@@ -142,6 +142,7 @@
     <Compile Include="Common\Encryption.cs" />
     <Compile Include="Controller\ConnectorController.cs" />
     <Compile Include="Controller\Connector_oldController.cs" />
+    <Compile Include="Controller\EmployeeMasterController.cs" />
     <Compile Include="Controller\TicketViewerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

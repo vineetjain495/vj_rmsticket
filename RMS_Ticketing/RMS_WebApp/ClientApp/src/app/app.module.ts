@@ -37,12 +37,12 @@ import { jqxFormComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxform
 import { PicklistComponent } from './picklist/picklist.component';
 import { LinkViewRefComponent } from './shared/components/LinkViewRef.Component';
 import { LinkViewComponent } from './shared/components/linkView.component';
-import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
-import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
+/*import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
+//import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
 import { EditempComponent } from './Employee/editemp/editemp.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { ToastyModule } from 'ng2-toasty';
-import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
+import { ToastyModule } from 'ng2-toasty';*/
+//import { UpdateTicketComponent } from './Employee/updateTicket/updateTicket.component';
 //import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
   @NgModule({
@@ -76,9 +76,7 @@ import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
       SidebarModule.forRoot(),
       ChatModule,
       CrudTicketCommentsModule,
-      NgMultiSelectDropDownModule,
-      ToastyModule.forRoot()
-     // jqxGridModule
+     
    ],
     exports: [ScrollModule ],
     declarations: [
@@ -92,10 +90,7 @@ import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
       PicklistComponent,
       LinkViewRefComponent,
       LinkViewComponent,
-      AddEmployeeComponent,
-      ShowemployeeComponent,
-      EditempComponent,
-      UpdateTicketComponent
+    //  UpdateTicketComponent
 
     ],
     bootstrap: [AppComponent]
