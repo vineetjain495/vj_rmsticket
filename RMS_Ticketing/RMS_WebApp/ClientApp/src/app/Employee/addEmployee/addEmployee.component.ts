@@ -68,7 +68,7 @@ dropdownSettings: any = {};
     });
     this.employeeService.getRolesDetail().subscribe((res: any) => {
       //res;
-      res.forEach((element) => {
+      res.Entity.forEach((element) => {
         
         if (element.Type == "Roles") {
           //console.log(element);
@@ -96,7 +96,8 @@ dropdownSettings: any = {};
         closeOther: true,
         timeout: 3000
       });
-      this.Countries = res;
+      this.Countries = res.Entity;
+      console.log(" add "+  this.Countries);
       this.Countries.forEach((element) => {
         this.Countries2.push(element.RoName);
       });
@@ -234,37 +235,32 @@ dropdownSettings: any = {};
       closeOther: true
     });
     console.log("sec");
-    if (this.employeeIdUpdate == null) {
-      this.employeeService.getEmployeeById(employee.Type_EmpCode).subscribe((response: any) => {
+    
+      console.log(this.employeeService.getUserDetail());
+      employee.createdBy = this.employeeService.empCode;
+      this.employeeService.createEmployee(employee).subscribe((response: any) => {
         if (response.Success) {
+          // console.log("sec");
+          this.dataSaved = true;
+          this.massage = 'Record saved Successfully';
+          console.log("sec");
+          this.ds.ShowHideToasty({
+            title: response.Message,
+            msg: '',
+            showClose: true,
+            theme: 'bootstrap',
+            type: 'success',
+            closeOther: true,
+            timeout: 5000
+          });
 
-          console.log(this.employeeService.getUserDetail());
-          employee.createdBy = this.employeeService.empCode;
-          this.employeeService.createEmployee(employee).subscribe(() => {
-            // console.log("sec");
-            this.dataSaved = true;
-            this.massage = 'Record saved Successfully';
-            console.log("sec");
-            this.ds.ShowHideToasty({
-              title: response.Messaege,
-              msg: '',
-              showClose: true,
-              theme: 'bootstrap',
-              type: 'success',
-              closeOther: true,
-              timeout: 5000
-            });
-           
-            console.log(this.massage);
-            // this.loadAllEmployees();  
-            this.employeeIdUpdate = null;
-            // this.employeeForm.reset();
-            this.router.navigateByUrl('/Employee');
-          }
-          );
-       
-
+          console.log(this.massage);
+          // this.loadAllEmployees();  
+          this.employeeIdUpdate = null;
+          // this.employeeForm.reset();
+          this.router.navigateByUrl('/Employee');
         }
+      
         else {
           this.codeAvailable = true;
           this.errorFound = true;
@@ -280,20 +276,8 @@ dropdownSettings: any = {};
           });
 
         }
-        
-      });
-      // console.log(this.data_exist + "dfcds");
-
-    } else {
-      employee.Type_EmpCode = this.employeeIdUpdate;
-     /* this.employeeService.updateEmployee(employee).subscribe(() => {
-        this.dataSaved = true;
-        this.massage = 'Record Updated Successfully';
-        this.loadAllEmployees();
-        this.employeeIdUpdate = null;
-        // this.employeeForm.reset();  
-      });*/
-    }
+          });
+      
   }
   checkCode(event) {
     console.log(event.target.value);

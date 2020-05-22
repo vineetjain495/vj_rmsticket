@@ -532,7 +532,7 @@ var EmployeeService = /** @class */ (function () {
         return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/RolesDetail');
     };
     EmployeeService.prototype.getLocationDetail = function () {
-        return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/LocatioDetail');
+        return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/LocationDetail');
     };
     EmployeeService.prototype.getEmployeeLimited = function () {
         return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/Employeelimited');
@@ -574,7 +574,7 @@ var EmployeeService = /** @class */ (function () {
     };
     EmployeeService.prototype.UpdateTicketAssign = function (employee) {
         // console.log(employee);
-        return this.http.put('../Employee/UpdateTicketAssign', employee);
+        return this.http.post('../Employee/UpdateTicketAssign', employee);
     };
     EmployeeService.prototype.deleteEmployeeById = function (employeeid) {
         // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  

@@ -54,5 +54,14 @@ namespace CMSWebApp.Utility
         public const string CreateEmployeeUrl = "api/EmployeeMaster/CreateEmployee";
         public const string CheckEmployeeUrl = "api/EmployeeMaster/CheckEmployee";
         public const string UpdateEmployeeUrl = "api/EmployeeMaster/UpdateEmployeeDetails";
+        public const string LocationDetailUrl = "api/EmployeeMaster/LocationDetail";
+        public const string EmployeeLocationByIdUrl = "api/EmployeeMaster/LocationDetailByID";
+        public const string RolesDetailUrl = "api/EmployeeMaster/RolesDetail";
+        public const string EmployeeDetailsUrl = "api/EmployeeMaster/EmployeeDetails";
+        public const string EmployeeTicketsByIdUrl = "api/EmployeeMaster/EmployeeTicketsById";
+        public const string UpdateTicketAssignUrl = "api/EmployeeMaster/UpdateTicketAssign";
+        
+        //EmployeeDetailsUrl
+        //RolesDetailUrl
     }
 }

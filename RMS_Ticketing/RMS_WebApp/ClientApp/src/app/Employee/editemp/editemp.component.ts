@@ -61,7 +61,7 @@ export class EditempComponent implements OnInit {
       });
       this.employeeService.getRolesDetail().subscribe((res: any) => {
         //res;
-        res.forEach((element) => {
+        res.Entity.forEach((element) => {
 
           if (element.Type == "Roles") {
             //console.log(element);
@@ -122,7 +122,7 @@ export class EditempComponent implements OnInit {
 
     }  
     UpdateEmployee(employee: Employee) {  
-   
+      console.log(employee);
       this.ds.ShowHideToasty({
         title: 'Please Wait...',
         msg: '',
@@ -234,7 +234,7 @@ export class EditempComponent implements OnInit {
 
     this.employeeService.getLocationDetail().subscribe((res: any) => {
 
-      this.Countries = res;
+      this.Countries = res.Entity;
       console.log(this.Countries);
       this.Countries.forEach((element) => {
         this.Countries2.push(element.RoName);
@@ -244,6 +244,7 @@ export class EditempComponent implements OnInit {
 
     this.employeeService.getEmployeeLocationByID(this.employeeIdUpdate).subscribe((res_loc: any) => {
       console.log(res_loc);
+
       this.ds.ShowHideToasty({
         title: 'Locations are ready to select',
         msg: '',
@@ -253,21 +254,21 @@ export class EditempComponent implements OnInit {
         closeOther: true,
         timeout: 3000
       });
-      res_loc.forEach((element) => {
-        console.log(element.length);
+      res_loc.Entity.forEach((element) => {
+        console.log(element);
         
 
-        if (element.Loc_detail[0].EmployeeCode) {
-          this.selected_region.push(element.Loc_detail[0].RoName);
-          console.log(element.Loc_detail[0].RoName);
-          this.selected_loc.push(element.Loc_detail[0].LocationName);
-          console.log(element.Loc_detail[0].LocationName);
-          this.selected_hub.push(element.Loc_detail[0].HubLocationName);
-          console.log(element.Loc_detail[0].HubLocationName);
-          this.changeCountry(element.Loc_detail[0].RoName);
-          console.log(element.Loc_detail[0].HubLocationName);
-          this.changeState(element.Loc_detail[0].LocationName);
-          console.log(element.Loc_detail[0].HubLocationName);
+        if (element.EmployeeCode) {
+          this.selected_region.push(element.RoName);
+          console.log(element.RoName);
+          this.selected_loc.push(element.LocationName);
+          console.log(element.LocationName);
+          this.selected_hub.push(element.HubLocationName);
+          console.log(element.HubLocationName);
+          this.changeCountry(element.RoName);
+          console.log(element.HubLocationName);
+          this.changeState(element.LocationName);
+          console.log(element.HubLocationName);
           console.log(this.selected_hub);
           console.log(this.selected_loc);
           console.log(this.selected_region);

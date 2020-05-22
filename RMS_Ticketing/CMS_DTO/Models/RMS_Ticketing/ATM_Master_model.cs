@@ -9,8 +9,7 @@ namespace CMS_DTO.Entity.RMS_Ticketing
 {
    public class ATM_Master_model
     {
-        [Key]
-       
+       public string EmployeeCode { get; set; }
         public string RoCode{get;set;}
         public string RoName { get; set; }
         
@@ -19,8 +18,8 @@ namespace CMS_DTO.Entity.RMS_Ticketing
 
         public string HubLocationCode{get;set;}
         public string HubLocationName { get; set; }
-       
-      
+     
+
 
 }
 

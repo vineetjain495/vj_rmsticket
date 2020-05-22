@@ -10,6 +10,7 @@ using CMSDTO.Models.Request;
 using CMSDTO.Models.Response;
 using CMSRepository.Models;
 using CMSWebApp.Utility;
+using System.Collections.Generic;
 /*using System.Data;
  * using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace WebApp.Controllers
     {
         RestClient restClient = new RestClient(ConfigurationManager.AppSettings["WebApiLoginUrl"].ToString());
         HttpClient client = new HttpClient();
-        [HttpPost]
+       /* [HttpPost]
         public ActionResult NewEmployee(Employee_Role employee_Role)
         {
 
@@ -83,7 +84,7 @@ namespace WebApp.Controllers
 
 
             //return null;
-        }
+        }*/
         [HttpPost]
         public ContentResult CreateEmployee(Employee_Role employee_Role)
         {
@@ -156,6 +157,7 @@ namespace WebApp.Controllers
             }
 
         }
+
         /*[HttpPut]
         public ActionResult UpdateEmployeeDetails(Employee_Role employee_Role)
         {
@@ -205,7 +207,31 @@ namespace WebApp.Controllers
 
             //return null;
         }*/
-        [HttpPut]
+        [HttpPost]
+        public ContentResult UpdateTicketAssign(AssignTicket employeeID)
+        {
+            {
+
+                BaseResponse baseResponse = new BaseResponse();
+                BaseRequest<AssignTicket> baseReq = new BaseRequest<AssignTicket>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = employeeID
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse, BaseRequest<AssignTicket>>
+                (CommonConstant.UpdateTicketAssignUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        /*[HttpPut]
         public ActionResult UpdateTicketAssign(AssignTicket employeeID)
         {
 
@@ -254,7 +280,7 @@ namespace WebApp.Controllers
 
 
             //return null;
-        }
+        }*/
 
         //EmployeelimitedById
        /* [HttpGet]
@@ -359,7 +385,7 @@ namespace WebApp.Controllers
         }
 
 
-        [HttpGet]
+        /*[HttpGet]
         public JsonResult EmployeeDetails()
         {
             try
@@ -393,9 +419,9 @@ namespace WebApp.Controllers
 
             }
             return null;
-        }
+        }*/
 
-        [HttpGet]
+       /* [HttpGet]
         public JsonResult LocatioDetail()
         {
             try
@@ -429,8 +455,8 @@ namespace WebApp.Controllers
 
             }
             return null;
-        }
-        [HttpGet]
+        }*/
+       /* [HttpGet]
         public JsonResult RolesDetail()
         {
             try
@@ -464,8 +490,8 @@ namespace WebApp.Controllers
 
             }
             return null;
-        }
-        [HttpGet]
+        }*/
+        /*[HttpGet]
         public ActionResult EmployeeDetailsById(string employeeId)
         {
             try
@@ -499,8 +525,128 @@ namespace WebApp.Controllers
 
             }
             return null;
+        }*/
+        [HttpGet]
+        public ContentResult LocationDetail()
+        {
+            {
+
+                BaseResponse<IEnumerable<ATM_Master_model>> baseResponse = new BaseResponse<IEnumerable<ATM_Master_model>>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<IEnumerable<ATM_Master_model>>, BaseRequest<string>>
+                (CommonConstant.LocationDetailUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
         }
         [HttpGet]
+        public ContentResult RolesDetail()
+        {
+            {
+
+                BaseResponse<IEnumerable<Employee_Role>> baseResponse = new BaseResponse<IEnumerable<Employee_Role>>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<IEnumerable<Employee_Role>>, BaseRequest<string>>
+                (CommonConstant.RolesDetailUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        [HttpGet]
+        public ContentResult EmployeeDetails()
+        {
+            {
+
+                BaseResponse<IEnumerable<Employee_Role>> baseResponse = new BaseResponse<IEnumerable<Employee_Role>>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<IEnumerable<Employee_Role>>, BaseRequest<string>>
+                (CommonConstant.EmployeeDetailsUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        [HttpGet]
+        public ContentResult EmployeeTicketsById(string employeeID)
+        {
+            {
+
+                BaseResponse<int> baseResponse = new BaseResponse<int>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = employeeID
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<int>, BaseRequest<string>>
+                (CommonConstant.EmployeeTicketsByIdUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        [HttpGet]
+        public ContentResult EmployeeLocationById(string employeeID)
+        {
+            {
+
+                BaseResponse<IEnumerable<ATM_Master_model>> baseResponse = new BaseResponse<IEnumerable<ATM_Master_model>>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+                    Entity = employeeID
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<IEnumerable<ATM_Master_model>>, BaseRequest<string>>
+                (CommonConstant.EmployeeLocationByIdUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        /*[HttpGet]
         public ActionResult EmployeeLocationById(string employeeId)
         {
             try
@@ -531,8 +677,8 @@ namespace WebApp.Controllers
                 return null;
             }
             return null;
-        }
-        [HttpGet]
+        }*/
+        /*[HttpGet]
         public ActionResult EmployeeTicketsById(string employeeId)
         {
             try
@@ -563,6 +709,6 @@ namespace WebApp.Controllers
                 return null;
             }
             return null;
-        }
+        }*/
     }
 }

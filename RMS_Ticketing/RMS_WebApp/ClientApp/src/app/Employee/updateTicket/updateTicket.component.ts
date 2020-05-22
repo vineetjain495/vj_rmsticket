@@ -50,7 +50,7 @@ export class UpdateTicketComponent implements OnInit {
     });
     
     this.employeeService.getEmployeeDetails().subscribe((res: any) => {
-      res.forEach((element) => {
+      res.Entity.forEach((element) => {
         console.log(res);
         if (element) {
 
@@ -109,7 +109,7 @@ export class UpdateTicketComponent implements OnInit {
     });
    
     this.employeeService.UpdateTicketAssign(employee).subscribe((response: any) => {
-     
+      if (response.Success) {
         this.ds.ShowHideToasty({
           title: 'Record Updated Successfully',
           msg: '',
@@ -119,6 +119,17 @@ export class UpdateTicketComponent implements OnInit {
           closeOther: true,
           timeout: 5000
         });
+      }
+      else {
+        this.ds.ShowHideToasty({
+          title: 'Failed to Create Ticket and Upload file',
+          msg: response.Message,
+          showClose: true,
+          theme: 'bootstrap',
+          type: 'error',
+          closeOther: true,
+        });
+      }
       
 
     });
@@ -129,7 +140,7 @@ export class UpdateTicketComponent implements OnInit {
     if (employeeID != "") {
       console.log(employeeID);
       this.employeeService.getEmployeeTicketsByID(employeeID).subscribe((res: any) => {
-        this.ticket_count = res;
+        this.ticket_count = res.Entity;
         console.log(this.ticket_count);
         this.isTicketAvailable = true;
         this.isTicketEmpty = false;
@@ -153,7 +164,7 @@ export class UpdateTicketComponent implements OnInit {
   getTicketCount(employeeID) {
     console.log(employeeID);
     this.employeeService.getEmployeeTicketsByID(employeeID).subscribe((res: any) => {
-      this.ticket_count = res;
+      this.ticket_count = res.Entity;
       console.log(this.ticket_count);
       this.isTicketAvailable = true;
       this.isTicketEmpty = false;

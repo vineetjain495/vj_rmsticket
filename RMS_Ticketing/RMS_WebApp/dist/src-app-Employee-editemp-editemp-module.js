@@ -96,7 +96,7 @@ var EditempComponent = /** @class */ (function () {
         });
         this.employeeService.getRolesDetail().subscribe(function (res) {
             //res;
-            res.forEach(function (element) {
+            res.Entity.forEach(function (element) {
                 if (element.Type == "Roles") {
                     //console.log(element);
                     _this.roles.push([element.TypeCode, element.Type_EmpCode]);
@@ -148,6 +148,7 @@ var EditempComponent = /** @class */ (function () {
     };
     EditempComponent.prototype.UpdateEmployee = function (employee) {
         var _this = this;
+        console.log(employee);
         this.ds.ShowHideToasty({
             title: 'Please Wait...',
             msg: '',
@@ -254,7 +255,7 @@ var EditempComponent = /** @class */ (function () {
             closeOther: true
         });
         this.employeeService.getLocationDetail().subscribe(function (res) {
-            _this.Countries = res;
+            _this.Countries = res.Entity;
             console.log(_this.Countries);
             _this.Countries.forEach(function (element) {
                 _this.Countries2.push(element.RoName);
@@ -271,19 +272,19 @@ var EditempComponent = /** @class */ (function () {
                     closeOther: true,
                     timeout: 3000
                 });
-                res_loc.forEach(function (element) {
-                    console.log(element.length);
-                    if (element.Loc_detail[0].EmployeeCode) {
-                        _this.selected_region.push(element.Loc_detail[0].RoName);
-                        console.log(element.Loc_detail[0].RoName);
-                        _this.selected_loc.push(element.Loc_detail[0].LocationName);
-                        console.log(element.Loc_detail[0].LocationName);
-                        _this.selected_hub.push(element.Loc_detail[0].HubLocationName);
-                        console.log(element.Loc_detail[0].HubLocationName);
-                        _this.changeCountry(element.Loc_detail[0].RoName);
-                        console.log(element.Loc_detail[0].HubLocationName);
-                        _this.changeState(element.Loc_detail[0].LocationName);
-                        console.log(element.Loc_detail[0].HubLocationName);
+                res_loc.Entity.forEach(function (element) {
+                    console.log(element);
+                    if (element.EmployeeCode) {
+                        _this.selected_region.push(element.RoName);
+                        console.log(element.RoName);
+                        _this.selected_loc.push(element.LocationName);
+                        console.log(element.LocationName);
+                        _this.selected_hub.push(element.HubLocationName);
+                        console.log(element.HubLocationName);
+                        _this.changeCountry(element.RoName);
+                        console.log(element.HubLocationName);
+                        _this.changeState(element.LocationName);
+                        console.log(element.HubLocationName);
                         console.log(_this.selected_hub);
                         console.log(_this.selected_loc);
                         console.log(_this.selected_region);

@@ -96,5 +96,126 @@ namespace WebApp.Controllers
             }
             return baseResponse;
         }
+        [Route("api/EmployeeMaster/LocationDetail")]
+        [HttpPost]
+        public BaseResponse<IEnumerable<ATM_Master_model>> LocationDetail(BaseRequest baseRequest)
+        {
+            BaseResponse<IEnumerable<ATM_Master_model>> baseResponse = new BaseResponse<IEnumerable<ATM_Master_model>>() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.GetLocationDetail(baseRequest);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
+        [Route("api/EmployeeMaster/RolesDetail")]
+        [HttpPost]
+        public BaseResponse<IEnumerable<Employee_Role>> RolesDetail(BaseRequest baseRequest)
+        {
+            BaseResponse<IEnumerable<Employee_Role>> baseResponse = new BaseResponse<IEnumerable<Employee_Role>>() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.GetRolesDetail(baseRequest);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
+        [Route("api/EmployeeMaster/EmployeeDetails")]
+        [HttpPost]
+        public BaseResponse<IEnumerable<Employee_Role>> EmployeeDetail(BaseRequest baseRequest)
+        {
+            BaseResponse<IEnumerable<Employee_Role>> baseResponse = new BaseResponse<IEnumerable<Employee_Role>>() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.GetEmployeeDetail(baseRequest);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
+        [Route("api/EmployeeMaster/UpdateTicketAssign")]
+        [HttpPost]
+        public BaseResponse UpdateTicketAssign(BaseRequest<AssignTicket> employee)
+        {
+            BaseResponse baseResponse = new BaseResponse() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.UpdateTicketAssign(employee);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
+
+        [Route("api/EmployeeMaster/EmployeeTicketsById")]
+        [HttpPost]
+        public BaseResponse<int> EmployeeTicketsById(BaseRequest<string> baseRequest)
+        {
+            BaseResponse<int> baseResponse = new BaseResponse<int>() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.GetEmployeeTicketsById(baseRequest);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
+        [Route("api/EmployeeMaster/LocationDetailByID")]
+        [HttpPost]
+        public BaseResponse<IEnumerable<ATM_Master_model>> LocationDetailByID(BaseRequest<string> baseRequest)
+        {
+            BaseResponse<IEnumerable<ATM_Master_model>> baseResponse = new BaseResponse<IEnumerable<ATM_Master_model>>() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.GetLocationDetailByID(baseRequest);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
     }
 }

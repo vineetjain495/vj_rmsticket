@@ -87,7 +87,7 @@ var UpdateTicketComponent = /** @class */ (function () {
             ticket_count: [this.ticket_count]
         });
         this.employeeService.getEmployeeDetails().subscribe(function (res) {
-            res.forEach(function (element) {
+            res.Entity.forEach(function (element) {
                 console.log(res);
                 if (element) {
                     _this.Emp_details.push(element.Type_EmpCode + " - ( " + element.EmployeeName + " )");
@@ -137,15 +137,27 @@ var UpdateTicketComponent = /** @class */ (function () {
             closeOther: true
         });
         this.employeeService.UpdateTicketAssign(employee).subscribe(function (response) {
-            _this.ds.ShowHideToasty({
-                title: 'Record Updated Successfully',
-                msg: '',
-                showClose: true,
-                theme: 'bootstrap',
-                type: 'success',
-                closeOther: true,
-                timeout: 5000
-            });
+            if (response.Success) {
+                _this.ds.ShowHideToasty({
+                    title: 'Record Updated Successfully',
+                    msg: '',
+                    showClose: true,
+                    theme: 'bootstrap',
+                    type: 'success',
+                    closeOther: true,
+                    timeout: 5000
+                });
+            }
+            else {
+                _this.ds.ShowHideToasty({
+                    title: 'Failed to Create Ticket and Upload file',
+                    msg: response.Message,
+                    showClose: true,
+                    theme: 'bootstrap',
+                    type: 'error',
+                    closeOther: true,
+                });
+            }
         });
     };
     UpdateTicketComponent.prototype.getTicketCount2 = function (event) {
@@ -154,7 +166,7 @@ var UpdateTicketComponent = /** @class */ (function () {
         if (employeeID != "") {
             console.log(employeeID);
             this.employeeService.getEmployeeTicketsByID(employeeID).subscribe(function (res) {
-                _this.ticket_count = res;
+                _this.ticket_count = res.Entity;
                 console.log(_this.ticket_count);
                 _this.isTicketAvailable = true;
                 _this.isTicketEmpty = false;
@@ -180,7 +192,7 @@ var UpdateTicketComponent = /** @class */ (function () {
         var _this = this;
         console.log(employeeID);
         this.employeeService.getEmployeeTicketsByID(employeeID).subscribe(function (res) {
-            _this.ticket_count = res;
+            _this.ticket_count = res.Entity;
             console.log(_this.ticket_count);
             _this.isTicketAvailable = true;
             _this.isTicketEmpty = false;

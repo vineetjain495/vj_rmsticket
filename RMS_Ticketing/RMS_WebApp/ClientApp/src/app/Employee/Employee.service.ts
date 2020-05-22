@@ -33,7 +33,7 @@ import { UpdateTicket } from './updateTicket/UpdateTicket';
      return this.http.get(baseUrl + 'Employee/RolesDetail');
    }
   getLocationDetail() {
-     return this.http.get(baseUrl + 'Employee/LocatioDetail');
+     return this.http.get(baseUrl + 'Employee/LocationDetail');
   }
   getEmployeeLimited() {
     return this.http.get(baseUrl + 'Employee/Employeelimited');
@@ -78,7 +78,7 @@ import { UpdateTicket } from './updateTicket/UpdateTicket';
    }
    UpdateTicketAssign(employee: UpdateTicket) {
     // console.log(employee);
-    return this.http.put('../Employee/UpdateTicketAssign', employee);
+    return this.http.post('../Employee/UpdateTicketAssign', employee);
    }  
   deleteEmployeeById(employeeid: string){  
    // const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  

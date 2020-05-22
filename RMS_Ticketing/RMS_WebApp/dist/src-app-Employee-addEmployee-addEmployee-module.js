@@ -102,7 +102,7 @@ var AddEmployeeComponent = /** @class */ (function () {
         });
         this.employeeService.getRolesDetail().subscribe(function (res) {
             //res;
-            res.forEach(function (element) {
+            res.Entity.forEach(function (element) {
                 if (element.Type == "Roles") {
                     //console.log(element);
                     _this.roles.push([element.TypeCode, element.Type_EmpCode]);
@@ -125,7 +125,8 @@ var AddEmployeeComponent = /** @class */ (function () {
                 closeOther: true,
                 timeout: 3000
             });
-            _this.Countries = res;
+            _this.Countries = res.Entity;
+            console.log(" add " + _this.Countries);
             _this.Countries.forEach(function (element) {
                 _this.Countries2.push(element.RoName);
             });
@@ -264,58 +265,43 @@ var AddEmployeeComponent = /** @class */ (function () {
             closeOther: true
         });
         console.log("sec");
-        if (this.employeeIdUpdate == null) {
-            this.employeeService.getEmployeeById(employee.Type_EmpCode).subscribe(function (response) {
-                if (response.Success) {
-                    console.log(_this.employeeService.getUserDetail());
-                    employee.createdBy = _this.employeeService.empCode;
-                    _this.employeeService.createEmployee(employee).subscribe(function () {
-                        // console.log("sec");
-                        _this.dataSaved = true;
-                        _this.massage = 'Record saved Successfully';
-                        console.log("sec");
-                        _this.ds.ShowHideToasty({
-                            title: response.Messaege,
-                            msg: '',
-                            showClose: true,
-                            theme: 'bootstrap',
-                            type: 'success',
-                            closeOther: true,
-                            timeout: 5000
-                        });
-                        console.log(_this.massage);
-                        // this.loadAllEmployees();  
-                        _this.employeeIdUpdate = null;
-                        // this.employeeForm.reset();
-                        _this.router.navigateByUrl('/Employee');
-                    });
-                }
-                else {
-                    _this.codeAvailable = true;
-                    _this.errorFound = true;
-                    _this.massage = response.Message;
-                    _this.ds.ShowHideToasty({
-                        title: 'Failure..',
-                        msg: response.Message,
-                        showClose: true,
-                        theme: 'bootstrap',
-                        type: 'error',
-                        closeOther: true,
-                    });
-                }
-            });
-            // console.log(this.data_exist + "dfcds");
-        }
-        else {
-            employee.Type_EmpCode = this.employeeIdUpdate;
-            /* this.employeeService.updateEmployee(employee).subscribe(() => {
-               this.dataSaved = true;
-               this.massage = 'Record Updated Successfully';
-               this.loadAllEmployees();
-               this.employeeIdUpdate = null;
-               // this.employeeForm.reset();
-             });*/
-        }
+        console.log(this.employeeService.getUserDetail());
+        employee.createdBy = this.employeeService.empCode;
+        this.employeeService.createEmployee(employee).subscribe(function (response) {
+            if (response.Success) {
+                // console.log("sec");
+                _this.dataSaved = true;
+                _this.massage = 'Record saved Successfully';
+                console.log("sec");
+                _this.ds.ShowHideToasty({
+                    title: response.Message,
+                    msg: '',
+                    showClose: true,
+                    theme: 'bootstrap',
+                    type: 'success',
+                    closeOther: true,
+                    timeout: 5000
+                });
+                console.log(_this.massage);
+                // this.loadAllEmployees();  
+                _this.employeeIdUpdate = null;
+                // this.employeeForm.reset();
+                _this.router.navigateByUrl('/Employee');
+            }
+            else {
+                _this.codeAvailable = true;
+                _this.errorFound = true;
+                _this.massage = response.Message;
+                _this.ds.ShowHideToasty({
+                    title: 'Failure..',
+                    msg: response.Message,
+                    showClose: true,
+                    theme: 'bootstrap',
+                    type: 'error',
+                    closeOther: true,
+                });
+            }
+        });
     };
     AddEmployeeComponent.prototype.checkCode = function (event) {
         var _this = this;

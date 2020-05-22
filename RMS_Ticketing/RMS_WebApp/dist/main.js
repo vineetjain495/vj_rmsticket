@@ -809,10 +809,30 @@ var MainLayoutComponent = /** @class */ (function () {
                         },
                         {
                             state: 'Employee',
-                            name: 'Employee',
-                            type: 'link',
-                            icon: 'ti-view-grid'
+                            name: 'Employee Master',
+                            type: 'sub',
+                            icon: 'ti-view-grid',
+                            children: [
+                                {
+                                    state: '',
+                                    name: 'Employee',
+                                    type: 'link',
+                                    icon: 'ti-view-grid'
+                                },
+                                {
+                                    state: 'UpdateTicket',
+                                    name: 'Assign Ticket',
+                                    type: 'link',
+                                    icon: 'ti-view-grid'
+                                }
+                            ]
                         }
+                        /*{
+                          state: 'Employee',
+                          name: 'Employee',
+                          type: 'link',
+                          icon: 'ti-view-grid'
+                        }*/
                     ],
                 };
                 _this.menuItems.clearAll();
