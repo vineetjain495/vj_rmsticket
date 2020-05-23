@@ -11,5 +11,5 @@ export class Employee {
     Location: string;
   Hub: string;
   createdBy: string;
-    
+  IsActive: boolean;
 }

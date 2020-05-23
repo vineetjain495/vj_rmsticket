@@ -33,7 +33,7 @@ namespace RMS_Ticketing
             SwaggerConfig.Register(config);
             app.UseWebApi(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            config.MessageHandlers.Add(new Common.CustomLogHandler());
+            //config.MessageHandlers.Add(new Common.CustomLogHandler());
         }
 
         public void ConfigureOAuth(IAppBuilder app)

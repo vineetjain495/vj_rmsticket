@@ -109,7 +109,7 @@ var LoginComponent = /** @class */ (function () {
                             timeout: 5000
                         });
                         // this.router.navigateByUrl('/TicketViewer');
-                        _this.router.navigateByUrl('/Employee');
+                        _this.router.navigateByUrl('/Employee/EmployeeViewer');
                     }
                     //if (this.modelEmployeeMaster.ResetPassword) {
                     //            this.router.navigateByUrl('/ResetPassword');

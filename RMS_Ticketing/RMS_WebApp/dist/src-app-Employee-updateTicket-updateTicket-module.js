@@ -51,14 +51,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UpdateTicketComponent = /** @class */ (function () {
-    function UpdateTicketComponent(employeeService, formbulider, ds, 
-    // private route: ActivatedRoute,
-    router) {
+    function UpdateTicketComponent(employeeService, formbulider, ds, route, router) {
         var _this = this;
         this.employeeService = employeeService;
         this.formbulider = formbulider;
         this.ds = ds;
+        this.route = route;
         this.router = router;
         this.Emp_details = [];
         this.dropdownSettings = {};
@@ -72,8 +72,9 @@ var UpdateTicketComponent = /** @class */ (function () {
             type: 'wait',
             closeOther: true
         });
-        if (this.employeeService.edit_empCode != "") {
-            this.last_emp_id_val = this.employeeService.edit_empCode;
+        console.log(this.employeeService.edit_empCode);
+        if (this.route.snapshot.params.id) {
+            this.last_emp_id_val = this.route.snapshot.params.id;
             console.log(this.last_emp_id_val);
             this.getTicketCount(this.last_emp_id_val);
         }
@@ -88,7 +89,7 @@ var UpdateTicketComponent = /** @class */ (function () {
         });
         this.employeeService.getEmployeeDetails().subscribe(function (res) {
             res.Entity.forEach(function (element) {
-                console.log(res);
+                //console.log(res);
                 if (element) {
                     _this.Emp_details.push(element.Type_EmpCode + " - ( " + element.EmployeeName + " )");
                     //console.log(this.Emp_details);
@@ -147,6 +148,7 @@ var UpdateTicketComponent = /** @class */ (function () {
                     closeOther: true,
                     timeout: 5000
                 });
+                _this.updateTicketForm.reset();
             }
             else {
                 _this.ds.ShowHideToasty({
@@ -219,6 +221,7 @@ var UpdateTicketComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_Employee_service__WEBPACK_IMPORTED_MODULE_1__["EmployeeService"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
             src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__["DataService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], UpdateTicketComponent);
     return UpdateTicketComponent;

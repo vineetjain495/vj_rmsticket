@@ -115,7 +115,7 @@ export class MainLayoutComponent implements OnInit {
               icon: 'ti-view-grid',
                 children: [
                     {
-                    state: '',
+                    state: 'EmployeeViewer',
                     name: 'Employee',
                     type: 'link',
                     icon: 'ti-view-grid'

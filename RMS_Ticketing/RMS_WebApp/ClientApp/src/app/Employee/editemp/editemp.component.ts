@@ -147,7 +147,17 @@ export class EditempComponent implements OnInit {
               closeOther: true,
             });
             this.employeeService.edit_empCode = this.route.snapshot.params.id;
-            this.loadEmployeeToEdit(this.employeeService.edit_empCode);
+            console.log(this.employeeService.edit_empCode);
+            /*.employeeForm.controls['EmployeeName'].setValue(employee.EmployeeName);
+            this.employeeForm.controls['MobileNumber'].setValue(employee.MobileNumber);
+            this.employeeForm.controls['EmailId'].setValue(employee.EmailId);
+            
+            this.employeeForm.controls['RoleCode'].setValue(employee.RoleCode);
+            this.employeeForm.controls['RightsCode'].setValue(employee.RightsCode);
+            this.employeeForm.controls['Type_EmpCode'].setValue(employee.Type_EmpCode);
+            this.employeeForm.controls['IsActive'].setValue(employee.IsActive);*/
+            console.log(this.selected_region);
+            //this.loadEmployeeToEdit(this.employeeService.edit_empCode);
             this.isTicketAvailable = true;
           }
           else {
@@ -164,8 +174,8 @@ export class EditempComponent implements OnInit {
           this.massage = 'Record Updated Successfully';  
           // this.loadAllEmployees();  
           this.employeeIdUpdate = null;  
-          // this.employeeForm.reset();
-            this.router.navigateByUrl('/Employee');
+          this.employeeForm.reset();
+            this.router.navigateByUrl('/Employee/EmployeeViewer');
         }
 
         });  
@@ -255,10 +265,13 @@ export class EditempComponent implements OnInit {
         timeout: 3000
       });
       res_loc.Entity.forEach((element) => {
+        console.log(this.selected_region);      
         console.log(element);
         
 
         if (element.EmployeeCode) {
+          console.log(element.RoName);
+          console.log(this.selected_region);
           this.selected_region.push(element.RoName);
           console.log(element.RoName);
           this.selected_loc.push(element.LocationName);
@@ -290,7 +303,7 @@ export class EditempComponent implements OnInit {
       
       this.UpdateEmployee(employee);  
       
-      this.employeeForm.reset();  
+     // this.employeeForm.reset();  
     }  
     resetForm() {  
       this.employeeForm.reset();  
@@ -409,6 +422,6 @@ export class EditempComponent implements OnInit {
     this.router.navigate([`${pageName}`]);
   }
   goto_update() {
-    this.router.navigateByUrl('Employee/UpdateTicket'); 
+    this.router.navigateByUrl('Employee/UpdateTicket/' + this.employeeService.edit_empCode); 
   }
   }

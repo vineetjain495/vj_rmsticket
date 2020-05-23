@@ -69,7 +69,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },  
       {
-        path: 'Employee',
+        path: 'Employee/EmployeeViewer',
         loadChildren: 'src/app/Employee/Employee.module#EmployeeModule',
         canActivate: [AuthGuard],
       },
@@ -85,10 +85,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'Employee/UpdateTicket/:id',
+        loadChildren: 'src/app/Employee/updateTicket/updateTicket.module#UpdateTicketModule',
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'Employee/UpdateTicket',
         loadChildren: 'src/app/Employee/updateTicket/updateTicket.module#UpdateTicketModule',
         canActivate: [AuthGuard],
       },
+
 ]
 
   }

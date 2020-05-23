@@ -173,7 +173,17 @@ var EditempComponent = /** @class */ (function () {
                     closeOther: true,
                 });
                 _this.employeeService.edit_empCode = _this.route.snapshot.params.id;
-                _this.loadEmployeeToEdit(_this.employeeService.edit_empCode);
+                console.log(_this.employeeService.edit_empCode);
+                /*.employeeForm.controls['EmployeeName'].setValue(employee.EmployeeName);
+                this.employeeForm.controls['MobileNumber'].setValue(employee.MobileNumber);
+                this.employeeForm.controls['EmailId'].setValue(employee.EmailId);
+                
+                this.employeeForm.controls['RoleCode'].setValue(employee.RoleCode);
+                this.employeeForm.controls['RightsCode'].setValue(employee.RightsCode);
+                this.employeeForm.controls['Type_EmpCode'].setValue(employee.Type_EmpCode);
+                this.employeeForm.controls['IsActive'].setValue(employee.IsActive);*/
+                console.log(_this.selected_region);
+                //this.loadEmployeeToEdit(this.employeeService.edit_empCode);
                 _this.isTicketAvailable = true;
             }
             else {
@@ -190,8 +200,8 @@ var EditempComponent = /** @class */ (function () {
                 _this.massage = 'Record Updated Successfully';
                 // this.loadAllEmployees();  
                 _this.employeeIdUpdate = null;
-                // this.employeeForm.reset();
-                _this.router.navigateByUrl('/Employee');
+                _this.employeeForm.reset();
+                _this.router.navigateByUrl('/Employee/EmployeeViewer');
             }
         });
     };
@@ -273,8 +283,11 @@ var EditempComponent = /** @class */ (function () {
                     timeout: 3000
                 });
                 res_loc.Entity.forEach(function (element) {
+                    console.log(_this.selected_region);
                     console.log(element);
                     if (element.EmployeeCode) {
+                        console.log(element.RoName);
+                        console.log(_this.selected_region);
                         _this.selected_region.push(element.RoName);
                         console.log(element.RoName);
                         _this.selected_loc.push(element.LocationName);
@@ -300,7 +313,7 @@ var EditempComponent = /** @class */ (function () {
         this.dataSaved = false;
         var employee = this.employeeForm.value;
         this.UpdateEmployee(employee);
-        this.employeeForm.reset();
+        // this.employeeForm.reset();  
     };
     EditempComponent.prototype.resetForm = function () {
         this.employeeForm.reset();
@@ -415,7 +428,7 @@ var EditempComponent = /** @class */ (function () {
         this.router.navigate(["" + pageName]);
     };
     EditempComponent.prototype.goto_update = function () {
-        this.router.navigateByUrl('Employee/UpdateTicket');
+        this.router.navigateByUrl('Employee/UpdateTicket/' + this.employeeService.edit_empCode);
     };
     EditempComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

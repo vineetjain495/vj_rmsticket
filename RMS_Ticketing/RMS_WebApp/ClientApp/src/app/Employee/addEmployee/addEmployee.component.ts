@@ -258,7 +258,7 @@ dropdownSettings: any = {};
           // this.loadAllEmployees();  
           this.employeeIdUpdate = null;
           // this.employeeForm.reset();
-          this.router.navigateByUrl('/Employee');
+          this.router.navigateByUrl('/Employee/EmployeeViewer');
         }
       
         else {

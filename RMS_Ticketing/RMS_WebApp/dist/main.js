@@ -630,7 +630,7 @@ var routes = [
                 canActivate: [_shared_Security_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
             },
             {
-                path: 'Employee',
+                path: 'Employee/EmployeeViewer',
                 loadChildren: 'src/app/Employee/Employee.module#EmployeeModule',
                 canActivate: [_shared_Security_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
             },
@@ -642,6 +642,11 @@ var routes = [
             {
                 path: 'Employee/edit_element/:id',
                 loadChildren: 'src/app/Employee/editemp/editemp.module#EditempModule',
+                canActivate: [_shared_Security_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
+            },
+            {
+                path: 'Employee/UpdateTicket/:id',
+                loadChildren: 'src/app/Employee/updateTicket/updateTicket.module#UpdateTicketModule',
                 canActivate: [_shared_Security_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
             },
             {
@@ -814,7 +819,7 @@ var MainLayoutComponent = /** @class */ (function () {
                             icon: 'ti-view-grid',
                             children: [
                                 {
-                                    state: '',
+                                    state: 'EmployeeViewer',
                                     name: 'Employee',
                                     type: 'link',
                                     icon: 'ti-view-grid'

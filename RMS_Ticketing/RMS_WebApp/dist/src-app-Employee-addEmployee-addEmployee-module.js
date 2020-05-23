@@ -286,7 +286,7 @@ var AddEmployeeComponent = /** @class */ (function () {
                 // this.loadAllEmployees();  
                 _this.employeeIdUpdate = null;
                 // this.employeeForm.reset();
-                _this.router.navigateByUrl('/Employee');
+                _this.router.navigateByUrl('/Employee/EmployeeViewer');
             }
             else {
                 _this.codeAvailable = true;

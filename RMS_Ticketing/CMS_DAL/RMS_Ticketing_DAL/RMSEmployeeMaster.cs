@@ -554,7 +554,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
 
                     }).Where(i => i.Type == "Employees"
                      && (Type_EmpCode_Flag && i.Type_EmpCode == Type_EmpCode)
-                     && (i.IsActive == true))
+                     && (i.IsActive == true || i.IsActive == false))
                .OrderBy(o => o.ID)
                .Take(baseRequest.Entity.PageSize)
                .ToList();
@@ -605,13 +605,13 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                         RightsName = db.UserMaster.Where(e => e.TypeCode == RR.RightsCode
                                        && e.Type == "Rights").Select(M => M.Type_EmpCode).FirstOrDefault(),
 
-                    }).Where(i => i.Type == "Employees" && (i.IsActive == true))
-                .OrderBy(o => o.ID)
+                    }).Where(i => i.Type == "Employees" && (i.IsActive == true || i.IsActive == false))
+                .OrderByDescending(o =>  o.IsActive )
                 .Skip((baseRequest.Entity.PageNum - 1) * baseRequest.Entity.PageSize).Take(baseRequest.Entity.PageSize)
                 .ToList();
 
                     EmployeeDetail.PageResponseModelObj.TotalCount = db.UserMaster
-                        .Where(i => i.Type == "Employees" && (i.IsActive == true)).Count();
+                        .Where(i => i.Type == "Employees" && (i.IsActive == true || i.IsActive == false)).Count();
                    
                     foreach (var list in objEmp)
                     {

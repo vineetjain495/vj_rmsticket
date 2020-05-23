@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../Employee.service';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 import { DataService } from 'src/app/services/DataService';
 @Component({
   selector: 'app-update-ticket',
@@ -20,7 +21,7 @@ export class UpdateTicketComponent implements OnInit {
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
     private ds: DataService,
-   // private route: ActivatedRoute,
+   private route: ActivatedRoute,
     private router: Router,
   ) {
    // this.ticket_count = 0;
@@ -32,9 +33,9 @@ export class UpdateTicketComponent implements OnInit {
       type: 'wait',
       closeOther: true
     });
-
-    if (this.employeeService.edit_empCode != "") {
-      this.last_emp_id_val = this.employeeService.edit_empCode;
+    console.log(this.employeeService.edit_empCode);
+    if (this.route.snapshot.params.id) {
+      this.last_emp_id_val = this.route.snapshot.params.id;
       console.log(this.last_emp_id_val);
       this.getTicketCount(this.last_emp_id_val);
      
@@ -51,7 +52,7 @@ export class UpdateTicketComponent implements OnInit {
     
     this.employeeService.getEmployeeDetails().subscribe((res: any) => {
       res.Entity.forEach((element) => {
-        console.log(res);
+        //console.log(res);
         if (element) {
 
           this.Emp_details.push(element.Type_EmpCode + " - ( " + element.EmployeeName + " )");
@@ -119,6 +120,7 @@ export class UpdateTicketComponent implements OnInit {
           closeOther: true,
           timeout: 5000
         });
+        this.updateTicketForm.reset();
       }
       else {
         this.ds.ShowHideToasty({

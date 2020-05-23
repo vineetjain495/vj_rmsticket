@@ -97,6 +97,7 @@ namespace WebApp.Controllers
                     LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
                     Entity = employee_Role
                 };
+                employee_Role.CreatedBy = baseReq.LoginEmployeeDetails.EmpCode;
                 baseResponse = CommonUtility.
                 ConsumeAPIService<BaseResponse, BaseRequest<Employee_Role>>
                 (CommonConstant.CreateEmployeeUrl, baseReq);
@@ -113,7 +114,7 @@ namespace WebApp.Controllers
         public ContentResult UpdateEmployeeDetails(Employee_Role employee_Role)
         {
             {
-
+                //employee_Role.ModifiedBy = 
                 BaseResponse baseResponse = new BaseResponse();
                 BaseRequest<Employee_Role> baseReq = new BaseRequest<Employee_Role>
                 {
@@ -121,6 +122,7 @@ namespace WebApp.Controllers
                     LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
                     Entity = employee_Role
                 };
+                employee_Role.ModifiedBy = baseReq.LoginEmployeeDetails.EmpCode;
                 baseResponse = CommonUtility.
                 ConsumeAPIService<BaseResponse, BaseRequest<Employee_Role>>
                 (CommonConstant.UpdateEmployeeUrl, baseReq);
