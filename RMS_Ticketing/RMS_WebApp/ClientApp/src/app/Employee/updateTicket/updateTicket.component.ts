@@ -12,6 +12,7 @@ import { DataService } from 'src/app/services/DataService';
 export class UpdateTicketComponent implements OnInit {
   updateTicketForm: any;
   Emp_details: Array<any> = [];
+  selected_ticket: Array<any> = [];
   dropdownSettings: any = {};
   dropdownSettings2: any = {};
   last_emp_id_val: string;
@@ -21,10 +22,10 @@ export class UpdateTicketComponent implements OnInit {
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
     private ds: DataService,
-   private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
   ) {
-   // this.ticket_count = 0;
+    // this.ticket_count = 0;
     this.ds.ShowHideToasty({
       title: 'Please Wait...',
       msg: '',
@@ -38,7 +39,7 @@ export class UpdateTicketComponent implements OnInit {
       this.last_emp_id_val = this.route.snapshot.params.id;
       console.log(this.last_emp_id_val);
       this.getTicketCount(this.last_emp_id_val);
-     
+
     }
     else {
       this.last_emp_id_val = '';
@@ -47,9 +48,9 @@ export class UpdateTicketComponent implements OnInit {
     this.updateTicketForm = this.formbulider.group({
       Emp_ID: ['', [Validators.required]],
       Last_Type_EmpCode: [this.last_emp_id_val, [Validators.required]],
-      ticket_count:[this.ticket_count]
+      ticket_count: [this.ticket_count]
     });
-    
+
     this.employeeService.getEmployeeDetails().subscribe((res: any) => {
       res.Entity.forEach((element) => {
         //console.log(res);
@@ -71,11 +72,11 @@ export class UpdateTicketComponent implements OnInit {
       closeOther: true,
       timeout: 5000
     });
-    
+
   }
 
   ngOnInit() {
-    
+
     this.dropdownSettings2 = {
       singleSelection: false,
       // idField: 'item_id',
@@ -87,7 +88,7 @@ export class UpdateTicketComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
-   
+
   }
   onFormSubmit() {
     //console.log("hello");
@@ -99,16 +100,16 @@ export class UpdateTicketComponent implements OnInit {
     //this.updateTicketForm.reset();
   }
   UpdateTicketAssign(employee) {
-  
+
     this.ds.ShowHideToasty({
       title: 'Please Wait...',
       msg: '',
-      showClose: false,   
+      showClose: false,
       theme: 'bootstrap',
       type: 'wait',
       closeOther: true
     });
-   
+
     this.employeeService.UpdateTicketAssign(employee).subscribe((response: any) => {
       if (response.Success) {
         this.ds.ShowHideToasty({
@@ -121,6 +122,9 @@ export class UpdateTicketComponent implements OnInit {
           timeout: 5000
         });
         this.updateTicketForm.reset();
+        this.isTicketAvailable = false;
+        this.isTicketEmpty = false;
+        this.selected_ticket = [];
       }
       else {
         this.ds.ShowHideToasty({
@@ -132,7 +136,7 @@ export class UpdateTicketComponent implements OnInit {
           closeOther: true,
         });
       }
-      
+
 
     });
 
@@ -181,7 +185,7 @@ export class UpdateTicketComponent implements OnInit {
         unSelectAllText: 'UnSelect All',
         limitSelection: this.ticket_count,
         itemsShowLimit: 3,
-        allowSearchFilter : true
+        allowSearchFilter: true
       };
     });
   }

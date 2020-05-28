@@ -6,6 +6,7 @@ import { Employee } from './addEmployee';
 ////import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/DataService';
+import { forEach } from '@angular/router/src/utils/collection';
 @Component({
   selector: 'app-addEmployee',
   templateUrl: './addEmployee.component.html',
@@ -14,13 +15,14 @@ import { DataService } from 'src/app/services/DataService';
 
 export class AddEmployeeComponent implements OnInit {
   dataSaved = false;
-  employeeForm: any;  
+  employeeForm: any;
   allEmployees: Observable<Employee[]>;
   employeeIdUpdate = null;
   massage = null;
   submitted = false;
   isLocationSelected: boolean;
   isMSPSelected: boolean;
+  Emp_details: Array<any> = [];
   data_exist: any;
   Countries: Array<any>;
   Countries2: Array<any> = [];
@@ -34,23 +36,25 @@ export class AddEmployeeComponent implements OnInit {
   cities2: Array<any> = [];
   roles: Array<any>[] = [];
   rights: Array<any> = [];
+  MSP: Array<any> = [];
   //roles2: Array<any> = [];
   //rights2: Array<any> = [];
   disabled = false;
-ShowFilter = false;
-limitSelection = false;
-errorFound = false;
-codeAvailable = false;
-selectedItems: Array<any> = [];
-dropdownSettings: any = {};
+  ShowFilter = false;
+  limitSelection = false;
+  errorFound = false;
+  codeAvailable = false;
+  selectedItems: Array<any> = [];
+  dropdownSettings: any = {};
   dropdownSettings2: any = {};
+  dropdownSettings3:any = {};
   emp_code = "";
   // cities2: Array<any>;
   getLocation() {
 
   }
   constructor(private formbulider: FormBuilder,
-  //  private httpService: HttpClient,
+    //  private httpService: HttpClient,
     private router: Router,
     private ds: DataService,
     private employeeService: EmployeeService
@@ -69,12 +73,12 @@ dropdownSettings: any = {};
     this.employeeService.getRolesDetail().subscribe((res: any) => {
       //res;
       res.Entity.forEach((element) => {
-        
+
         if (element.Type == "Roles") {
           //console.log(element);
-          
+
           this.roles.push([element.TypeCode, element.Type_EmpCode]);
-        
+
         }
         if (element.Type == "Rights") {
           //console.log(element);
@@ -84,9 +88,30 @@ dropdownSettings: any = {};
         }
       });
     });
-   // console.log(this.roles)
+    this.employeeService.getEmployeeDetails().subscribe((res: any) => {
+      res.Entity.forEach((element) => {
+        //console.log(res);
+        if (element) {
+
+          this.Emp_details.push(element.Type_EmpCode + " - ( " + element.EmployeeName + " )");
+          //console.log(this.Emp_details);
+        }
+
+      });
+      this.Emp_details = this.Emp_details.filter((el, i, a) => i === a.indexOf(el));
+    });
+    this.employeeService.getMSPDetail().subscribe((res: any) => {
+      
+      res.Entity.forEach((element) => {
+         this.MSP.push(element.MSP);
+      });
+      this.MSP = this.MSP.filter((el, i, a) => i === a.indexOf(el));
+    
+    });
+  
+    // console.log(this.roles)
     this.employeeService.getLocationDetail().subscribe((res: any) => {
-      console.log(res);
+     // console.log(res);
       this.ds.ShowHideToasty({
         title: 'Create Employee Here',
         msg: '',
@@ -97,7 +122,7 @@ dropdownSettings: any = {};
         timeout: 3000
       });
       this.Countries = res.Entity;
-      console.log(" add "+  this.Countries);
+      //console.log(" add " + this.Countries);
       this.Countries.forEach((element) => {
         this.Countries2.push(element.RoName);
       });
@@ -112,6 +137,7 @@ dropdownSettings: any = {};
       EmployeeName: ['', [Validators.required]],
       MobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       EmailId: ['', [Validators.required, Validators.email]],
+      MGRCODE: ['', Validators.required],
       MspCategory: [''],
       RoleCode: [''],
       RightsCode: [''],
@@ -135,26 +161,53 @@ dropdownSettings: any = {};
       singleSelection: false,
       // idField: 'item_id',
       // textField: 'item_text',
-      enableCheckAll : false,
+      enableCheckAll: false,
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
       allowSearchFilter: this.ShowFilter
     };
+    this.dropdownSettings3 = {
+      singleSelection: false,
+      enableCheckAll: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      limitSelection: 1,
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
   }
   get f() { return this.employeeForm.controls; }
   loadAllEmployees() {
-  //  this.allEmployees = this.employeeService.getAllEmployee();
+    //  this.allEmployees = this.employeeService.getAllEmployee();
   }
   onFormSubmit() {
     console.log("sec");
     this.submitted = true;
     this.dataSaved = false;
     const employee = this.employeeForm.value;
+    var mgrcode = "";
+    console.log(employee.MGRCODE);
+    employee.MGRCODE.forEach((element) => {
+      
+      var emp_code = element.split(" ");
+      console.log(emp_code);
+      console.log(emp_code);
+      if (emp_code.length > 1) {
+        mgrcode = emp_code[0];
+        console.log(mgrcode);
+      }
+
+      else {
+        mgrcode = "";
+      }
+    });
+    console.log(mgrcode);
+    employee.MGRCODE = mgrcode;
     console.log(employee);
     this.CreateEmployee(employee);
 
-    this.employeeForm.reset();
+    
   }
   changeCountry(country) {
     this.states = this.Countries.filter(cntry => cntry.RoName == country);
@@ -223,7 +276,7 @@ dropdownSettings: any = {};
 
     });
     this.cities2 = this.cities2.filter((el, i, a) => i === a.indexOf(el))
-     //console.log(this.cities2);
+    //console.log(this.cities2);
   }
   CreateEmployee(employee: Employee) {
     this.ds.ShowHideToasty({
@@ -235,49 +288,49 @@ dropdownSettings: any = {};
       closeOther: true
     });
     console.log("sec");
-    
-      console.log(this.employeeService.getUserDetail());
-      employee.createdBy = this.employeeService.empCode;
-      this.employeeService.createEmployee(employee).subscribe((response: any) => {
-        if (response.Success) {
-          // console.log("sec");
-          this.dataSaved = true;
-          this.massage = 'Record saved Successfully';
-          console.log("sec");
-          this.ds.ShowHideToasty({
-            title: response.Message,
-            msg: '',
-            showClose: true,
-            theme: 'bootstrap',
-            type: 'success',
-            closeOther: true,
-            timeout: 5000
-          });
 
-          console.log(this.massage);
-          // this.loadAllEmployees();  
-          this.employeeIdUpdate = null;
-          // this.employeeForm.reset();
-          this.router.navigateByUrl('/Employee/EmployeeViewer');
-        }
-      
-        else {
-          this.codeAvailable = true;
-          this.errorFound = true;
+    console.log(this.employeeService.getUserDetail());
+    employee.createdBy = this.employeeService.empCode;
+    this.employeeService.createEmployee(employee).subscribe((response: any) => {
+      if (response.Success) {
+        // console.log("sec");
+        this.dataSaved = true;
+        this.massage = 'Record saved Successfully';
+        console.log("sec");
+        this.ds.ShowHideToasty({
+          title: response.Message,
+          msg: '',
+          showClose: true,
+          theme: 'bootstrap',
+          type: 'success',
+          closeOther: true,
+          timeout: 5000
+        });
 
-          this.massage = response.Message;
-          this.ds.ShowHideToasty({
-            title: 'Failure..',
-            msg: response.Message,
-            showClose: true,
-            theme: 'bootstrap',
-            type: 'error',
-            closeOther: true,
-          });
+        console.log(this.massage);
+        // this.loadAllEmployees();  
+        this.employeeIdUpdate = null;
+        // this.employeeForm.reset();
+        this.router.navigateByUrl('/Employee/EmployeeViewer');
+      }
 
-        }
-          });
-      
+      else {
+        this.codeAvailable = true;
+        this.errorFound = true;
+
+        this.massage = response.Message;
+        this.ds.ShowHideToasty({
+          title: 'Failure..',
+          msg: response.Message,
+          showClose: true,
+          theme: 'bootstrap',
+          type: 'error',
+          closeOther: true,
+        });
+
+      }
+    });
+
   }
   checkCode(event) {
     console.log(event.target.value);
@@ -299,7 +352,7 @@ dropdownSettings: any = {};
             timeout: 5000
           });
           this.massage = "This code is already available";
-          
+
           this.employeeForm.setErrors({ 'incorrect': true });
         }
         else {
@@ -313,13 +366,21 @@ dropdownSettings: any = {};
     let selected = event.target.value;
     if (selected == "2") {
       this.isMSPSelected = true;
+      this.employeeForm.controls['MspCategory'].setValidators([Validators.required]);
+
     } else {
       this.isMSPSelected = false;
+      this.employeeForm.controls['MspCategory'].setValidators();
+      this.employeeForm.controls['MspCategory'].updateValueAndValidity();
+
     }
     if (selected == "4" || selected == "6") {
       this.isLocationSelected = true;
     } else {
       this.isLocationSelected = false;
+      this.selected_region = [];
+      this.selected_loc = [];
+      this.selected_hub = [];
     }
   }
   // maps the local data column to fields property
@@ -334,10 +395,10 @@ dropdownSettings: any = {};
   }
   onItemSelect(item: any) {
     console.log('onItemSelect', item);
-}
-onSelectAll(items: any) {
+  }
+  onSelectAll(items: any) {
     console.log('onSelectAll', items);
-}
+  }
   goToPage(pageName: string) {
     console.log(pageName);
     this.router.navigate([`${pageName}`]);

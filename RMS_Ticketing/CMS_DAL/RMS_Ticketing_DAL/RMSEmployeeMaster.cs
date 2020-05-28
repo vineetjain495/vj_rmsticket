@@ -68,7 +68,8 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                             }
                             if ((objEmp.RoleCode == 4 || objEmp.RoleCode == 6) && (employee.RoleCode != 4 || employee.RoleCode != 6))
                             {
-                                if ((objEmp.RoleCode == 4 && employee.RoleCode != 6) || (objEmp.RoleCode == 6 && employee.RoleCode != 4))
+                                if ((objEmp.RoleCode != employee.RoleCode) && 
+                                    ((objEmp.RoleCode == 4 && employee.RoleCode != 6) || (objEmp.RoleCode == 6 && employee.RoleCode != 4)))
                                 {
                                     var last_location = db.employee_Hierarchies.Where(f => f.EmployeeCode == employee.Type_EmpCode && f.IsActive == true).ToList();
                                     last_location.ForEach(a => {
@@ -90,9 +91,10 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                         objEmp.ModifiedDate = now;
                         objEmp.ModifiedBy = employee.CreatedBy;
                         objEmp.IsActive = employee.IsActive;
+                        objEmp.MGRCODE = employee.MGRCODE;
                         objEmp.MspCategory = employee.MspCategory;
                      
-                        if (employee.RoleCode == 4 || employee.RoleCode == 6)
+                        if ((employee.RoleCode == 4 || employee.RoleCode == 6) && employee.IsActive == true)
                         {
                         if (employee.Hub != null)
                         {
@@ -211,14 +213,16 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                         Entity = emp.Type_EmpCode
                     };
                     var checkEmp = this.checkEmployee(baseReq);
-
+                    
                     if(checkEmp.Success)
                     {
+                        checkEmp.Success = false;
                         response = checkEmp;
                         return response;
                     }
                     var iTypeCode = ctx.UserMaster.Where(e => e.Type == "Employees" && e.TypeCode != null).OrderByDescending(u => u.ID).Select(i => i.TypeCode).FirstOrDefault() + 1;
-                    ctx.UserMaster.Add(new Employee_Role()
+                   
+                        ctx.UserMaster.Add(new Employee_Role()
                     {
                         TypeCode = iTypeCode,
                         Type_EmpCode = emp.Type_EmpCode,
@@ -233,7 +237,8 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                         FromDate = now,
                         IsActive = true,
                         MspCategory = emp.MspCategory,
-                        CreatedBy = emp.CreatedBy
+                        CreatedBy = emp.CreatedBy,
+                        MGRCODE = emp.MGRCODE
                     }); ;
 
                     int a = ctx.SaveChanges();
@@ -404,6 +409,39 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                 throw;
             }
         }
+        public BaseResponse<IEnumerable<ATM_Master_model>> GetMSPDetail(BaseRequest baseRequest)
+        {
+            try
+            {
+                BaseResponse<IEnumerable<ATM_Master_model>> response = new BaseResponse<IEnumerable<ATM_Master_model>>();
+                IEnumerable<ATM_Master_model> result = null;
+                result = db.atm_master.Select(m => new ATM_Master_model
+                {
+                   MSP = m.MSP
+                }).Distinct().ToList();
+
+
+                if (result != null)
+                {
+                    response.Success = true;
+                    response.Message = "MSP Detail fetched successfully";
+                    response.Entity = result;
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = "MSP Detail Not Loaded";
+                    response.Entity = null;
+                    // response = new BaseResponse { Success = true, Message = employeeID + " Employee not Exist" };
+                }
+                return response;
+                //return Ok(result);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public BaseResponse<IEnumerable<Employee_Role>> GetRolesDetail(BaseRequest baseRequest)
         {
             try
@@ -551,6 +589,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                                        && e.Type == "Roles").Select(M => M.Type_EmpCode).FirstOrDefault(),
                         RightsName = db.UserMaster.Where(e => e.TypeCode == RR.RightsCode
                                        && e.Type == "Rights").Select(M => M.Type_EmpCode).FirstOrDefault(),
+                        MspCategory = RR.MspCategory
 
                     }).Where(i => i.Type == "Employees"
                      && (Type_EmpCode_Flag && i.Type_EmpCode == Type_EmpCode)
@@ -566,6 +605,15 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                     foreach (var list in objEmp)
                     {
                         string Empty = "NULL";
+                        string RoleFinal = "";
+                        if (list.RoleCode == 2 && list.MspCategory != Empty && list.MspCategory != "")
+                        {
+                            RoleFinal = list.RoleName + " " + list.MspCategory + " ";
+                        }
+                        else
+                        {
+                            RoleFinal = list.RoleName;
+                        }
                         Employee_info viewer = new Employee_info();
                         viewer.ID = list.ID;
                         viewer.Type_EmpCode = list.Type_EmpCode;
@@ -578,7 +626,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                             !string.IsNullOrEmpty(list.EmployeeName) ? list.EmployeeName : list.EmployeeName,
                             !string.IsNullOrEmpty(list.MobileNumber) ? list.MobileNumber : Empty,
                             !string.IsNullOrEmpty(list.EmailID) ? list.EmailID : Empty,
-                            !string.IsNullOrEmpty(list.RoleName) ? list.RoleName : Empty,
+                             !string.IsNullOrEmpty(RoleFinal) ? RoleFinal : Empty,
                             !string.IsNullOrEmpty(list.RightsName) ? list.RightsName : Empty
                             );
 
@@ -604,8 +652,9 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                                        && e.Type == "Roles").Select(M => M.Type_EmpCode).FirstOrDefault(),
                         RightsName = db.UserMaster.Where(e => e.TypeCode == RR.RightsCode
                                        && e.Type == "Rights").Select(M => M.Type_EmpCode).FirstOrDefault(),
+                       MspCategory = RR.MspCategory
 
-                    }).Where(i => i.Type == "Employees" && (i.IsActive == true || i.IsActive == false))
+                   }).Where(i => i.Type == "Employees" && (i.IsActive == true || i.IsActive == false))
                 .OrderByDescending(o =>  o.IsActive )
                 .Skip((baseRequest.Entity.PageNum - 1) * baseRequest.Entity.PageSize).Take(baseRequest.Entity.PageSize)
                 .ToList();
@@ -615,7 +664,17 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                    
                     foreach (var list in objEmp)
                     {
+                       
                         string Empty = "NULL";
+                        string RoleFinal = "";
+                        if (list.RoleCode == 2 && list.MspCategory != Empty && list.MspCategory != "" )
+                        {
+                            RoleFinal = list.RoleName + " ( " + list.MspCategory + " ) ";
+                        }
+                        else
+                        {
+                            RoleFinal = list.RoleName;
+                        }
                         Employee_info viewer = new Employee_info();
                         viewer.ID = list.ID;
                         viewer.Type_EmpCode = list.Type_EmpCode;
@@ -628,7 +687,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                             !string.IsNullOrEmpty(list.EmployeeName) ? list.EmployeeName : list.EmployeeName,
                             !string.IsNullOrEmpty(list.MobileNumber) ? list.MobileNumber : Empty,
                             !string.IsNullOrEmpty(list.EmailID) ? list.EmailID : Empty,
-                            !string.IsNullOrEmpty(list.RoleName) ? list.RoleName : Empty,
+                            !string.IsNullOrEmpty(RoleFinal) ? RoleFinal : Empty,
                             !string.IsNullOrEmpty(list.RightsName) ? list.RightsName : Empty
                             );
 

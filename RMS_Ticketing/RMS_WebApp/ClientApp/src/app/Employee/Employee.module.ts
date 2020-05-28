@@ -14,7 +14,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   imports: [
-    routing,   
+    routing,
     SharedModule,
     CommonModule,
     FormsModule,

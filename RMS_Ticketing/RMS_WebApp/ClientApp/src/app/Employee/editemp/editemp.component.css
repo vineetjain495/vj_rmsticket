@@ -1,0 +1,8 @@
+input.largerCheckbox {
+  width: 30px;
+  height: 20px;
+  display: inline-block;
+}
+.active-group span {
+  display: inline-block;
+}

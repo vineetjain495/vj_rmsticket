@@ -1,8 +1,8 @@
-<app-card [title]="'Edit Employee Detail'" [blockClass]="'tran-data'" [showRightSection]="'false'" [cardToggle]="cardToggleGrid">
+<app-card [title]="'Edit Employee Detail'" [blockClass]="'tran-data'" [showRightSection]="'false'"
+          [cardToggle]="cardToggleGrid">
 
   <form [formGroup]="employeeForm" (ngSubmit)="onFormSubmit()">
-    <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold"
-       Class="success">
+    <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success">
       {{massage}}
     </p>
 
@@ -32,8 +32,8 @@
         <div class="form-group row">
           <label class="col-sm-12 col-form-label">Mobile Number<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <input type="text" formControlName="MobileNumber" id="MobileNumber"
-                   class="form-control input-sm" placeholder="Mobile *" required>
+            <input type="text" formControlName="MobileNumber" id="MobileNumber" class="form-control input-sm"
+                   placeholder="Mobile *" required>
             <div *ngIf="employeeForm.get('MobileNumber').value && employeeForm.get('MobileNumber').errors?.pattern">
               <div class="alert-danger"> Enter 10 digit Mobile Number </div>
             </div>
@@ -51,8 +51,8 @@
         <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Email Address<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <input type="email" formControlName="EmailId" id="EmailId"
-                   class="form-control input-sm" placeholder="Email *" required email>
+            <input type="email" formControlName="EmailId" id="EmailId" class="form-control input-sm"
+                   placeholder="Email *" required email>
             <div *ngIf="!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched">
               <div class="alert-danger"> Enter Email ID </div>
             </div>
@@ -77,8 +77,7 @@
         <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Select Roles</label>
           <div class="col-sm-12">
-            <select class="form-control" (change)="RolesInput($event)"
-                    formControlName="RoleCode">
+            <select class="form-control" (change)="RolesInput($event)" formControlName="RoleCode">
               <option *ngFor="let rl of roles" [value]="rl[0]">{{ rl[1] }}</option>
 
 
@@ -89,14 +88,28 @@
     </div>
     <div class="row">
 
+      <div class="col-lg-4">
+        <div class="form-group row">
+          <label class="col-lg-12 col-form-label">Manager Code</label>
+          <div class="col-sm-12">
+
+            <ng-multiselect-dropdown name="MgrCode" [(ngModel)]="selected_manager"
+                                     [placeholder]="'Select Employee'" [data]="Emp_details" formControlName="MGRCODE"
+                                     [settings]="dropdownSettings3">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-4" *ngIf="isMSPSelected">
         <div class="form-group row">
           <label class="col-sm-12 col-form-label ">MSP Category<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <input type="text" formControlName="MspCategory" id="mspcategory"
-                   *ngIf="isMSPSelected" class="form-control input-sm" placeholder="MSP Category">
-            <div *ngIf="isMSPSelected && !employeeForm.get('MspCategory').value && employeeForm.get('MspCategory').touched">
-              <div class="alert-danger"> Enter MSP Catogory </div>
+            <select class="form-control" formControlName="MspCategory" id="mspcategory" *ngIf="isMSPSelected" placeholder="MSP Category">
+              <option *ngFor="let rl of MSP" [value]="rl">{{ rl }}</option>
+
+            </select>
+            <div *ngIf="isMSPSelected && employeeForm.get('MspCategory').invalid && employeeForm.get('MspCategory').touched">
+              <div class="alert-danger"> Select MSP Catogory </div>
             </div>
           </div>
         </div>
@@ -105,9 +118,9 @@
         <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Select Region<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <ng-multiselect-dropdown name="region"
-                                     [placeholder]="'Select Region'" [data]="Countries2" formControlName="Region" [(ngModel)]="selected_region"
-                                     [settings]="dropdownSettings2" (onDeSelect)="removeCountry($event)" (onSelect)="changeCountry($event)">
+            <ng-multiselect-dropdown name="region" [placeholder]="'Select Region'" [data]="Countries2"
+                                     formControlName="Region" [(ngModel)]="selected_region" [settings]="dropdownSettings2"
+                                     (onDeSelect)="removeCountry($event)" (onSelect)="changeCountry($event)">
             </ng-multiselect-dropdown>
           </div>
         </div>
@@ -116,9 +129,9 @@
         <div class="form-group row">
           <label class="col-sm-12 col-form-label ">Select Location<a style="color:red">*</a></label>
           <div class="col-sm-12">
-            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region"
-                                     [placeholder]="'Select Location'" [data]="states2" formControlName="Location" [(ngModel)]="selected_loc"
-                                     [settings]="dropdownSettings2" (onDeSelect)="removeState($event)" (onSelect)="changeState($event)">
+            <ng-multiselect-dropdown *ngIf="isLocationSelected" name="region" [placeholder]="'Select Location'"
+                                     [data]="states2" formControlName="Location" [(ngModel)]="selected_loc" [settings]="dropdownSettings2"
+                                     (onDeSelect)="removeState($event)" (onSelect)="changeState($event)">
             </ng-multiselect-dropdown>
           </div>
         </div>
@@ -129,8 +142,7 @@
           <label class="col-sm-12 col-form-label ">Select Hub<a style="color:red">*</a></label>
           <div class="col-sm-12">
             <ng-multiselect-dropdown *ngIf="isLocationSelected" name="hub" [(ngModel)]="selected_hub"
-                                     [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub"
-                                     [settings]="dropdownSettings">
+                                     [placeholder]="'Select Hub'" [data]="cities2" formControlName="Hub" [settings]="dropdownSettings">
             </ng-multiselect-dropdown>
             <div *ngIf="isLocationSelected && !employeeForm.get('Hub').value && employeeForm.get('Hub').touched">
               <div class="alert-danger"> Enter Hub Catogory </div>
@@ -141,16 +153,20 @@
     </div>
     <div class="row">
       <div class="col-sm-4">
-        <input type="checkbox" formControlName="IsActive" data-md-icheck (change)="toggleVisibility($event)" />
-        <span *ngIf="active"> Active</span><span *ngIf="!active"> InActive</span>
+        <div class="form-group row">
+          <div class="col-sm-12">
 
-        <span class="checkmark"></span>
+            <input type="checkbox" formControlName="IsActive" class="largerCheckbox" (change)="toggleVisibility($event)" />
+
+            <span *ngIf="active" (click)="togglebutton(false)" class="[ btn btn-success ]"> Active</span><span *ngIf="!active" (click)="togglebutton(true)"  class="[ btn btn-default ]"> InActive</span>
+          </div>
+        </div>
       </div>
+
       <div class="col-sm-4">
         <div class="form-group row">
           <div class="col-sm-12 text-center">
-            <input type="submit" [disabled]="!employeeForm.valid" value="Updates"
-                   class="btn btn-info">
+            <input type="submit" [disabled]="!employeeForm.valid" value="Updates" class="btn btn-info">
           </div>
         </div>
 
@@ -158,26 +174,25 @@
 
     </div>
     <div class="row" *ngIf="isTicketAvailable">
-    <div class="col-sm-12" >
-      <div class="form-group row">
+      <div class="col-sm-12">
+        <div class="form-group row">
 
-        <div class="col-sm-12">
-          
-          <div class="alert alert-info">
+          <div class="col-sm-12">
 
-            To assign ticket to other user click on button 
+            <div class="alert alert-info">
 
-            <button type="button" class="btn btn-danger " (click)="goto_update()">Allocate ticket</button>
+              To assign ticket to other user click on button
+
+              <button type="button" class="btn btn-danger " (click)="goto_update()">Allocate ticket</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
 
   </form>
-  
-</app-card>
 
+</app-card>
 
 
 <!--<div class="container">

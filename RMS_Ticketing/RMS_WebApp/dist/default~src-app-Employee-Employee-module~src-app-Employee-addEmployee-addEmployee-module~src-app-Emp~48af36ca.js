@@ -534,6 +534,9 @@ var EmployeeService = /** @class */ (function () {
     EmployeeService.prototype.getLocationDetail = function () {
         return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/LocationDetail');
     };
+    EmployeeService.prototype.getMSPDetail = function () {
+        return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/MSPDetail');
+    };
     EmployeeService.prototype.getEmployeeLimited = function () {
         return this.http.get(_GlobalShareCode__WEBPACK_IMPORTED_MODULE_2__["baseUrl"] + 'Employee/Employeelimited');
     };

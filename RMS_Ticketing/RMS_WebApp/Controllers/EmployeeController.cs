@@ -553,6 +553,30 @@ namespace WebApp.Controllers
 
         }
         [HttpGet]
+        public ContentResult MSPDetail()
+        {
+            {
+
+                BaseResponse<IEnumerable<ATM_Master_model>> baseResponse = new BaseResponse<IEnumerable<ATM_Master_model>>();
+                BaseRequest<string> baseReq = new BaseRequest<string>
+                {
+
+                    LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
+
+                };
+                baseResponse = CommonUtility.
+                ConsumeAPIService<BaseResponse<IEnumerable<ATM_Master_model>>, BaseRequest<string>>
+                (CommonConstant.MSPDetailUrl, baseReq);
+                var result = JsonConvert.SerializeObject(baseResponse, Formatting.None,
+                                new JsonSerializerSettings
+                                {
+                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                });
+                return Content(result, "application/json");
+            }
+
+        }
+        [HttpGet]
         public ContentResult RolesDetail()
         {
             {

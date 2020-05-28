@@ -18,7 +18,7 @@ namespace CMS_DTO.Entity.RMS_Ticketing
 
         public string HubLocationCode{get;set;}
         public string HubLocationName { get; set; }
-     
+     public string MSP { get; set; }
 
 
 }

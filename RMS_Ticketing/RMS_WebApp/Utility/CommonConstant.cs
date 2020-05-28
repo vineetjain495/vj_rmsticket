@@ -60,7 +60,7 @@ namespace CMSWebApp.Utility
         public const string EmployeeDetailsUrl = "api/EmployeeMaster/EmployeeDetails";
         public const string EmployeeTicketsByIdUrl = "api/EmployeeMaster/EmployeeTicketsById";
         public const string UpdateTicketAssignUrl = "api/EmployeeMaster/UpdateTicketAssign";
-        
+        public const string MSPDetailUrl = "api/EmployeeMaster/MSPDetail"; 
         //EmployeeDetailsUrl
         //RolesDetailUrl
     }

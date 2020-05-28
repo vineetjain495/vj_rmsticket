@@ -12,8 +12,8 @@ const routes: Routes = [
             breadcrumb: 'Employee',
             icon: 'icofont-dashboard bg-c-blue',
             status: false
-    },
-    canActivate: [AuthGuard]
+        },
+        canActivate: [AuthGuard]
     }
 
 ];

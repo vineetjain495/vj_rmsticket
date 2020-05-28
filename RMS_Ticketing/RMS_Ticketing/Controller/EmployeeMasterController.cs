@@ -116,6 +116,26 @@ namespace WebApp.Controllers
             }
             return baseResponse;
         }
+        [Route("api/EmployeeMaster/MSPDetail")]
+        [HttpPost]
+        public BaseResponse<IEnumerable<ATM_Master_model>> MSPDetail(BaseRequest baseRequest)
+        {
+            BaseResponse<IEnumerable<ATM_Master_model>> baseResponse = new BaseResponse<IEnumerable<ATM_Master_model>>() { Success = false, Message = "" };
+            try
+            {
+                RMSEmployeeMaster employeeRepository = new RMSEmployeeMaster();
+                var resp = employeeRepository.GetMSPDetail(baseRequest);
+                baseResponse = resp;
+
+            }
+            catch (Exception ex)
+            {
+                //CommonUtility.AddException(ex);
+                baseResponse.Success = false;
+                baseResponse.Message = ex.Message;
+            }
+            return baseResponse;
+        }
         [Route("api/EmployeeMaster/RolesDetail")]
         [HttpPost]
         public BaseResponse<IEnumerable<Employee_Role>> RolesDetail(BaseRequest baseRequest)
