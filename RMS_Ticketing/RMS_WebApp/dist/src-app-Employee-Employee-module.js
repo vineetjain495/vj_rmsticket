@@ -18,7 +18,7 @@ module.exports = ".topleft {\r\n  position: absolute;\r\n  top: 8px;\r\n  left: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-card [title]=\"'Employee Viewer'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\" [showBack]=\"mainGridShow\"\r\n  [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"searchForm\" (ngSubmit)=\"onFormSubmit()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-lg-2\">\r\n            <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n            <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\" class=\"form-control input-sm\"\r\n              placeholder=\"Code *\" required>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"row space\">\r\n          <div class=\"col-sm-12\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button type=\"submit\" class=\"btn btn-primary btntype\">Search</button>\r\n              </div>\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button class=\"btn btn-inverse float-left resetbtn btntype\" (click)=\"resetForm()\">Reset</button>\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n\r\n        </div>\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"col-sm-12 \">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-6\">\r\n            <div class=\"col-sm-12\">\r\n              <div class=\"icofont-2x\" style=\"color:dodgerblue\">Employee Details</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"col-sm-6\" [hidden]=\"hidefromLocation\">\r\n            <div class=\"col-sm-12\">\r\n              <!----<a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/UpdateTicket');\">\r\n                <i class=\"icofont icofont-ticket float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Assign Ticket</span>\r\n                </i>\r\n              </a>-->\r\n\r\n              <a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/CreateEmployee');\">\r\n                <i class=\"icofont icofont-contact-add float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Create Employee</span>\r\n                </i>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <!--  <button class=\"btn btn-primary\" (click)=\"goToPage('/Employee/CreateEmployee');\">Create</button>-->\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <jqxGrid #myGrid jqx-grid-energyblue #myGrid [width]=getWidth() [source]=\"dataAdapter\" [autoheight]=\"true\"\r\n              (onPagechanged)=\"onPageChanged($event)\" [rendergridrows]=\"rendergridrows\"\r\n              [initrowdetails]=\"initRowDetails\" [rowdetailstemplate]=\"rowdetailstemplate\" [virtualmode]='true'\r\n              [altrows]=\"true\" [columns]=\"columns\" (onCellselect)=\"myGridOnCellSelect($event)\" [filterable]=\"false\"\r\n              [columnsresize]=\"true\" [sortable]=\"false\" [height]='620' [showheader]=\"false\" [theme]=\"'energyblue'\"\r\n              [rowsheight]=\"75\" [pagermode]=\"'simple'\" [updatefilterconditions]=\"updatefilterconditions\"\r\n              [pageable]=\"true\" [selectionmode]=\"'singlecell'\">\r\n            </jqxGrid>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</app-card>"
+module.exports = "<app-card [title]=\"'Employee Viewer'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\" [showBack]=\"mainGridShow\"\r\n  [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"searchForm\" (ngSubmit)=\"onFormSubmit()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-lg-2\">\r\n            <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n            <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\" class=\"form-control input-sm\"\r\n                   placeholder=\"Code *\" required>\r\n\r\n          </div>\r\n          <div class=\"col-sm-4\">\r\n            <div class=\"form-group row\">\r\n              <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n              <div class=\"col-sm-12\">\r\n                <select class=\"form-control\" formControlName=\"RoleCode\">\r\n                  <option *ngFor=\"let rl of roles\" [value]=\"rl[0]\">{{ rl[1] }}</option>\r\n\r\n                </select>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"row space\">\r\n          <div class=\"col-sm-12\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button type=\"submit\" class=\"btn btn-primary btntype\">Search</button>\r\n              </div>\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button class=\"btn btn-inverse float-left resetbtn btntype\" (click)=\"resetForm()\">Reset</button>\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n\r\n        </div>\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"col-sm-12 \">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-6\">\r\n            <div class=\"col-sm-12\">\r\n              <div class=\"icofont-2x\" style=\"color:dodgerblue\">Employee Details</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"col-sm-6\" [hidden]=\"hidefromLocation\">\r\n            <div class=\"col-sm-12\">\r\n              <!----<a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/UpdateTicket');\">\r\n                <i class=\"icofont icofont-ticket float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Assign Ticket</span>\r\n                </i>\r\n              </a>-->\r\n\r\n              <a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/CreateEmployee');\">\r\n                <i class=\"icofont icofont-contact-add float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Create Employee</span>\r\n                </i>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <!--  <button class=\"btn btn-primary\" (click)=\"goToPage('/Employee/CreateEmployee');\">Create</button>-->\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <jqxGrid #myGrid jqx-grid-energyblue #myGrid [width]=getWidth() [source]=\"dataAdapter\" [autoheight]=\"true\"\r\n              (onPagechanged)=\"onPageChanged($event)\" [rendergridrows]=\"rendergridrows\"\r\n              [initrowdetails]=\"initRowDetails\" [rowdetailstemplate]=\"rowdetailstemplate\" [virtualmode]='true'\r\n              [altrows]=\"true\" [columns]=\"columns\" (onCellselect)=\"myGridOnCellSelect($event)\" [filterable]=\"false\"\r\n              [columnsresize]=\"true\" [sortable]=\"false\" [height]='620' [showheader]=\"false\" [theme]=\"'energyblue'\"\r\n              [rowsheight]=\"75\" [pagermode]=\"'simple'\" [updatefilterconditions]=\"updatefilterconditions\"\r\n              [pageable]=\"true\" [selectionmode]=\"'singlecell'\">\r\n            </jqxGrid>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</app-card>\r\n"
 
 /***/ }),
 
@@ -67,6 +67,7 @@ var EmployeeComponent = /** @class */ (function () {
         this.ds = ds;
         this.router = router;
         this.filterDataExport = [];
+        this.roles = [];
         this.getEmployeeLimitedUrl = _GlobalShareCode__WEBPACK_IMPORTED_MODULE_4__["baseUrl"] + 'Employee/GetEmployeelimited';
         /*ngAfterViewInit() {
           
@@ -108,10 +109,14 @@ var EmployeeComponent = /** @class */ (function () {
         this.dataAdapter = new jqx.dataAdapter(this.source, {
             formatData: function (Parameter) {
                 Parameter.pagenum = Parameter.pagenum + 1;
-                if (!(_this.searchForm.value.Type_EmpCode == null)) {
+                if (!(_this.searchForm.value.Type_EmpCode == null && _this.searchForm.value.RoleCode == null)) {
                     var incrementCount = 0;
                     var filtercount = 0;
                     if (!(_this.searchForm.value.Type_EmpCode == null)) {
+                        incrementCount = incrementCount + 1;
+                        filtercount = filtercount + 1;
+                    }
+                    if (!(_this.searchForm.value.RoleCode == null)) {
                         incrementCount = incrementCount + 1;
                         filtercount = filtercount + 1;
                     }
@@ -122,12 +127,27 @@ var EmployeeComponent = /** @class */ (function () {
                             if (!(_this.searchForm.value.Type_EmpCode == null)) {
                                 filterGroups[incrementCount - filtercount].filters.push({ 'field': 'Type_EmpCode', 'value': _this.searchForm.value.Type_EmpCode, 'condition': 'CONTAINS', 'operator': 'and' });
                             }
+                            if (!(_this.searchForm.value.RoleCode == null)) {
+                                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'RoleCode', 'value': _this.searchForm.value.RoleCode, 'condition': 'CONTAINS', 'operator': 'and' });
+                            }
+                            break;
+                        case 2:
+                            filterGroups = [{ filters: [] }, { filters: [] },];
+                            if (!(_this.searchForm.value.Type_EmpCode == null)) {
+                                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'Type_EmpCode', 'value': _this.searchForm.value.Type_EmpCode, 'condition': 'CONTAINS', 'operator': 'and' });
+                                filtercount = filtercount - 1;
+                            }
+                            if (!(_this.searchForm.value.RoleCode == null)) {
+                                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'RoleCode', 'value': _this.searchForm.value.RoleCode, 'condition': 'CONTAINS', 'operator': 'and' });
+                                filtercount = filtercount - 1;
+                            }
                     }
                     Object.assign(Parameter, { "filterGroups": filterGroups });
                     _this.filterDataExport.push(lodash__WEBPACK_IMPORTED_MODULE_3__["cloneDeep"](Parameter.filterGroups));
                 }
                 else {
                     _this.filterDataExport = [];
+                    // Parameter.pagenum = 1;
                 }
             },
             loadError: function (one, two, third) { }
@@ -164,13 +184,16 @@ var EmployeeComponent = /** @class */ (function () {
         ];
         this.searchForm = this.formbulider.group({
             Type_EmpCode: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required]],
+            RoleCode: [null],
         });
     }
     EmployeeComponent.prototype.onFormSubmit = function () {
         var employeeID = this.searchForm.value;
-        if (!(employeeID.Type_EmpCode == null)) {
+        if (!(employeeID.Type_EmpCode == null && employeeID.RoleCode == null)) {
             employeeID.Type_EmpCode = (employeeID.Type_EmpCode != null && employeeID.Type_EmpCode != "") ? employeeID.Type_EmpCode : null;
+            employeeID.RoleCode = (employeeID.RoleCode != null && employeeID.RoleCode != "") ? employeeID.RoleCode : null;
             this.myGrid.updatebounddata('cell');
+            this.myGrid.gotopage(0);
         }
     };
     /* onFormSubmit() {
@@ -222,6 +245,16 @@ var EmployeeComponent = /** @class */ (function () {
        }
      }  */
     EmployeeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.employeeService.getRolesDetail().subscribe(function (res) {
+            //res;
+            res.Entity.forEach(function (element) {
+                if (element.Type == "Roles") {
+                    //console.log(element);
+                    _this.roles.push([element.TypeCode, element.Type_EmpCode]);
+                }
+            });
+        });
     };
     EmployeeComponent.prototype.onPageSizeChanged = function () {
     };
@@ -247,7 +280,9 @@ var EmployeeComponent = /** @class */ (function () {
     EmployeeComponent.prototype.resetForm = function () {
         this.searchForm.reset();
         this.searchForm.value.Type_EmpCode = null;
+        this.searchForm.value.RoleCode = null;
         this.myGrid.updatebounddata('cell');
+        this.myGrid.gotopage(0);
     };
     EmployeeComponent.prototype.goToPage = function (pageName) {
         //console.log(pageName);

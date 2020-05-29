@@ -18,6 +18,7 @@ export class EmployeeComponent implements OnInit {
   @ViewChild('myGrid') myGrid: jqxGridComponent;
   searchForm: any;
   public filterDataExport: any = [];
+  roles: Array<any>[] = [];
 
   private getEmployeeLimitedUrl: string = baseUrl + 'Employee/GetEmployeelimited';
   constructor(private employeeService: EmployeeService,
@@ -28,17 +29,18 @@ export class EmployeeComponent implements OnInit {
 
     this.searchForm = this.formbulider.group({
       Type_EmpCode: [null, [Validators.required]],
-
+      RoleCode: [null],
     });
   }
 
   onFormSubmit() {
     const employeeID = this.searchForm.value;
-    if (!(employeeID.Type_EmpCode == null)) {
+    if (!(employeeID.Type_EmpCode == null && employeeID.RoleCode == null)) {
 
       employeeID.Type_EmpCode = (employeeID.Type_EmpCode != null && employeeID.Type_EmpCode != "") ? employeeID.Type_EmpCode : null;
-
+      employeeID.RoleCode = (employeeID.RoleCode != null && employeeID.RoleCode != "") ? employeeID.RoleCode : null;
       this.myGrid.updatebounddata('cell');
+      this.myGrid.gotopage(0);
     }
 
   }
@@ -91,6 +93,19 @@ export class EmployeeComponent implements OnInit {
      }
    }  */
   ngOnInit() {
+    this.employeeService.getRolesDetail().subscribe((res: any) => {
+      //res;
+      res.Entity.forEach((element) => {
+
+        if (element.Type == "Roles") {
+          //console.log(element);
+
+          this.roles.push([element.TypeCode, element.Type_EmpCode]);
+
+        }
+        
+      });
+    });
   }
 
   /*ngAfterViewInit() {
@@ -146,13 +161,17 @@ export class EmployeeComponent implements OnInit {
       formatData: (Parameter) => {
         Parameter.pagenum = Parameter.pagenum + 1;
 
-        if (!(this.searchForm.value.Type_EmpCode == null)) {
+        if (!(this.searchForm.value.Type_EmpCode == null && this.searchForm.value.RoleCode == null)) {
           let incrementCount: number = 0;
           let filtercount: number = 0;
           if (!(this.searchForm.value.Type_EmpCode == null)) {
             incrementCount = incrementCount + 1;
             filtercount = filtercount + 1;
 
+          }
+          if (!(this.searchForm.value.RoleCode == null)) {
+            incrementCount = incrementCount + 1;
+            filtercount = filtercount + 1;
           }
 
           let filterGroups = null;
@@ -163,12 +182,27 @@ export class EmployeeComponent implements OnInit {
               if (!(this.searchForm.value.Type_EmpCode == null)) {
                 filterGroups[incrementCount - filtercount].filters.push({ 'field': 'Type_EmpCode', 'value': this.searchForm.value.Type_EmpCode, 'condition': 'CONTAINS', 'operator': 'and' });
               }
+              if (!(this.searchForm.value.RoleCode == null)) {
+                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'RoleCode', 'value': this.searchForm.value.RoleCode, 'condition': 'CONTAINS', 'operator': 'and' });
+              }
+              break;
+            case 2:
+              filterGroups = [{ filters: [] }, { filters: [] },];
+              if (!(this.searchForm.value.Type_EmpCode == null)) {
+                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'Type_EmpCode', 'value': this.searchForm.value.Type_EmpCode, 'condition': 'CONTAINS', 'operator': 'and' });
+                filtercount = filtercount - 1
+              }
+              if (!(this.searchForm.value.RoleCode == null)) {
+                filterGroups[incrementCount - filtercount].filters.push({ 'field': 'RoleCode', 'value': this.searchForm.value.RoleCode, 'condition': 'CONTAINS', 'operator': 'and' });
+                 filtercount = filtercount - 1
+              }
           }
 
           Object.assign(Parameter, { "filterGroups": filterGroups });
           this.filterDataExport.push(_.cloneDeep(Parameter.filterGroups));
         } else {
           this.filterDataExport = [];
+         // Parameter.pagenum = 1;
         }
       },
 
@@ -246,11 +280,11 @@ export class EmployeeComponent implements OnInit {
 
     this.searchForm.reset();
     this.searchForm.value.Type_EmpCode = null;
-
+    this.searchForm.value.RoleCode = null;
 
 
     this.myGrid.updatebounddata('cell');
-
+    this.myGrid.gotopage(0);
 
 
   }

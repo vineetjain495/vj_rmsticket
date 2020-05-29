@@ -8,8 +8,19 @@
           <div class="col-lg-2">
             <label class="col-lg-12 col-form-label">Employee ID</label>
             <input type="text" formControlName="Type_EmpCode" id="Type_EmpCode" class="form-control input-sm"
-              placeholder="Code *" required>
+                   placeholder="Code *" required>
 
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group row">
+              <label class="col-sm-12 col-form-label ">Select Roles</label>
+              <div class="col-sm-12">
+                <select class="form-control" formControlName="RoleCode">
+                  <option *ngFor="let rl of roles" [value]="rl[0]">{{ rl[1] }}</option>
+
+                </select>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row space">

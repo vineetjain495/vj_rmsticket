@@ -562,6 +562,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                 if (baseRequest.Entity.filterGroups != null)
                 {
                     string Type_EmpCode = string.Empty; bool Type_EmpCode_Flag = false;
+                    int RoleCode = 0; bool RoleCode_Flag = false;
                     foreach (var filterGroups in baseRequest.Entity.filterGroups)
                     {
                         foreach (var filter in filterGroups.filters)
@@ -569,7 +570,7 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                             switch (filter.field)
                             {
                                 case "Type_EmpCode": Type_EmpCode = filter.value; Type_EmpCode_Flag = true; break;
-                               
+                                case "RoleCode": RoleCode = Convert.ToInt16(filter.value); RoleCode_Flag = true; break;
                             }
                         }
                     }
@@ -592,14 +593,16 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                         MspCategory = RR.MspCategory
 
                     }).Where(i => i.Type == "Employees"
-                     && (Type_EmpCode_Flag && i.Type_EmpCode == Type_EmpCode)
+                     && ((Type_EmpCode_Flag == false) || (Type_EmpCode_Flag && i.Type_EmpCode == Type_EmpCode))
+                     && ((RoleCode_Flag == false) || (RoleCode_Flag && i.RoleCode == RoleCode))
                      && (i.IsActive == true || i.IsActive == false))
                .OrderBy(o => o.ID)
-               .Take(baseRequest.Entity.PageSize)
+               .Skip((baseRequest.Entity.PageNum - 1) * baseRequest.Entity.PageSize).Take(baseRequest.Entity.PageSize)
                .ToList();
                  EmployeeDetail.PageResponseModelObj.TotalCount = db.UserMaster
                       .Where(i => i.Type == "Employees"
-                      && Type_EmpCode_Flag && i.Type_EmpCode == Type_EmpCode
+                      && ((Type_EmpCode_Flag == false) || (Type_EmpCode_Flag && i.Type_EmpCode == Type_EmpCode))
+                     && ((RoleCode_Flag == false) || (RoleCode_Flag && i.RoleCode == RoleCode))
                       && (i.IsActive == true || i.IsActive == false)).Count();
 
                     foreach (var list in objEmp)
