@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DataService } from 'src/app/services/DataService';
+import { BaseResponseWithData } from '../../shared/model/BaseResponseModel';
+import { CommonFunctionality } from '../../app.commonFunctionality';
+
 @Component({
   selector: 'app-update-ticket',
   templateUrl: './updateTicket.component.html',
@@ -19,11 +22,13 @@ export class UpdateTicketComponent implements OnInit {
   ticket_count: string;
   isTicketAvailable: boolean;
   isTicketEmpty: boolean;
+  public showSubmit: boolean = false;
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
     private ds: DataService,
     private route: ActivatedRoute,
     private router: Router,
+    private cf: CommonFunctionality
   ) {
     // this.ticket_count = 0;
     this.ds.ShowHideToasty({
@@ -50,7 +55,12 @@ export class UpdateTicketComponent implements OnInit {
       Last_Type_EmpCode: [this.last_emp_id_val, [Validators.required]],
       ticket_count: [this.ticket_count]
     });
-
+    this.cf.GetUserDetails().subscribe((data: BaseResponseWithData<any>) => {
+      if (data.Success) {
+        this.showSubmit = data.Entity.AssignedRoleID != 1 ? true : false;
+        //this.hidefromLocation = (data.Entity.AssignedRoleID != 4 && data.Entity.AssignedRoleID != 6) ? false : true;
+      }
+    });
     this.employeeService.getEmployeeDetails().subscribe((res: any) => {
       res.Entity.forEach((element) => {
         //console.log(res);
@@ -165,6 +175,7 @@ export class UpdateTicketComponent implements OnInit {
       });
     } else {
       this.isTicketEmpty = true;
+      this.isTicketAvailable = false;
     }
   }
   getTicketCount(employeeID) {

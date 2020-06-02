@@ -146,7 +146,7 @@ export class AddEmployeeComponent implements OnInit {
       Hub: ['']
     });
     this.loadAllEmployees();
-    console.log("user " + this.employeeService.getUserDetail());
+    //console.log("user " + this.employeeService.getUserDetail());
     this.dropdownSettings = {
       singleSelection: false,
       // idField: 'item_id',
@@ -191,7 +191,7 @@ export class AddEmployeeComponent implements OnInit {
     employee.MGRCODE.forEach((element) => {
       
       var emp_code = element.split(" ");
-      console.log(emp_code);
+     // console.log(emp_code);
       console.log(emp_code);
       if (emp_code.length > 1) {
         mgrcode = emp_code[0];
@@ -289,7 +289,7 @@ export class AddEmployeeComponent implements OnInit {
     });
     console.log("sec");
 
-    console.log(this.employeeService.getUserDetail());
+    //console.log(this.employeeService.getUserDetail());
     employee.createdBy = this.employeeService.empCode;
     this.employeeService.createEmployee(employee).subscribe((response: any) => {
       if (response.Success) {

@@ -7,10 +7,12 @@ import { baseUrl } from '../GlobalShareCode';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/DataService';
+import { BaseResponseWithData } from '../shared/model/BaseResponseModel';
+import { CommonFunctionality } from '../app.commonFunctionality';
 @Component({
   selector: 'app-showemployee',
   templateUrl: './Employee.component.html',
-  styleUrls: ['./Employee.component.css']
+  styleUrls: ['./Employee.component.css'],
 })
 
 export class EmployeeComponent implements OnInit {
@@ -19,17 +21,24 @@ export class EmployeeComponent implements OnInit {
   searchForm: any;
   public filterDataExport: any = [];
   roles: Array<any>[] = [];
-
+  public showCreate: boolean = false;
   private getEmployeeLimitedUrl: string = baseUrl + 'Employee/GetEmployeelimited';
   constructor(private employeeService: EmployeeService,
     private formbulider: FormBuilder,
     private ds: DataService,
     private router: Router,
+    private cf: CommonFunctionality
   ) {
 
     this.searchForm = this.formbulider.group({
       Type_EmpCode: [null, [Validators.required]],
       RoleCode: [null],
+    });
+    this.cf.GetUserDetails().subscribe((data: BaseResponseWithData<any>) => {
+      if (data.Success) {
+        this.showCreate = data.Entity.AssignedRoleID != 1 ? true : false;
+        //this.hidefromLocation = (data.Entity.AssignedRoleID != 4 && data.Entity.AssignedRoleID != 6) ? false : true;
+      }
     });
   }
 
@@ -106,6 +115,7 @@ export class EmployeeComponent implements OnInit {
         
       });
     });
+    
   }
 
   /*ngAfterViewInit() {
@@ -142,7 +152,7 @@ export class EmployeeComponent implements OnInit {
     ],
 
     beforeprocessing: (data) => {
-      console.log(data.Entity.PageResponseModelObj.TotalCount);
+      //console.log(data.Entity.PageResponseModelObj.TotalCount);
       this.source.totalrecords = data.Entity.PageResponseModelObj.TotalCount; //data.Entity.PageResponseModelObj.TotalCount;
       this.source.PageNum = data.Entity.PageResponseModelObj.PageNumber;
       this.source.PageSize = data.Entity.PageResponseModelObj.PageSize;
@@ -251,7 +261,7 @@ export class EmployeeComponent implements OnInit {
   ticketViewDetailsCallBack(requestEmpId: string) {
     // console.log();
 
-    this.router.navigateByUrl('/Employee/edit_element/' + requestEmpId);
+    this.router.navigateByUrl('/Employee/EditEmployee/' + requestEmpId);
     // localStorage.setItem('TicketId', requestTicketId);    
   }
   detailCellrenderer = (row, column, value, defaulthtml, columnproperties, rowselect): any => {
@@ -281,12 +291,8 @@ export class EmployeeComponent implements OnInit {
     this.searchForm.reset();
     this.searchForm.value.Type_EmpCode = null;
     this.searchForm.value.RoleCode = null;
-
-
     this.myGrid.updatebounddata('cell');
     this.myGrid.gotopage(0);
-
-
   }
   goToPage(pageName: string) {
     //console.log(pageName);

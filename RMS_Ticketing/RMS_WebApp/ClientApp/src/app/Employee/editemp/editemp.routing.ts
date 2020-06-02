@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         component: EditempComponent,
         data: {
-          breadcrumb: 'edit_element',
+          breadcrumb: 'EditEmployee',
             icon: 'icofont-dashboard bg-c-blue',
             status: false
     },

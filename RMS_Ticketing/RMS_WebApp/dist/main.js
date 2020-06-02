@@ -490,13 +490,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-/*import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
-//import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
-import { EditempComponent } from './Employee/editemp/editemp.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { ToastyModule } from 'ng2-toasty';*/
-//import { UpdateTicketComponent } from './Employee/updateTicket/updateTicket.component';
-//import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -544,7 +537,7 @@ var AppModule = /** @class */ (function () {
                 jqwidgets_scripts_jqwidgets_ts_angular_jqxform__WEBPACK_IMPORTED_MODULE_26__["jqxFormComponent"],
                 _picklist_picklist_component__WEBPACK_IMPORTED_MODULE_27__["PicklistComponent"],
                 _shared_components_LinkViewRef_Component__WEBPACK_IMPORTED_MODULE_28__["LinkViewRefComponent"],
-                _shared_components_linkView_component__WEBPACK_IMPORTED_MODULE_29__["LinkViewComponent"],
+                _shared_components_linkView_component__WEBPACK_IMPORTED_MODULE_29__["LinkViewComponent"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
@@ -574,7 +567,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
 // Route config let's you map routes to components
 var routes = [
     {
@@ -640,7 +632,7 @@ var routes = [
                 canActivate: [_shared_Security_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
             },
             {
-                path: 'Employee/edit_element/:id',
+                path: 'Employee/EditEmployee/:id',
                 loadChildren: 'src/app/Employee/editemp/editemp.module#EditempModule',
                 canActivate: [_shared_Security_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
             },

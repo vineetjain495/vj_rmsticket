@@ -22,7 +22,7 @@ export class CMSHttpInterceptor implements HttpInterceptor {
     const token: string = localStorage.getItem('access_token');
     
     if (token) {
-
+     
       //if (request.headers.has('content-type')) {
         request = request.clone({
           setHeaders: {

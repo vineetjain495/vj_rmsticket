@@ -7,6 +7,8 @@ import { Employee } from '../addEmployee/addEmployee';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/DataService';
+import { BaseResponseWithData } from '../../shared/model/BaseResponseModel';
+import { CommonFunctionality } from '../../app.commonFunctionality';
 @Component({
   selector: 'app-editemp',
   templateUrl: './editemp.component.html',
@@ -45,11 +47,13 @@ export class EditempComponent implements OnInit {
   isLocationSelected: boolean;
   isMSPSelected: boolean;
   isTicketAvailable: boolean;
+  hideSubmitButton: boolean = false;
   constructor(private formbulider: FormBuilder,
     //   private httpService: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private ds: DataService,
+    private cf: CommonFunctionality,
     private employeeService: EmployeeService) {
     this.isLocationSelected = false;
     this.isMSPSelected = false;
@@ -132,8 +136,40 @@ export class EditempComponent implements OnInit {
     };
     this.loadEmployeeToEdit(this.route.snapshot.params.id);
     // console.log(res);
+    this.cf.GetUserDetails().subscribe((data: BaseResponseWithData<any>) => {
+
+      if (data.Success) {
+        this.filedPopAccRole_Rights(data.Entity.AssignedRoleID, data.Entity.AssignedRightsID);
+
+        //if (this.rolesParameter != 1) {
+        //  if ((this.model.CustomerActions == "ACCEPT" || this.model.CustomerActions == "REJECT") && this.model.CMSStatus == "CLOSED") {
+        //    this.ticketSummaryForm.disable();
+        //    this.hideSubmitButton = true;
+        //    this.hideAttachment = true;
+        //    this.hideFileEditing = true;
+        //  }
+        //}
+      }
+    });
+
+  }
+  filedPopAccRole_Rights(Roles: number, Rights: number) {
+    //this.rolesParameter = Roles;
 
 
+
+    if (Rights == 1) {
+      this.employeeForm.disable();
+      this.hideSubmitButton = true;
+
+    }
+    else {
+      this.hideSubmitButton = false;
+
+    }
+    
+
+    
   }
   UpdateEmployee(employee: Employee) {
     console.log(employee);
@@ -373,10 +409,23 @@ export class EditempComponent implements OnInit {
     // this.employeeForm.reset();  
   }
   resetForm() {
-    this.employeeForm.reset();
+    //this.employeeForm.reset();
+    console.log("inreset");
     this.massage = null;
     this.dataSaved = false;
-  }
+   
+    this.employeeForm.controls['EmailId'].setValue('');
+    this.employeeForm.controls['RoleCode'].setValue('');
+    this.employeeForm.controls['RightsCode'].setValue('');
+    this.employeeForm.controls['MobileNumber'].setValue('');
+    this.employeeForm.controls['MspCategory'].setValue('');
+    this.employeeForm.controls['MGRCODE'].setValue('');
+    this.selected_manager = [];
+    this.selected_loc = [];
+    this.selected_hub = [];
+    this.selected_region = [];
+    }
+  
   toggleVisibility(e) {
     this.active = e.target.checked;
   }
@@ -478,6 +527,7 @@ export class EditempComponent implements OnInit {
   RolesInput(event) {
     let selected = event.target.value;
     if (selected == "2") {
+      this.getMSP();
       this.isMSPSelected = true;
       this.employeeForm.controls['MspCategory'].setValidators([Validators.required]);
     } else {

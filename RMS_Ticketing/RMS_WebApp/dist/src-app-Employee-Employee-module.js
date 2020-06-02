@@ -18,7 +18,7 @@ module.exports = ".topleft {\r\n  position: absolute;\r\n  top: 8px;\r\n  left: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-card [title]=\"'Employee Viewer'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\" [showBack]=\"mainGridShow\"\r\n  [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"searchForm\" (ngSubmit)=\"onFormSubmit()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-lg-2\">\r\n            <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n            <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\" class=\"form-control input-sm\"\r\n                   placeholder=\"Code *\" required>\r\n\r\n          </div>\r\n          <div class=\"col-sm-4\">\r\n            <div class=\"form-group row\">\r\n              <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n              <div class=\"col-sm-12\">\r\n                <select class=\"form-control\" formControlName=\"RoleCode\">\r\n                  <option *ngFor=\"let rl of roles\" [value]=\"rl[0]\">{{ rl[1] }}</option>\r\n\r\n                </select>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"row space\">\r\n          <div class=\"col-sm-12\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button type=\"submit\" class=\"btn btn-primary btntype\">Search</button>\r\n              </div>\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button class=\"btn btn-inverse float-left resetbtn btntype\" (click)=\"resetForm()\">Reset</button>\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n\r\n        </div>\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"col-sm-12 \">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-6\">\r\n            <div class=\"col-sm-12\">\r\n              <div class=\"icofont-2x\" style=\"color:dodgerblue\">Employee Details</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"col-sm-6\" [hidden]=\"hidefromLocation\">\r\n            <div class=\"col-sm-12\">\r\n              <!----<a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/UpdateTicket');\">\r\n                <i class=\"icofont icofont-ticket float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Assign Ticket</span>\r\n                </i>\r\n              </a>-->\r\n\r\n              <a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/CreateEmployee');\">\r\n                <i class=\"icofont icofont-contact-add float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Create Employee</span>\r\n                </i>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <!--  <button class=\"btn btn-primary\" (click)=\"goToPage('/Employee/CreateEmployee');\">Create</button>-->\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <jqxGrid #myGrid jqx-grid-energyblue #myGrid [width]=getWidth() [source]=\"dataAdapter\" [autoheight]=\"true\"\r\n              (onPagechanged)=\"onPageChanged($event)\" [rendergridrows]=\"rendergridrows\"\r\n              [initrowdetails]=\"initRowDetails\" [rowdetailstemplate]=\"rowdetailstemplate\" [virtualmode]='true'\r\n              [altrows]=\"true\" [columns]=\"columns\" (onCellselect)=\"myGridOnCellSelect($event)\" [filterable]=\"false\"\r\n              [columnsresize]=\"true\" [sortable]=\"false\" [height]='620' [showheader]=\"false\" [theme]=\"'energyblue'\"\r\n              [rowsheight]=\"75\" [pagermode]=\"'simple'\" [updatefilterconditions]=\"updatefilterconditions\"\r\n              [pageable]=\"true\" [selectionmode]=\"'singlecell'\">\r\n            </jqxGrid>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</app-card>\r\n"
+module.exports = "<app-card [title]=\"'Employee Viewer'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\" [showBack]=\"mainGridShow\"\r\n  [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"searchForm\" (ngSubmit)=\"onFormSubmit()\">\r\n\r\n        <div class=\"row\">\r\n          <div class=\"col-lg-4\">\r\n            <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n            <input type=\"text\" formControlName=\"Type_EmpCode\" id=\"Type_EmpCode\" class=\"form-control input-sm\"\r\n                   placeholder=\"Code *\" required>\r\n\r\n          </div>\r\n          <div class=\"col-sm-4\">\r\n            <div class=\"form-group row\">\r\n              <label class=\"col-sm-12 col-form-label \">Select Roles</label>\r\n              <div class=\"col-sm-12\">\r\n                <select class=\"form-control\" formControlName=\"RoleCode\">\r\n                  <option *ngFor=\"let rl of roles\" [value]=\"rl[0]\">{{ rl[1] }}</option>\r\n\r\n                </select>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"row space\">\r\n          <div class=\"col-sm-12\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button type=\"submit\" class=\"btn btn-primary btntype\">Search</button>\r\n              </div>\r\n              <div class=\"col-sm-6 text-center\">\r\n                <button class=\"btn btn-inverse float-left resetbtn btntype\" (click)=\"resetForm()\">Reset</button>\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n\r\n        </div>\r\n\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"col-sm-12 \">\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-6\">\r\n            <div class=\"col-sm-12\">\r\n              <div class=\"icofont-2x\" style=\"color:dodgerblue\">Employee Details</div>\r\n            </div>\r\n          </div>\r\n          <div class=\"col-sm-6\" [hidden]=\"showCreate\">\r\n            <div class=\"col-sm-12\">\r\n              <!----<a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/UpdateTicket');\">\r\n                <i class=\"icofont icofont-ticket float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Assign Ticket</span>\r\n                </i>\r\n              </a>-->\r\n\r\n              <a href=\"javascript:void(0);\" (click)=\"goToPage('/Employee/CreateEmployee');\">\r\n                <i class=\"icofont icofont-contact-add float-right icofont-3x icon_color add_hover\">\r\n                  <span class=\"add_text\">Create Employee</span>\r\n                </i>\r\n              </a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <!--  <button class=\"btn btn-primary\" (click)=\"goToPage('/Employee/CreateEmployee');\">Create</button>-->\r\n\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <jqxGrid #myGrid jqx-grid-energyblue #myGrid [width]=getWidth() [source]=\"dataAdapter\" [autoheight]=\"true\"\r\n              (onPagechanged)=\"onPageChanged($event)\" [rendergridrows]=\"rendergridrows\"\r\n              [initrowdetails]=\"initRowDetails\" [rowdetailstemplate]=\"rowdetailstemplate\" [virtualmode]='true'\r\n              [altrows]=\"true\" [columns]=\"columns\" (onCellselect)=\"myGridOnCellSelect($event)\" [filterable]=\"false\"\r\n              [columnsresize]=\"true\" [sortable]=\"false\" [height]='620' [showheader]=\"false\" [theme]=\"'energyblue'\"\r\n              [rowsheight]=\"75\" [pagermode]=\"'simple'\" [updatefilterconditions]=\"updatefilterconditions\"\r\n              [pageable]=\"true\" [selectionmode]=\"'singlecell'\">\r\n            </jqxGrid>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</app-card>\r\n"
 
 /***/ }),
 
@@ -41,6 +41,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_services_DataService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/DataService */ "./src/app/services/DataService.ts");
+/* harmony import */ var _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../app.commonFunctionality */ "./src/app/app.commonFunctionality.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,15 +60,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var EmployeeComponent = /** @class */ (function () {
-    function EmployeeComponent(employeeService, formbulider, ds, router) {
+    function EmployeeComponent(employeeService, formbulider, ds, router, cf) {
         var _this = this;
         this.employeeService = employeeService;
         this.formbulider = formbulider;
         this.ds = ds;
         this.router = router;
+        this.cf = cf;
         this.filterDataExport = [];
         this.roles = [];
+        this.showCreate = false;
         this.getEmployeeLimitedUrl = _GlobalShareCode__WEBPACK_IMPORTED_MODULE_4__["baseUrl"] + 'Employee/GetEmployeelimited';
         /*ngAfterViewInit() {
           
@@ -96,7 +100,7 @@ var EmployeeComponent = /** @class */ (function () {
                 { name: 'Viewcomment', type: 'string' },
             ],
             beforeprocessing: function (data) {
-                console.log(data.Entity.PageResponseModelObj.TotalCount);
+                //console.log(data.Entity.PageResponseModelObj.TotalCount);
                 _this.source.totalrecords = data.Entity.PageResponseModelObj.TotalCount; //data.Entity.PageResponseModelObj.TotalCount;
                 _this.source.PageNum = data.Entity.PageResponseModelObj.PageNumber;
                 _this.source.PageSize = data.Entity.PageResponseModelObj.PageSize;
@@ -186,6 +190,12 @@ var EmployeeComponent = /** @class */ (function () {
             Type_EmpCode: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required]],
             RoleCode: [null],
         });
+        this.cf.GetUserDetails().subscribe(function (data) {
+            if (data.Success) {
+                _this.showCreate = data.Entity.AssignedRoleID != 1 ? true : false;
+                //this.hidefromLocation = (data.Entity.AssignedRoleID != 4 && data.Entity.AssignedRoleID != 6) ? false : true;
+            }
+        });
     }
     EmployeeComponent.prototype.onFormSubmit = function () {
         var employeeID = this.searchForm.value;
@@ -274,7 +284,7 @@ var EmployeeComponent = /** @class */ (function () {
     };
     EmployeeComponent.prototype.ticketViewDetailsCallBack = function (requestEmpId) {
         // console.log();
-        this.router.navigateByUrl('/Employee/edit_element/' + requestEmpId);
+        this.router.navigateByUrl('/Employee/EditEmployee/' + requestEmpId);
         // localStorage.setItem('TicketId', requestTicketId);    
     };
     EmployeeComponent.prototype.resetForm = function () {
@@ -296,12 +306,13 @@ var EmployeeComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-showemployee',
             template: __webpack_require__(/*! ./Employee.component.html */ "./src/app/Employee/Employee.component.html"),
-            styles: [__webpack_require__(/*! ./Employee.component.css */ "./src/app/Employee/Employee.component.css")]
+            styles: [__webpack_require__(/*! ./Employee.component.css */ "./src/app/Employee/Employee.component.css")],
         }),
         __metadata("design:paramtypes", [_Employee_service__WEBPACK_IMPORTED_MODULE_2__["EmployeeService"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormBuilder"],
             src_app_services_DataService__WEBPACK_IMPORTED_MODULE_7__["DataService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
+            _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_8__["CommonFunctionality"]])
     ], EmployeeComponent);
     return EmployeeComponent;
 }());

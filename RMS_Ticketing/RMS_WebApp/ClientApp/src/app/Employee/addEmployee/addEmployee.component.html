@@ -161,8 +161,11 @@
       </div>
       <div class="col-sm-4">
         <div class="form-group row">
-          <div class="col-sm-12 text-center">
-            <input type="submit" [disabled]="!employeeForm.valid" value="Add" class="btn btn-info ">
+          <div class="col-sm-6 text-center">
+            <input type="submit" [disabled]="!employeeForm.valid" value="Create" class="btn btn-info ">
+          </div>
+          <div class="col-sm-6 text-center">
+            <button class="btn btn-inverse " (click)="resetForm()">Reset</button>
           </div>
         </div>
 

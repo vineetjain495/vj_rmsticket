@@ -655,7 +655,8 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                                        && e.Type == "Roles").Select(M => M.Type_EmpCode).FirstOrDefault(),
                         RightsName = db.UserMaster.Where(e => e.TypeCode == RR.RightsCode
                                        && e.Type == "Rights").Select(M => M.Type_EmpCode).FirstOrDefault(),
-                       MspCategory = RR.MspCategory
+                       MspCategory = RR.MspCategory,
+                       MGRCODE = RR.MGRCODE
 
                    }).Where(i => i.Type == "Employees" && (i.IsActive == true || i.IsActive == false))
                 .OrderByDescending(o =>  o.IsActive )
@@ -685,13 +686,14 @@ namespace CMS_DAL.RMS_Ticketing_DAL
                         viewer.Viewcomment = string.Format(
                             "{0}{1}Employee Name:{2}{0}{4} {0}{1}Mobile Number:{2}{0}{5}{3}" +
                             "{0}{1}Email ID:{2}{0}{6} {0}{1}Role:{2}{0}{7} {3}" +
-                            "{0}{1}Rights:{2}{0}{8}",
+                            "{0}{1}Rights:{2}{0}{8} {0}{1}Manager:{2}{0}{9} ",
                             "&nbsp;", "<b>", "</b>", "<br>",
                             !string.IsNullOrEmpty(list.EmployeeName) ? list.EmployeeName : list.EmployeeName,
                             !string.IsNullOrEmpty(list.MobileNumber) ? list.MobileNumber : Empty,
                             !string.IsNullOrEmpty(list.EmailID) ? list.EmailID : Empty,
                             !string.IsNullOrEmpty(RoleFinal) ? RoleFinal : Empty,
-                            !string.IsNullOrEmpty(list.RightsName) ? list.RightsName : Empty
+                            !string.IsNullOrEmpty(list.RightsName) ? list.RightsName : Empty,
+                            !string.IsNullOrEmpty(list.MGRCODE) ? list.MGRCODE : Empty
                             );
 
                         employeeViewers.Add(viewer);

@@ -122,7 +122,7 @@ namespace WebApp.Controllers
                     LoginEmployeeDetails = (EmployeeDetails)Session["EmployeeDetails"],
                     Entity = employee_Role
                 };
-                employee_Role.ModifiedBy = baseReq.LoginEmployeeDetails.EmpCode;
+                employee_Role.CreatedBy = baseReq.LoginEmployeeDetails.EmpCode;
                 baseResponse = CommonUtility.
                 ConsumeAPIService<BaseResponse, BaseRequest<Employee_Role>>
                 (CommonConstant.UpdateEmployeeUrl, baseReq);

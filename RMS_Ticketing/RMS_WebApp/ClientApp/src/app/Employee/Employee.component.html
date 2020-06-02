@@ -5,7 +5,7 @@
       <form [formGroup]="searchForm" (ngSubmit)="onFormSubmit()">
 
         <div class="row">
-          <div class="col-lg-2">
+          <div class="col-lg-4">
             <label class="col-lg-12 col-form-label">Employee ID</label>
             <input type="text" formControlName="Type_EmpCode" id="Type_EmpCode" class="form-control input-sm"
                    placeholder="Code *" required>
@@ -52,7 +52,7 @@
               <div class="icofont-2x" style="color:dodgerblue">Employee Details</div>
             </div>
           </div>
-          <div class="col-sm-6" [hidden]="hidefromLocation">
+          <div class="col-sm-6" [hidden]="showCreate">
             <div class="col-sm-12">
               <!----<a href="javascript:void(0);" (click)="goToPage('/Employee/UpdateTicket');">
                 <i class="icofont icofont-ticket float-right icofont-3x icon_color add_hover">

@@ -18,7 +18,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-card [title]=\"'Update Ticket Assignment'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\"\r\n  [showBack]=\"mainGridShow\" [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"updateTicketForm\" (ngSubmit)=\"onFormSubmit()\">\r\n        <div class=\"row\">\r\n          <div class=\"col-lg-4\">\r\n            <label class=\"col-lg-12 col-form-label\">Replacing Employee Code</label>\r\n            <input type=\"text\" formControlName=\"Last_Type_EmpCode\" id=\"Last_Type_EmpCode\" class=\"form-control input-sm\"\r\n              (blur)=\"getTicketCount2($event)\" placeholder=\"Code *\" required>\r\n          </div>\r\n          <div class=\"col-lg-4\">\r\n            <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n            <ng-multiselect-dropdown name=\"ticketEmployee\" [(ngModel)]=\"selected_ticket\"\r\n              [placeholder]=\"'Select Employee'\" [data]=\"Emp_details\" formControlName=\"Emp_ID\"\r\n              [settings]=\"dropdownSettings2\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n\r\n        </div>\r\n        <div class=\"row\" *ngIf=\"isTicketAvailable\">\r\n          <div class=\"col-lg-8\">\r\n            <div class=\"alert alert-success\">\r\n              Total <strong> {{ ticket_count }} </strong> available for this ID.\r\n            </div>\r\n            <input type=\"hidden\" formControlName=\"ticket_count\" id=\"Last_Type_EmpCode\" class=\"form-control input-sm\"\r\n              placeholder=\"Code *\" value=\"{{ ticket_count }}\">\r\n          </div>\r\n        </div>\r\n        <div class=\"row\" *ngIf=\"isTicketEmpty\">\r\n          <div class=\"col-lg-8\">\r\n            <div class=\"alert alert-danger\">\r\n              Please enter Employee ID for whom you have to assign tickets.\r\n            </div>\r\n            <input type=\"hidden\" formControlName=\"ticket_count\" id=\"Last_Type_EmpCode\" class=\"form-control input-sm\"\r\n              placeholder=\"Code *\" value=\"{{ ticket_count }}\">\r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 text-center\">\r\n\r\n                <input type=\"submit\" value=\"Update Ticket\" [disabled]=\"!updateTicketForm.valid\" class=\"btn btn-info\">\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n\r\n</app-card>"
+module.exports = "<app-card [title]=\"'Update Ticket Assignment'\" [blockClass]=\"'tran-data'\" [showRightSection]=\"'false'\"\r\n  [showBack]=\"mainGridShow\" [cardToggle]=\"cardToggleGrid\">\r\n  <div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n      <form [formGroup]=\"updateTicketForm\" (ngSubmit)=\"onFormSubmit()\">\r\n        <div class=\"row\">\r\n          <div class=\"col-lg-4\">\r\n            <label class=\"col-lg-12 col-form-label\">Replacing Employee Code</label>\r\n            <input type=\"text\" formControlName=\"Last_Type_EmpCode\" id=\"Last_Type_EmpCode\" class=\"form-control input-sm\"\r\n              (blur)=\"getTicketCount2($event)\" placeholder=\"Code *\" required>\r\n          </div>\r\n          <div class=\"col-lg-4\">\r\n            <label class=\"col-lg-12 col-form-label\">Employee ID</label>\r\n            <ng-multiselect-dropdown name=\"ticketEmployee\" [(ngModel)]=\"selected_ticket\"\r\n              [placeholder]=\"'Select Employee'\" [data]=\"Emp_details\" formControlName=\"Emp_ID\"\r\n              [settings]=\"dropdownSettings2\">\r\n            </ng-multiselect-dropdown>\r\n          </div>\r\n\r\n        </div>\r\n        <div class=\"row\" *ngIf=\"isTicketAvailable\">\r\n          <div class=\"col-lg-8\">\r\n            <div class=\"alert alert-success\">\r\n              Total <strong> {{ ticket_count }} </strong> available for this ID.\r\n            </div>\r\n            <input type=\"hidden\" formControlName=\"ticket_count\" id=\"Last_Type_EmpCode\" class=\"form-control input-sm\"\r\n              placeholder=\"Code *\" value=\"{{ ticket_count }}\">\r\n          </div>\r\n        </div>\r\n        <div class=\"row\" *ngIf=\"isTicketEmpty\">\r\n          <div class=\"col-lg-8\">\r\n            <div class=\"alert alert-danger\">\r\n              Please enter Employee ID for whom you have to assign tickets.\r\n            </div>\r\n            <input type=\"hidden\" formControlName=\"ticket_count\" id=\"Last_Type_EmpCode\" class=\"form-control input-sm\"\r\n              placeholder=\"Code *\" value=\"{{ ticket_count }}\">\r\n          </div>\r\n        </div>\r\n        <div class=\"row\" [hidden]=\"showSubmit\">\r\n          <div class=\"col-sm-12\">\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 text-center\">\r\n\r\n                <input type=\"submit\" value=\"Update Ticket\" [disabled]=\"!updateTicketForm.valid\" class=\"btn btn-info\">\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </form>\r\n    </div>\r\n  </div>\r\n\r\n\r\n</app-card>\r\n"
 
 /***/ }),
 
@@ -37,6 +37,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/DataService */ "./src/app/services/DataService.ts");
+/* harmony import */ var _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../app.commonFunctionality */ "./src/app/app.commonFunctionality.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -52,18 +53,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UpdateTicketComponent = /** @class */ (function () {
-    function UpdateTicketComponent(employeeService, formbulider, ds, route, router) {
+    function UpdateTicketComponent(employeeService, formbulider, ds, route, router, cf) {
         var _this = this;
         this.employeeService = employeeService;
         this.formbulider = formbulider;
         this.ds = ds;
         this.route = route;
         this.router = router;
+        this.cf = cf;
         this.Emp_details = [];
         this.selected_ticket = [];
         this.dropdownSettings = {};
         this.dropdownSettings2 = {};
+        this.showSubmit = false;
         // this.ticket_count = 0;
         this.ds.ShowHideToasty({
             title: 'Please Wait...',
@@ -87,6 +91,12 @@ var UpdateTicketComponent = /** @class */ (function () {
             Emp_ID: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             Last_Type_EmpCode: [this.last_emp_id_val, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             ticket_count: [this.ticket_count]
+        });
+        this.cf.GetUserDetails().subscribe(function (data) {
+            if (data.Success) {
+                _this.showSubmit = data.Entity.AssignedRoleID != 1 ? true : false;
+                //this.hidefromLocation = (data.Entity.AssignedRoleID != 4 && data.Entity.AssignedRoleID != 6) ? false : true;
+            }
         });
         this.employeeService.getEmployeeDetails().subscribe(function (res) {
             res.Entity.forEach(function (element) {
@@ -192,6 +202,7 @@ var UpdateTicketComponent = /** @class */ (function () {
         }
         else {
             this.isTicketEmpty = true;
+            this.isTicketAvailable = false;
         }
     };
     UpdateTicketComponent.prototype.getTicketCount = function (employeeID) {
@@ -226,7 +237,8 @@ var UpdateTicketComponent = /** @class */ (function () {
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
             src_app_services_DataService__WEBPACK_IMPORTED_MODULE_4__["DataService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            _app_commonFunctionality__WEBPACK_IMPORTED_MODULE_5__["CommonFunctionality"]])
     ], UpdateTicketComponent);
     return UpdateTicketComponent;
 }());

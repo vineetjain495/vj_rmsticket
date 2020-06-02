@@ -3,10 +3,6 @@ import { MainLayoutComponent } from './mainLayout/mainLayout.component';
 import { ExternalLayoutComponent } from './externalLayout/externalLayout.component';
 import { AuthGuard } from './shared/Security/auth.guard';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
-import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
-//import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
-import { EditempComponent } from './Employee/editemp/editemp.component';
-//import { UpdateTicketComponent } from './updateTicket/updateTicket.component';
 
 // Route config let's you map routes to components
 const routes: Routes = [
@@ -80,7 +76,7 @@ const routes: Routes = [
       },
       
       {
-        path: 'Employee/edit_element/:id',
+        path: 'Employee/EditEmployee/:id',
         loadChildren: 'src/app/Employee/editemp/editemp.module#EditempModule',
         canActivate: [AuthGuard],
       },

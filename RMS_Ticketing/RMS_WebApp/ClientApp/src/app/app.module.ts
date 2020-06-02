@@ -37,13 +37,6 @@ import { jqxFormComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxform
 import { PicklistComponent } from './picklist/picklist.component';
 import { LinkViewRefComponent } from './shared/components/LinkViewRef.Component';
 import { LinkViewComponent } from './shared/components/linkView.component';
-/*import { AddEmployeeComponent } from './Employee/addEmployee/addEmployee.component';
-//import { ShowemployeeComponent } from './Employee/showemployee/showemployee.component';
-import { EditempComponent } from './Employee/editemp/editemp.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { ToastyModule } from 'ng2-toasty';*/
-//import { UpdateTicketComponent } from './Employee/updateTicket/updateTicket.component';
-//import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 
   @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
@@ -89,9 +82,7 @@ import { ToastyModule } from 'ng2-toasty';*/
       jqxFormComponent,
       PicklistComponent,
       LinkViewRefComponent,
-      LinkViewComponent,
-    //  UpdateTicketComponent
-
+      LinkViewComponent
     ],
     bootstrap: [AppComponent]
   })
