@@ -45,7 +45,7 @@
     "jqwidgets-framework": "^6.1.0",
     "jqwidgets-ng": "^9.1.4",
     "jqwidgets-scripts": "^6.2.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.19",
     "ng-click-outside": "4.0.0",
     "ng-multiselect-dropdown": "^0.2.10",
     "ng-sidebar": "^9.2.0",
